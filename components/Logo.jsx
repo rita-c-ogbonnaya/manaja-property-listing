@@ -1,40 +1,34 @@
 'use client';
 
-import { Box, Typography } from '@mui/material';
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import { Box } from '@mui/material';
 
 export default function Logo({ variant = 'dark', size = 36 }) {
-  const wordColor = variant === 'light' ? '#fff' : '#16213E';
-  const iconBox = Math.round(size * 0.95);
+  // The brand logo is dark blue lettering, so on dark surfaces we place it
+  // on a light rounded chip to keep both the blue wordmark and yellow arc legible.
+  const isLight = variant === 'light';
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+    <Box
+      sx={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        px: isLight ? 1.25 : 0,
+        py: isLight ? 0.75 : 0,
+        borderRadius: isLight ? '10px' : 0,
+        backgroundColor: isLight ? '#fff' : 'transparent',
+      }}
+    >
       <Box
+        component="img"
+        src="/logo.png"
+        alt="Manaja"
         sx={{
-          width: iconBox,
-          height: iconBox,
-          borderRadius: `${Math.round(iconBox * 0.28)}px`,
-          backgroundColor: '#E23744',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexShrink: 0,
+          height: size,
+          width: 'auto',
+          display: 'block',
         }}
-      >
-        <HomeRoundedIcon sx={{ color: '#fff', fontSize: iconBox * 0.62 }} />
-      </Box>
-      <Typography
-        component="span"
-        sx={{
-          fontWeight: 800,
-          fontSize: size * 0.62,
-          letterSpacing: '-0.02em',
-          color: wordColor,
-          lineHeight: 1,
-        }}
-      >
-        manaja
-      </Typography>
+      />
     </Box>
   );
 }

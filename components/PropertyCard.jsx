@@ -75,7 +75,7 @@ export default function PropertyCard({ property }) {
           size="small"
         >
           {liked ? (
-            <FavoriteIcon sx={{ color: '#E23744', fontSize: 20 }} />
+            <FavoriteIcon sx={{ color: '#1A4C9E', fontSize: 20 }} />
           ) : (
             <FavoriteBorderIcon sx={{ color: '#16213E', fontSize: 20 }} />
           )}
@@ -90,7 +90,7 @@ export default function PropertyCard({ property }) {
 
         <Typography
           sx={{
-            color: '#E23744',
+            color: '#1A4C9E',
             fontWeight: 700,
             fontSize: '0.82rem',
             mt: 0.75,

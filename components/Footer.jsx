@@ -46,7 +46,7 @@ export default function Footer() {
             }}
           >
             <Box>
-              <Typography sx={{ color: '#EA5B65', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}>
+              <Typography sx={{ color: '#F5B70C', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}>
                 LIST WITH MANAJA
               </Typography>
               <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2rem' }, mb: 1 }}>
@@ -58,15 +58,15 @@ export default function Footer() {
             </Box>
             <Button
               sx={{
-                backgroundColor: '#E23744',
-                color: '#fff',
-                fontWeight: 700,
+                backgroundColor: '#F5B70C',
+                color: '#16213E',
+                fontWeight: 800,
                 px: 4,
                 py: 1.5,
                 borderRadius: '10px',
                 whiteSpace: 'nowrap',
                 boxShadow: 'none',
-                '&:hover': { backgroundColor: '#C42B37' },
+                '&:hover': { backgroundColor: '#DBA200' },
               }}
             >
               List a property

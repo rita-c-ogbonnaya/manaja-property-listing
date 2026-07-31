@@ -27,7 +27,7 @@ export default function BrowseByType({ onSelect }) {
     <Box component="section" sx={{ backgroundColor: '#f6f7f9', py: { xs: 6, md: 8 } }}>
       <Container maxWidth="lg">
         <Typography
-          sx={{ color: '#E23744', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}
+          sx={{ color: '#1A4C9E', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}
         >
           BROWSE BY TYPE
         </Typography>
@@ -62,7 +62,7 @@ export default function BrowseByType({ onSelect }) {
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
                 '&:hover': {
-                  borderColor: '#E23744',
+                  borderColor: '#1A4C9E',
                   boxShadow: '0 12px 28px rgba(16, 23, 41, 0.1)',
                   transform: 'translateY(-3px)',
                 },
@@ -73,14 +73,14 @@ export default function BrowseByType({ onSelect }) {
                   width: 46,
                   height: 46,
                   borderRadius: '12px',
-                  backgroundColor: 'rgba(226,55,68,0.1)',
+                  backgroundColor: 'rgba(26,76,158,0.1)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   mb: 2,
                 }}
               >
-                <Icon sx={{ color: '#E23744', fontSize: 24 }} />
+                <Icon sx={{ color: '#1A4C9E', fontSize: 24 }} />
               </Box>
               <Typography sx={{ fontWeight: 700, color: '#16213E', fontSize: '1rem' }}>{label}</Typography>
               <Typography sx={{ color: '#8a93a3', fontSize: '0.85rem', mt: 0.25 }}>

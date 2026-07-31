@@ -65,7 +65,7 @@ export default function Hero({ filters, onFilterChange, onSearch, stats }) {
       sx={{
         position: 'relative',
         background:
-          'radial-gradient(120% 120% at 85% 0%, rgba(226, 55, 68, 0.35) 0%, rgba(226, 55, 68, 0) 45%), linear-gradient(160deg, #16213E 0%, #0F1729 100%)',
+          'radial-gradient(120% 120% at 85% 0%, rgba(245, 183, 12, 0.30) 0%, rgba(245, 183, 12, 0) 45%), linear-gradient(160deg, #16213E 0%, #0F1729 100%)',
         color: '#fff',
         pt: { xs: 6, md: 9 },
         pb: { xs: 6, md: 10 },
@@ -88,7 +88,7 @@ export default function Hero({ filters, onFilterChange, onSearch, stats }) {
               fontSize: '0.85rem',
             }}
           >
-            <VerifiedUserOutlinedIcon sx={{ fontSize: 16, color: '#EA5B65' }} />
+            <VerifiedUserOutlinedIcon sx={{ fontSize: 16, color: '#F5B70C' }} />
             Nigeria&apos;s property marketplace
           </Box>
         </Box>
@@ -147,8 +147,8 @@ export default function Hero({ filters, onFilterChange, onSearch, stats }) {
                   borderRadius: 999,
                   fontWeight: 700,
                   fontSize: '0.9rem',
-                  color: activeTab === tab ? '#E23744' : '#5b6472',
-                  backgroundColor: activeTab === tab ? 'rgba(226,55,68,0.1)' : 'transparent',
+                  color: activeTab === tab ? '#1A4C9E' : '#5b6472',
+                  backgroundColor: activeTab === tab ? 'rgba(26,76,158,0.1)' : 'transparent',
                   transition: 'all 0.2s ease',
                 }}
               >
@@ -230,7 +230,7 @@ export default function Hero({ filters, onFilterChange, onSearch, stats }) {
               sx={{
                 ml: { xs: 0, md: 2 },
                 mt: { xs: 1.5, md: 0 },
-                backgroundColor: '#E23744',
+                backgroundColor: '#1A4C9E',
                 color: '#fff',
                 fontWeight: 700,
                 px: 4,
@@ -238,7 +238,7 @@ export default function Hero({ filters, onFilterChange, onSearch, stats }) {
                 borderRadius: '10px',
                 whiteSpace: 'nowrap',
                 boxShadow: 'none',
-                '&:hover': { backgroundColor: '#C42B37' },
+                '&:hover': { backgroundColor: '#143B7A' },
               }}
             >
               Search

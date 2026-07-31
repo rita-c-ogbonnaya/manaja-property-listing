@@ -63,7 +63,7 @@ export default function Navbar() {
           href="#list"
           onClick={handleDrawerToggle}
           variant="contained"
-          sx={{ backgroundColor: '#E23744', fontWeight: 700, py: 1.2 }}
+          sx={{ backgroundColor: '#1A4C9E', fontWeight: 700, py: 1.2 }}
         >
           List a property
         </Button>
@@ -109,7 +109,7 @@ export default function Navbar() {
                 fontWeight: 600,
                 fontSize: '0.95rem',
                 px: 1.5,
-                '&:hover': { color: '#E23744', backgroundColor: 'transparent' },
+                '&:hover': { color: '#1A4C9E', backgroundColor: 'transparent' },
               }}
             >
               {link.label}
@@ -121,11 +121,11 @@ export default function Navbar() {
             variant="contained"
             sx={{
               ml: 1.5,
-              backgroundColor: '#E23744',
+              backgroundColor: '#1A4C9E',
               fontWeight: 700,
               px: 2.5,
               boxShadow: 'none',
-              '&:hover': { backgroundColor: '#C42B37', boxShadow: 'none' },
+              '&:hover': { backgroundColor: '#143B7A', boxShadow: 'none' },
             }}
           >
             List a property
