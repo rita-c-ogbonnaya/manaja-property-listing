@@ -4,7 +4,11 @@ import { Box, Container, Typography, Link as MuiLink, Divider, Button } from '@m
 import MailOutlineIcon from '@mui/icons-material/Mail';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import ScheduleOutlinedIcon from '@mui/icons-material/ScheduleOutlined';
 import Logo from '@/components/Logo';
+
+const APP_URL = 'https://app.manaja.solutions';
+const SITE_URL = 'https://manaja.solutions';
 
 const linkSx = {
   color: 'rgba(255,255,255,0.7)',
@@ -16,15 +20,28 @@ const linkSx = {
 const columns = [
   {
     title: 'Popular Property',
-    links: ['Flats for rent in Lagos', 'Houses for sale in Abuja', 'Land in Lekki', 'Shortlets in Ikoyi'],
+    links: [
+      { label: 'Flats for rent in Lagos', href: '/' },
+      { label: 'Houses for sale in Abuja', href: '/' },
+      { label: 'Land in Lekki', href: '/' },
+      { label: 'Shortlets in Ikoyi', href: '/' },
+    ],
   },
   {
     title: 'Explore',
-    links: ['Property managers', 'For sale', 'For rent', 'New developments'],
+    links: [
+      { label: 'Property managers', href: '/property-managers' },
+      { label: 'For sale', href: '/' },
+      { label: 'For rent', href: '/' },
+      { label: 'Shortlets', href: '/' },
+    ],
   },
   {
-    title: 'Company',
-    links: ['About Manaja', 'Advertise your property', 'Careers', 'Contact us'],
+    title: 'For Managers',
+    links: [
+      { label: 'Advertise your property', href: APP_URL, external: true },
+      { label: 'List a property', href: APP_URL, external: true },
+    ],
   },
 ];
 
@@ -57,6 +74,10 @@ export default function Footer() {
               </Typography>
             </Box>
             <Button
+              component="a"
+              href={APP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               sx={{
                 backgroundColor: '#F5B70C',
                 color: '#16213E',
@@ -92,18 +113,26 @@ export default function Footer() {
               <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.92rem', lineHeight: 1.7, mb: 2, maxWidth: 320 }}>
                 Manaja connects you with verified properties across Lagos, Abuja and beyond — expertly curated and intelligently matched to your needs.
               </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'rgba(255,255,255,0.7)' }}>
-                  <LocationOnOutlinedIcon sx={{ fontSize: 18 }} />
-                  <Typography sx={{ fontSize: '0.9rem' }}>Lagos, Nigeria</Typography>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.25 }}>
+                <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, color: 'rgba(255,255,255,0.7)' }}>
+                  <MailOutlineIcon sx={{ fontSize: 18, mt: '2px' }} />
+                  <MuiLink href="mailto:hello@manaja.solutions" sx={{ ...linkSx, fontSize: '0.9rem' }}>
+                    hello@manaja.solutions
+                  </MuiLink>
                 </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'rgba(255,255,255,0.7)' }}>
-                  <LocalPhoneOutlinedIcon sx={{ fontSize: 18 }} />
-                  <Typography sx={{ fontSize: '0.9rem' }}>+234 701 234 5678</Typography>
+                <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, color: 'rgba(255,255,255,0.7)' }}>
+                  <LocalPhoneOutlinedIcon sx={{ fontSize: 18, mt: '2px' }} />
+                  <Typography sx={{ fontSize: '0.9rem' }}>
+                    +234 (814) 694-6985{'  |  '}+250 (793) 149-988
+                  </Typography>
                 </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'rgba(255,255,255,0.7)' }}>
-                  <MailOutlineIcon sx={{ fontSize: 18 }} />
-                  <Typography sx={{ fontSize: '0.9rem' }}>info@manaja.com</Typography>
+                <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, color: 'rgba(255,255,255,0.7)' }}>
+                  <LocationOnOutlinedIcon sx={{ fontSize: 18, mt: '2px' }} />
+                  <Typography sx={{ fontSize: '0.9rem' }}>Global: Remote-First</Typography>
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, color: 'rgba(255,255,255,0.7)' }}>
+                  <ScheduleOutlinedIcon sx={{ fontSize: 18, mt: '2px' }} />
+                  <Typography sx={{ fontSize: '0.9rem' }}>Monday – Friday, 9AM – 5PM GMT+1</Typography>
                 </Box>
               </Box>
             </Box>
@@ -112,9 +141,14 @@ export default function Footer() {
               <Box key={col.title}>
                 <Typography sx={{ fontWeight: 700, mb: 2, fontSize: '0.95rem' }}>{col.title}</Typography>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.25 }}>
-                  {col.links.map((label) => (
-                    <MuiLink key={label} href="#" sx={linkSx}>
-                      {label}
+                  {col.links.map((item) => (
+                    <MuiLink
+                      key={item.label}
+                      href={item.href}
+                      {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                      sx={linkSx}
+                    >
+                      {item.label}
                     </MuiLink>
                   ))}
                 </Box>
@@ -137,13 +171,13 @@ export default function Footer() {
               © {currentYear} Manaja. All rights reserved.
             </Typography>
             <Box sx={{ display: 'flex', gap: 3 }}>
-              <MuiLink href="#" sx={linkSx}>
+              <MuiLink href={`${SITE_URL}/terms`} target="_blank" rel="noopener noreferrer" sx={linkSx}>
                 Terms
               </MuiLink>
-              <MuiLink href="#" sx={linkSx}>
+              <MuiLink href={`${SITE_URL}/privacy`} target="_blank" rel="noopener noreferrer" sx={linkSx}>
                 Privacy
               </MuiLink>
-              <MuiLink href="#" sx={linkSx}>
+              <MuiLink href={`${SITE_URL}/cookies`} target="_blank" rel="noopener noreferrer" sx={linkSx}>
                 Cookies
               </MuiLink>
             </Box>
