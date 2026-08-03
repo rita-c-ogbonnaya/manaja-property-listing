@@ -6,9 +6,9 @@ import './globals.css'
 const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Manaja | Find the Right Property in Nigeria',
-  description: 'Search thousands of homes, land and commercial property for sale and rent across Lagos, Abuja and every major city in Nigeria with Manaja.',
-  themeColor: '#16213E',
+  title: 'Manaja Solutions | Premium Real Estate in Nigeria',
+  description: 'Discover exclusive properties across Nigeria\'s prime locations. From luxury apartments to investment opportunities, find your perfect space with Manaja Solutions.',
+  themeColor: '#0A1628',
   icons: {
     icon: '/logo.png',
   },

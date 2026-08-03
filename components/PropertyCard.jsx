@@ -10,7 +10,12 @@ import KingBedOutlinedIcon from '@mui/icons-material/KingBedOutlined';
 import BathtubOutlinedIcon from '@mui/icons-material/BathtubOutlined';
 import SquareFootOutlinedIcon from '@mui/icons-material/SquareFootOutlined';
 
-function formatFullPrice(price) {
+function formatFullPrice(price, listingType) {
+  if (listingType === 'rent') {
+    return `₦${price.toLocaleString('en-NG')}/month`;
+  } else if (listingType === 'shortlet') {
+    return `₦${price.toLocaleString('en-NG')}/night`;
+  }
   return `₦${price.toLocaleString('en-NG')}`;
 }
 
@@ -32,21 +37,22 @@ export default function PropertyCard({ property }) {
         flexDirection: 'column',
         textDecoration: 'none',
         backgroundColor: '#fff',
-        borderRadius: '14px',
+        borderRadius: '16px',
         overflow: 'hidden',
         border: '1px solid #e7e9ee',
-        transition: 'all 0.25s ease',
+        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
         height: '100%',
+        boxShadow: '0 4px 12px rgba(16, 23, 41, 0.08)',
         '&:hover': {
-          boxShadow: '0 18px 40px rgba(16, 23, 41, 0.14)',
-          transform: 'translateY(-4px)',
-          borderColor: '#dfe2e9',
-          '& .card-image': { transform: 'scale(1.06)' },
+          boxShadow: '0 24px 48px rgba(16, 23, 41, 0.16)',
+          transform: 'translateY(-6px)',
+          borderColor: '#1A4C9E',
+          '& .card-image': { transform: 'scale(1.08)' },
         },
       }}
     >
       {/* Image */}
-      <Box sx={{ position: 'relative', overflow: 'hidden', height: 220 }}>
+      <Box sx={{ position: 'relative', overflow: 'hidden', height: 240 }}>
         <Box
           component="img"
           src={property.images[0]}
@@ -57,9 +63,27 @@ export default function PropertyCard({ property }) {
             height: '100%',
             objectFit: 'cover',
             display: 'block',
-            transition: 'transform 0.4s ease',
+            transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
           }}
         />
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 12,
+            left: 12,
+            px: 2,
+            py: 0.5,
+            borderRadius: '8px',
+            backgroundColor: 'rgba(26, 76, 158, 0.9)',
+            color: '#fff',
+            fontSize: '0.75rem',
+            fontWeight: 700,
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em',
+          }}
+        >
+          {property.listingType === 'sale' ? 'For Sale' : property.listingType === 'rent' ? 'For Rent' : 'Shortlet'}
+        </Box>
         <IconButton
           onClick={toggleLike}
           aria-label={liked ? 'Remove from saved' : 'Save property'}
@@ -67,15 +91,21 @@ export default function PropertyCard({ property }) {
             position: 'absolute',
             top: 12,
             right: 12,
-            width: 38,
-            height: 38,
-            backgroundColor: 'rgba(255, 255, 255, 0.92)',
-            '&:hover': { backgroundColor: '#fff' },
+            width: 40,
+            height: 40,
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            backdropFilter: 'blur(8px)',
+            borderRadius: '50%',
+            '&:hover': { 
+              backgroundColor: '#fff',
+              transform: 'scale(1.1)',
+            },
+            transition: 'all 0.2s ease',
           }}
           size="small"
         >
           {liked ? (
-            <FavoriteIcon sx={{ color: '#1A4C9E', fontSize: 20 }} />
+            <FavoriteIcon sx={{ color: '#E53935', fontSize: 20 }} />
           ) : (
             <FavoriteBorderIcon sx={{ color: '#16213E', fontSize: 20 }} />
           )}
@@ -84,28 +114,30 @@ export default function PropertyCard({ property }) {
 
       {/* Body */}
       <Box sx={{ p: 2.5, display: 'flex', flexDirection: 'column', flex: 1 }}>
-        <Typography sx={{ fontSize: '1.35rem', fontWeight: 800, color: '#16213E', lineHeight: 1.1 }}>
-          {formatFullPrice(property.price)}
+        <Typography sx={{ fontSize: '1.4rem', fontWeight: 800, color: '#0A1628', lineHeight: 1.1, letterSpacing: '-0.02em' }}>
+          {formatFullPrice(property.price, property.listingType)}
         </Typography>
 
         <Typography
           sx={{
             color: '#1A4C9E',
             fontWeight: 700,
-            fontSize: '0.82rem',
+            fontSize: '0.8rem',
             mt: 0.75,
+            letterSpacing: '0.03em',
+            textTransform: 'uppercase',
           }}
         >
-          {property.type} for sale
+          {property.type} • {property.listingType === 'sale' ? 'Sale' : property.listingType === 'rent' ? 'Rent' : 'Shortlet'}
         </Typography>
 
         <Typography
           sx={{
-            color: '#16213E',
-            fontWeight: 600,
-            fontSize: '1rem',
-            mt: 0.5,
-            lineHeight: 1.35,
+            color: '#1A2744',
+            fontWeight: 700,
+            fontSize: '1.05rem',
+            mt: 0.75,
+            lineHeight: 1.3,
             display: '-webkit-box',
             WebkitLineClamp: 1,
             WebkitBoxOrient: 'vertical',
@@ -115,9 +147,9 @@ export default function PropertyCard({ property }) {
           {property.title}
         </Typography>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 1, color: '#6b7280' }}>
-          <LocationOnIcon sx={{ fontSize: 16 }} />
-          <Typography sx={{ fontSize: '0.85rem' }} noWrap>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 1, color: '#5A6478' }}>
+          <LocationOnIcon sx={{ fontSize: 16, color: '#1A4C9E' }} />
+          <Typography sx={{ fontSize: '0.87rem', fontWeight: 500 }} noWrap>
             {property.location}
           </Typography>
         </Box>
@@ -129,20 +161,20 @@ export default function PropertyCard({ property }) {
             gap: 2.5,
             mt: 'auto',
             pt: 1.75,
-            borderTop: '1px solid #eef0f3',
-            color: '#4a5568',
+            borderTop: '1px solid #F0F2F5',
+            color: '#4A5568',
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.6 }}>
-            <KingBedOutlinedIcon sx={{ fontSize: 18, color: '#98a1af' }} />
+            <KingBedOutlinedIcon sx={{ fontSize: 18, color: '#8A93A3' }} />
             <Typography sx={{ fontSize: '0.85rem', fontWeight: 600 }}>{property.beds} Beds</Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.6 }}>
-            <BathtubOutlinedIcon sx={{ fontSize: 18, color: '#98a1af' }} />
+            <BathtubOutlinedIcon sx={{ fontSize: 18, color: '#8A93A3' }} />
             <Typography sx={{ fontSize: '0.85rem', fontWeight: 600 }}>{property.baths} Baths</Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.6 }}>
-            <SquareFootOutlinedIcon sx={{ fontSize: 18, color: '#98a1af' }} />
+            <SquareFootOutlinedIcon sx={{ fontSize: 18, color: '#8A93A3' }} />
             <Typography sx={{ fontSize: '0.85rem', fontWeight: 600 }}>{property.area}m²</Typography>
           </Box>
         </Box>

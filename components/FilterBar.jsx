@@ -16,10 +16,11 @@ const propertyTypes = [
 
 const controlSx = {
   backgroundColor: '#fff',
-  borderRadius: '10px',
-  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#e2e5ea' },
-  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#c9cdd6' },
+  borderRadius: '12px',
+  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#E2E5EA' },
+  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#C9CDD6' },
   '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#1A4C9E' },
+  boxShadow: '0 2px 8px rgba(10, 22, 40, 0.06)',
 };
 
 export default function FilterBar({ filters, onFilterChange }) {
@@ -28,7 +29,7 @@ export default function FilterBar({ filters, onFilterChange }) {
   };
 
   const handleReset = () =>
-    onFilterChange({ search: '', state: 'all', type: 'all', beds: 'all', location: 'all', status: 'all' });
+    onFilterChange({ search: '', state: 'all', type: 'all', beds: 'all', location: 'all', status: 'all', listingType: 'all' });
 
   return (
     <Box
@@ -41,7 +42,7 @@ export default function FilterBar({ filters, onFilterChange }) {
       }}
     >
       <TextField
-        placeholder="Search by title, area or keyword..."
+        placeholder="Search properties by name, location..."
         value={filters.search || ''}
         onChange={(e) => handleChange('search', e.target.value)}
         size="small"
@@ -50,7 +51,7 @@ export default function FilterBar({ filters, onFilterChange }) {
           input: {
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon sx={{ color: '#98a1af', fontSize: 20 }} />
+                <SearchIcon sx={{ color: '#8A93A3', fontSize: 20 }} />
               </InputAdornment>
             ),
           },
@@ -99,6 +100,18 @@ export default function FilterBar({ filters, onFilterChange }) {
         <MenuItem value="5">5+</MenuItem>
       </Select>
 
+      <Select
+        value={filters.listingType || 'all'}
+        onChange={(e) => handleChange('listingType', e.target.value)}
+        size="small"
+        sx={{ flex: 1, ...controlSx }}
+      >
+        <MenuItem value="all">All Listings</MenuItem>
+        <MenuItem value="sale">For Sale</MenuItem>
+        <MenuItem value="rent">For Rent</MenuItem>
+        <MenuItem value="shortlet">Shortlet</MenuItem>
+      </Select>
+
       <Button
         variant="outlined"
         onClick={handleReset}
@@ -106,13 +119,19 @@ export default function FilterBar({ filters, onFilterChange }) {
           color: '#1A4C9E',
           borderColor: '#1A4C9E',
           fontWeight: 700,
-          borderRadius: '10px',
+          borderRadius: '12px',
           px: 3,
           whiteSpace: 'nowrap',
-          '&:hover': { backgroundColor: '#1A4C9E', color: '#fff', borderColor: '#1A4C9E' },
+          '&:hover': { 
+            backgroundColor: '#1A4C9E', 
+            color: '#fff', 
+            borderColor: '#1A4C9E',
+            boxShadow: '0 4px 12px rgba(26, 76, 158, 0.3)',
+          },
+          transition: 'all 0.2s ease',
         }}
       >
-        Reset
+        Clear Filters
       </Button>
     </Box>
   );

@@ -12,6 +12,7 @@ import FilterBar from '@/components/FilterBar';
 import Hero from '@/components/Hero';
 import BrowseByType from '@/components/BrowseByType';
 import { properties, filterProperties, states } from '@/lib/mock-data';
+import { useLocationState } from '@/components/StateProvider';
 
 const ITEMS_PER_PAGE = 6;
 
@@ -22,36 +23,56 @@ const emptyFilters = {
   beds: 'all',
   location: 'all',
   status: 'all',
+  listingType: 'all',
 };
 
 const features = [
   {
     Icon: VerifiedUserOutlinedIcon,
-    title: 'Verified listings',
-    text: 'Every listing is screened by our team, so you only see homes that are real and available.',
+    title: 'Verified Properties',
+    text: 'Every property undergoes thorough verification, ensuring authenticity and availability for your peace of mind.',
   },
   {
     Icon: GroupsOutlinedIcon,
-    title: 'Trusted managers',
-    text: 'Connect directly with vetted property managers and developers across the country.',
+    title: 'Trusted Network',
+    text: 'Connect with accredited real estate professionals and developers across Nigeria\'s prime locations.',
   },
   {
     Icon: TuneOutlinedIcon,
-    title: 'Powerful search',
-    text: 'Filter by location, budget, property type and beds to find the right place fast.',
+    title: 'Smart Search',
+    text: 'Advanced filtering by location, price range, property type, and specifications to find your ideal space efficiently.',
   },
   {
     Icon: PaidOutlinedIcon,
-    title: 'Free for seekers',
-    text: 'Browsing, saving and enquiring on any property is completely free — no fees, ever.',
+    title: 'Zero Hidden Fees',
+    text: 'Search, save favorites, and make inquiries without any charges — premium service at no cost to you.',
   },
 ];
 
 export default function HomePage() {
+  const { listingType: globalListingType, propertyType: globalPropertyType, locationFilter: globalLocationFilter, locationStateId: globalLocationStateId } = useLocationState();
   const [filters, setFilters] = useState(emptyFilters);
   const [displayedCount, setDisplayedCount] = useState(ITEMS_PER_PAGE);
   const [filteredProperties, setFilteredProperties] = useState(properties);
   const listingsRef = useRef(null);
+
+  // Sync filters with global state
+  useEffect(() => {
+    const newFilters = { ...emptyFilters };
+    if (globalListingType && globalListingType !== 'all') {
+      newFilters.listingType = globalListingType;
+    }
+    if (globalPropertyType && globalPropertyType !== 'all') {
+      newFilters.type = globalPropertyType;
+    }
+    if (globalLocationFilter && globalLocationFilter !== 'all') {
+      newFilters.location = globalLocationFilter;
+    }
+    if (globalLocationStateId && globalLocationStateId !== 'all') {
+      newFilters.state = globalLocationStateId;
+    }
+    setFilters(newFilters);
+  }, [globalListingType, globalPropertyType, globalLocationFilter, globalLocationStateId]);
 
   useEffect(() => {
     setFilteredProperties(filterProperties(filters));
@@ -96,24 +117,24 @@ export default function HomePage() {
       <Box ref={listingsRef} component="section" sx={{ py: { xs: 6, md: 8 }, scrollMarginTop: 80 }}>
         <Container maxWidth="lg">
           <Typography sx={{ color: '#1A4C9E', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}>
-            HANDPICKED FOR YOU
+            CURATED SELECTION
           </Typography>
-          <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2rem' }, color: '#16213E', mb: 3 }}>
-            Featured properties
+          <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2rem' }, color: '#0A1628', mb: 3 }}>
+            Premium Property Listings
           </Typography>
 
           <FilterBar filters={filters} onFilterChange={setFilters} />
 
-          <Typography variant="body2" sx={{ color: '#5b6472', mb: 3 }}>
-            Showing{' '}
-            <Box component="span" sx={{ fontWeight: 700, color: '#16213E' }}>
+          <Typography variant="body2" sx={{ color: '#5A6478', mb: 3 }}>
+            Displaying{' '}
+            <Box component="span" sx={{ fontWeight: 700, color: '#0A1628' }}>
               {visibleProperties.length}
             </Box>{' '}
             of{' '}
-            <Box component="span" sx={{ fontWeight: 700, color: '#16213E' }}>
+            <Box component="span" sx={{ fontWeight: 700, color: '#0A1628' }}>
               {filteredProperties.length}
             </Box>{' '}
-            properties
+            available properties
           </Typography>
 
           {visibleProperties.length > 0 ? (
@@ -135,35 +156,40 @@ export default function HomePage() {
                   <Button
                     onClick={() => setDisplayedCount((prev) => prev + ITEMS_PER_PAGE)}
                     sx={{
-                      backgroundColor: '#16213E',
+                      backgroundColor: '#1A4C9E',
                       color: '#fff',
                       px: 4,
                       py: 1.4,
-                      borderRadius: '10px',
+                      borderRadius: '12px',
                       fontWeight: 700,
-                      boxShadow: 'none',
-                      '&:hover': { backgroundColor: '#0F1729' },
+                      boxShadow: '0 4px 12px rgba(26, 76, 158, 0.3)',
+                      '&:hover': { 
+                        backgroundColor: '#143B7A',
+                        boxShadow: '0 6px 16px rgba(26, 76, 158, 0.4)',
+                        transform: 'translateY(-1px)',
+                      },
+                      transition: 'all 0.2s ease',
                     }}
                   >
-                    Load more properties
+                    View More Properties
                   </Button>
                 </Box>
               )}
             </>
           ) : (
             <Box sx={{ textAlign: 'center', py: 8 }}>
-              <Typography variant="h6" sx={{ mb: 1, color: '#16213E', fontWeight: 700 }}>
-                No properties found
+              <Typography variant="h6" sx={{ mb: 1, color: '#0A1628', fontWeight: 700 }}>
+                No Properties Available
               </Typography>
-              <Typography variant="body2" sx={{ color: '#8a93a3', mb: 3 }}>
-                Try adjusting your filters
+              <Typography variant="body2" sx={{ color: '#8A93A3', mb: 3 }}>
+                Try adjusting your search criteria
               </Typography>
               <Button
                 variant="outlined"
                 onClick={() => setFilters(emptyFilters)}
-                sx={{ color: '#1A4C9E', borderColor: '#1A4C9E', fontWeight: 700, borderRadius: '10px' }}
+                sx={{ color: '#1A4C9E', borderColor: '#1A4C9E', fontWeight: 700, borderRadius: '12px' }}
               >
-                Reset filters
+                Clear All Filters
               </Button>
             </Box>
           )}
@@ -174,13 +200,13 @@ export default function HomePage() {
       <Box component="section" sx={{ backgroundColor: '#f6f7f9', py: { xs: 6, md: 8 } }}>
         <Container maxWidth="lg">
           <Typography sx={{ color: '#1A4C9E', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}>
-            POPULAR LOCATIONS
+            PRIME LOCATIONS
           </Typography>
-          <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2rem' }, color: '#16213E' }}>
-            Explore property by state
+          <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2rem' }, color: '#0A1628' }}>
+            Browse by State
           </Typography>
-          <Typography sx={{ color: '#5b6472', mb: 4, mt: 1 }}>
-            Discover where your next home could be, from buzzing cities to quiet neighbourhoods.
+          <Typography sx={{ color: '#5A6478', mb: 4, mt: 1 }}>
+            Explore properties across Nigeria's most sought-after states and regions.
           </Typography>
 
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 2 }}>
@@ -206,7 +232,7 @@ export default function HomePage() {
                   }}
                 >
                   <Typography sx={{ color: '#1A4C9E', fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.06em', mb: 1 }}>
-                    AVAILABLE NOW
+                    ACTIVE LISTINGS
                   </Typography>
                   <Typography sx={{ fontWeight: 800, fontSize: '2rem', color: '#16213E', lineHeight: 1 }}>
                     {count}

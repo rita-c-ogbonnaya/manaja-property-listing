@@ -10,7 +10,7 @@ import {
   Button,
   InputLabel,
 } from '@mui/material';
-import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
+import StarIcon from '@mui/icons-material/Star';
 import SearchIcon from '@mui/icons-material/Search';
 import { states } from '@/lib/mock-data';
 
@@ -24,12 +24,14 @@ const propertyTypes = [
   'Studio',
 ];
 
-const tabs = ['Buy', 'Rent', 'Shortlet', 'Joint Venture'];
+const tabs = ['Buy', 'Rent', 'Shortlet'];
 
 const fieldSx = {
   '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
   '& .MuiSelect-select': { py: 0.5, fontWeight: 600, color: '#16213E' },
   fontSize: '0.95rem',
+  '&:hover': { backgroundColor: 'rgba(26, 76, 158, 0.05)' },
+  '&.Mui-focused': { backgroundColor: 'rgba(26, 76, 158, 0.08)' },
 };
 
 function Field({ label, children }) {
@@ -59,13 +61,23 @@ export default function Hero({ filters, onFilterChange, onSearch, stats }) {
     onFilterChange({ ...filters, [field]: value });
   };
 
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    const listingTypeMap = {
+      'Buy': 'sale',
+      'Rent': 'rent',
+      'Shortlet': 'shortlet'
+    };
+    onFilterChange({ ...filters, listingType: listingTypeMap[tab] });
+  };
+
   return (
     <Box
       component="section"
       sx={{
         position: 'relative',
         background:
-          'radial-gradient(120% 120% at 85% 0%, rgba(245, 183, 12, 0.30) 0%, rgba(245, 183, 12, 0) 45%), linear-gradient(160deg, #16213E 0%, #0F1729 100%)',
+          'radial-gradient(ellipse at 50% 0%, rgba(26, 76, 158, 0.25) 0%, transparent 50%), radial-gradient(ellipse at 100% 100%, rgba(245, 183, 12, 0.15) 0%, transparent 40%), linear-gradient(135deg, #0A1628 0%, #1A2744 50%, #0F1729 100%)',
         color: '#fff',
         pt: { xs: 6, md: 9 },
         pb: { xs: 6, md: 10 },
@@ -88,8 +100,8 @@ export default function Hero({ filters, onFilterChange, onSearch, stats }) {
               fontSize: '0.85rem',
             }}
           >
-            <VerifiedUserOutlinedIcon sx={{ fontSize: 16, color: '#F5B70C' }} />
-            Nigeria&apos;s property marketplace
+            <StarIcon sx={{ fontSize: 16, color: '#F5B70C' }} />
+            Premium Real Estate Solutions
           </Box>
         </Box>
 
@@ -105,7 +117,7 @@ export default function Hero({ filters, onFilterChange, onSearch, stats }) {
             mb: 2,
           }}
         >
-          Find the right property
+          Discover Your Perfect Space
         </Typography>
         <Typography
           className="text-pretty"
@@ -118,18 +130,20 @@ export default function Hero({ filters, onFilterChange, onSearch, stats }) {
             mb: { xs: 4, md: 5 },
           }}
         >
-          Search thousands of homes, land and commercial property for sale and rent — across every major city in Nigeria.
+          Explore exclusive properties across Nigeria's finest locations. From luxury apartments to investment opportunities, find what matters most to you.
         </Typography>
 
         {/* Search Card */}
         <Box
           sx={{
-            backgroundColor: '#fff',
-            borderRadius: '16px',
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            backdropFilter: 'blur(20px)',
+            borderRadius: '20px',
             p: { xs: 2, md: 2.5 },
-            boxShadow: '0 24px 60px rgba(15, 23, 41, 0.35)',
+            boxShadow: '0 32px 80px rgba(15, 23, 41, 0.4)',
             maxWidth: 1000,
             mx: 'auto',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
           }}
         >
           {/* Tabs */}
@@ -137,7 +151,7 @@ export default function Hero({ filters, onFilterChange, onSearch, stats }) {
             {tabs.map((tab) => (
               <Box
                 key={tab}
-                onClick={() => setActiveTab(tab)}
+                onClick={() => handleTabChange(tab)}
                 role="button"
                 tabIndex={0}
                 sx={{
@@ -235,13 +249,18 @@ export default function Hero({ filters, onFilterChange, onSearch, stats }) {
                 fontWeight: 700,
                 px: 4,
                 py: 1.5,
-                borderRadius: '10px',
+                borderRadius: '12px',
                 whiteSpace: 'nowrap',
-                boxShadow: 'none',
-                '&:hover': { backgroundColor: '#143B7A' },
+                boxShadow: '0 4px 14px rgba(26, 76, 158, 0.4)',
+                '&:hover': { 
+                  backgroundColor: '#143B7A',
+                  boxShadow: '0 6px 20px rgba(26, 76, 158, 0.5)',
+                  transform: 'translateY(-1px)',
+                },
+                transition: 'all 0.2s ease',
               }}
             >
-              Search
+              Search Properties
             </Button>
           </Box>
         </Box>

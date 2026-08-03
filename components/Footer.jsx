@@ -19,28 +19,28 @@ const linkSx = {
 
 const columns = [
   {
-    title: 'Popular Property',
+    title: 'Featured Searches',
     links: [
-      { label: 'Flats for rent in Lagos', href: '/' },
-      { label: 'Houses for sale in Abuja', href: '/' },
+      { label: 'Apartments in Lagos', href: '/' },
+      { label: 'Houses in Abuja', href: '/' },
       { label: 'Land in Lekki', href: '/' },
       { label: 'Shortlets in Ikoyi', href: '/' },
     ],
   },
   {
-    title: 'Explore',
+    title: 'Quick Links',
     links: [
-      { label: 'Property managers', href: '/property-managers' },
-      { label: 'For sale', href: '/' },
-      { label: 'For rent', href: '/' },
-      { label: 'Shortlets', href: '/' },
+      { label: 'Trusted Partners', href: '/property-managers' },
+      { label: 'Properties for Sale', href: '/' },
+      { label: 'Rental Properties', href: '/' },
+      { label: 'Short-term Stays', href: '/' },
     ],
   },
   {
-    title: 'For Managers',
+    title: 'For Professionals',
     links: [
-      { label: 'Advertise your property', href: APP_URL, external: true },
-      { label: 'List a property', href: APP_URL, external: true },
+      { label: 'Partner With Us', href: APP_URL, external: true },
+      { label: 'List Your Property', href: APP_URL, external: true },
     ],
   },
 ];
@@ -51,7 +51,7 @@ export default function Footer() {
   return (
     <Box component="footer" id="contact">
       {/* List CTA band */}
-      <Box id="list" sx={{ backgroundColor: '#0F1729', color: '#fff', py: { xs: 6, md: 8 } }}>
+      <Box id="list" sx={{ backgroundColor: '#0A1628', color: '#fff', py: { xs: 6, md: 8 } }}>
         <Container maxWidth="lg">
           <Box
             sx={{
@@ -64,13 +64,13 @@ export default function Footer() {
           >
             <Box>
               <Typography sx={{ color: '#F5B70C', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}>
-                LIST WITH MANAJA
+                PARTNER WITH MANAJA
               </Typography>
               <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2rem' }, mb: 1 }}>
-                Are you a property manager or developer?
+                Property Professional or Developer?
               </Typography>
               <Typography sx={{ color: 'rgba(255,255,255,0.7)', maxWidth: 520 }}>
-                List your properties on Manaja and put them in front of thousands of serious buyers and renters every day.
+                Showcase your properties to qualified buyers and tenants actively searching in Nigeria's premium real estate market.
               </Typography>
             </Box>
             <Button
@@ -80,24 +80,29 @@ export default function Footer() {
               rel="noopener noreferrer"
               sx={{
                 backgroundColor: '#F5B70C',
-                color: '#16213E',
+                color: '#0A1628',
                 fontWeight: 800,
                 px: 4,
                 py: 1.5,
-                borderRadius: '10px',
+                borderRadius: '12px',
                 whiteSpace: 'nowrap',
-                boxShadow: 'none',
-                '&:hover': { backgroundColor: '#DBA200' },
+                boxShadow: '0 4px 14px rgba(245, 183, 12, 0.4)',
+                '&:hover': { 
+                  backgroundColor: '#DBA200',
+                  boxShadow: '0 6px 20px rgba(245, 183, 12, 0.5)',
+                  transform: 'translateY(-1px)',
+                },
+                transition: 'all 0.2s ease',
               }}
             >
-              List a property
+              List Your Property
             </Button>
           </Box>
         </Container>
       </Box>
 
       {/* Main footer */}
-      <Box sx={{ backgroundColor: '#16213E', color: '#fff', py: { xs: 5, md: 7 } }}>
+      <Box sx={{ backgroundColor: '#0A1628', color: '#fff', py: { xs: 5, md: 7 } }}>
         <Container maxWidth="lg">
           <Box
             sx={{
@@ -111,7 +116,7 @@ export default function Footer() {
                 <Logo variant="light" size={34} />
               </Box>
               <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.92rem', lineHeight: 1.7, mb: 2, maxWidth: 320 }}>
-                Manaja connects you with verified properties across Lagos, Abuja and beyond — expertly curated and intelligently matched to your needs.
+                Manaja Solutions provides access to premium real estate opportunities across Nigeria's prime locations — curated excellence for discerning clients.
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.25 }}>
                 <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, color: 'rgba(255,255,255,0.7)' }}>

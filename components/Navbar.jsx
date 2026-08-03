@@ -29,6 +29,7 @@ import TerrainOutlinedIcon from '@mui/icons-material/TerrainOutlined';
 import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Logo from '@/components/Logo';
+import { useLocationState } from '@/components/StateProvider';
 
 const APP_URL = 'https://app.manaja.solutions';
 
@@ -39,15 +40,53 @@ const propertyTypes = [
   { label: 'Commercial Property', Icon: BusinessOutlinedIcon },
 ];
 
-const locations = ['Lagos', 'Abuja', 'Kaduna', 'Oyo', 'Rivers'];
-
-const dropdownNav = [
-  { label: 'For Sale', key: 'sale' },
-  { label: 'For Rent', key: 'rent' },
-  { label: 'Shortlets', key: 'shortlet' },
+const locations = [
+  { name: 'Lagos', stateId: 'lagos' },
+  { name: 'Abuja', stateId: 'abuja' },
+  { name: 'Kaduna', stateId: 'kaduna' },
+  { name: 'Oyo', stateId: 'oyo' },
+  { name: 'Rivers', stateId: 'rivers' },
 ];
 
-function MegaMenu({ onNavigate }) {
+const dropdownNav = [
+  { label: 'For Sale', key: 'sale', listingType: 'sale' },
+  { label: 'For Rent', key: 'rent', listingType: 'rent' },
+  { label: 'Shortlets', key: 'shortlet', listingType: 'shortlet' },
+];
+
+function MegaMenu({ onNavigate, onFilterByListingType }) {
+  const { setListingType, setPropertyType, setLocationFilter, setLocationStateId } = useLocationState();
+
+  const handlePropertyTypeClick = (type) => {
+    if (onFilterByListingType) {
+      setListingType(onFilterByListingType);
+    }
+    setPropertyType(type);
+    setLocationFilter('all');
+    setLocationStateId('all');
+    onNavigate();
+  };
+
+  const handleLocationClick = (locationObj) => {
+    if (onFilterByListingType) {
+      setListingType(onFilterByListingType);
+    }
+    setPropertyType('all');
+    setLocationFilter(locationObj.name);
+    setLocationStateId(locationObj.stateId);
+    onNavigate();
+  };
+
+  const handleViewAll = () => {
+    if (onFilterByListingType) {
+      setListingType(onFilterByListingType);
+    }
+    setPropertyType('all');
+    setLocationFilter('all');
+    setLocationStateId('all');
+    onNavigate();
+  };
+
   return (
     <Box sx={{ width: 320, py: 1 }}>
       {propertyTypes.map(({ label, Icon }) => (
@@ -55,7 +94,7 @@ function MegaMenu({ onNavigate }) {
           key={label}
           component={Link}
           href="/"
-          onClick={onNavigate}
+          onClick={() => handlePropertyTypeClick(label)}
           sx={{ px: 2.5, py: 1.1, gap: 1.5, color: '#16213E' }}
         >
           <Icon sx={{ fontSize: 22, color: '#1A4C9E' }} />
@@ -78,13 +117,13 @@ function MegaMenu({ onNavigate }) {
       </Typography>
       {locations.map((loc) => (
         <ListItemButton
-          key={loc}
+          key={loc.name}
           component={Link}
           href="/"
-          onClick={onNavigate}
+          onClick={() => handleLocationClick(loc)}
           sx={{ px: 2.5, py: 0.9, color: '#4a5568' }}
         >
-          <Typography sx={{ fontWeight: 600, fontSize: '0.92rem' }}>{loc}</Typography>
+          <Typography sx={{ fontWeight: 600, fontSize: '0.92rem' }}>{loc.name}</Typography>
         </ListItemButton>
       ))}
 
@@ -92,7 +131,7 @@ function MegaMenu({ onNavigate }) {
       <ListItemButton
         component={Link}
         href="/"
-        onClick={onNavigate}
+        onClick={handleViewAll}
         sx={{ px: 2.5, py: 1, gap: 1, color: '#1A4C9E' }}
       >
         <ArrowForwardIcon sx={{ fontSize: 20 }} />
@@ -107,6 +146,7 @@ export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileExpanded, setMobileExpanded] = useState(null);
+  const { setListingType, setPropertyType, setLocationFilter } = useLocationState();
 
   const handleDrawerToggle = () => setMobileOpen((prev) => !prev);
   const closeDrawer = () => {
@@ -125,6 +165,32 @@ export default function Navbar() {
 
   const toggleMobileSection = (key) => {
     setMobileExpanded((prev) => (prev === key ? null : key));
+  };
+
+  const handleMobilePropertyTypeClick = (itemKey, type) => {
+    const listingTypeMap = {
+      'sale': 'sale',
+      'rent': 'rent',
+      'shortlet': 'shortlet'
+    };
+    setListingType(listingTypeMap[itemKey]);
+    setPropertyType(type);
+    setLocationFilter('all');
+    setLocationStateId('all');
+    closeDrawer();
+  };
+
+  const handleMobileLocationClick = (itemKey, locationObj) => {
+    const listingTypeMap = {
+      'sale': 'sale',
+      'rent': 'rent',
+      'shortlet': 'shortlet'
+    };
+    setListingType(listingTypeMap[itemKey]);
+    setPropertyType('all');
+    setLocationFilter(locationObj.name);
+    setLocationStateId(locationObj.stateId);
+    closeDrawer();
   };
 
   const drawer = (
@@ -153,7 +219,7 @@ export default function Navbar() {
                     key={label}
                     component={Link}
                     href="/"
-                    onClick={closeDrawer}
+                    onClick={() => handleMobilePropertyTypeClick(item.key, label)}
                     sx={{ pl: 3, py: 1, gap: 1.5, color: '#16213E' }}
                   >
                     <Icon sx={{ fontSize: 20, color: '#1A4C9E' }} />
@@ -175,13 +241,13 @@ export default function Navbar() {
                 </Typography>
                 {locations.map((loc) => (
                   <ListItemButton
-                    key={loc}
+                    key={loc.name}
                     component={Link}
                     href="/"
-                    onClick={closeDrawer}
+                    onClick={() => handleMobileLocationClick(item.key, loc)}
                     sx={{ pl: 3, py: 0.75, color: '#4a5568' }}
                   >
-                    <Typography sx={{ fontWeight: 600, fontSize: '0.9rem' }}>{loc}</Typography>
+                    <Typography sx={{ fontWeight: 600, fontSize: '0.9rem' }}>{loc.name}</Typography>
                   </ListItemButton>
                 ))}
               </Box>
@@ -195,9 +261,9 @@ export default function Navbar() {
             component={Link}
             href="/property-managers"
             onClick={closeDrawer}
-            sx={{ py: 1.5, color: '#16213E', fontWeight: 700 }}
+            sx={{ py: 1.5, color: '#0A1628', fontWeight: 700 }}
           >
-            <Typography sx={{ fontWeight: 700 }}>Property Managers</Typography>
+            <Typography sx={{ fontWeight: 700 }}>Trusted Partners</Typography>
           </ListItemButton>
         </ListItem>
         <Divider />
@@ -211,9 +277,19 @@ export default function Navbar() {
           target="_blank"
           rel="noopener noreferrer"
           variant="contained"
-          sx={{ backgroundColor: '#1A4C9E', fontWeight: 700, py: 1.2 }}
+          sx={{ 
+            backgroundColor: '#1A4C9E', 
+            fontWeight: 700, 
+            py: 1.3,
+            borderRadius: '12px',
+            boxShadow: '0 4px 12px rgba(26, 76, 158, 0.3)',
+            '&:hover': {
+              backgroundColor: '#143B7A',
+              boxShadow: '0 6px 16px rgba(26, 76, 158, 0.4)',
+            }
+          }}
         >
-          List a property
+          List Your Property
         </Button>
       </Box>
     </Box>
@@ -224,9 +300,11 @@ export default function Navbar() {
       position="sticky"
       elevation={0}
       sx={{
-        backgroundColor: '#fff',
-        color: '#16213E',
-        borderBottom: '1px solid #e7e9ee',
+        backgroundColor: 'rgba(255, 255, 255, 0.98)',
+        backdropFilter: 'blur(20px)',
+        color: '#0A1628',
+        borderBottom: '1px solid #E8EBF0',
+        boxShadow: '0 2px 16px rgba(10, 22, 40, 0.04)',
       }}
     >
       <Toolbar
@@ -284,13 +362,15 @@ export default function Navbar() {
                   <Paper
                     elevation={0}
                     sx={{
-                      border: '1px solid #e7e9ee',
-                      borderRadius: '12px',
-                      boxShadow: '0 12px 32px rgba(16,23,41,0.12)',
+                      border: '1px solid #E8EBF0',
+                      borderRadius: '16px',
+                      boxShadow: '0 16px 48px rgba(10, 22, 40, 0.12)',
                       overflow: 'hidden',
+                      backgroundColor: 'rgba(255, 255, 255, 0.98)',
+                      backdropFilter: 'blur(12px)',
                     }}
                   >
-                    <MegaMenu onNavigate={handleMenuClose} />
+                    <MegaMenu onNavigate={handleMenuClose} onFilterByListingType={item.listingType} />
                   </Paper>
                 </Box>
               </Popper>
@@ -302,14 +382,14 @@ export default function Navbar() {
             href="/property-managers"
             disableRipple
             sx={{
-              color: '#4a5568',
+              color: '#0A1628',
               fontWeight: 600,
               fontSize: '0.95rem',
               px: 1.5,
               '&:hover': { color: '#1A4C9E', backgroundColor: 'transparent' },
             }}
           >
-            Property Managers
+            Trusted Partners
           </Button>
 
           <Button
@@ -323,11 +403,18 @@ export default function Navbar() {
               backgroundColor: '#1A4C9E',
               fontWeight: 700,
               px: 2.5,
-              boxShadow: 'none',
-              '&:hover': { backgroundColor: '#143B7A', boxShadow: 'none' },
+              py: 1,
+              borderRadius: '10px',
+              boxShadow: '0 4px 12px rgba(26, 76, 158, 0.3)',
+              '&:hover': { 
+                backgroundColor: '#143B7A',
+                boxShadow: '0 6px 16px rgba(26, 76, 158, 0.4)',
+                transform: 'translateY(-1px)',
+              },
+              transition: 'all 0.2s ease',
             }}
           >
-            List a property
+            List Your Property
           </Button>
         </Box>
 

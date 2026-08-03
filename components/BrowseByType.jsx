@@ -29,13 +29,13 @@ export default function BrowseByType({ onSelect }) {
         <Typography
           sx={{ color: '#1A4C9E', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}
         >
-          BROWSE BY TYPE
+          PROPERTY CATEGORIES
         </Typography>
-        <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2rem' }, color: '#16213E' }}>
-          What kind of property are you after?
+        <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2rem' }, color: '#0A1628' }}>
+          Find Your Ideal Property Type
         </Typography>
-        <Typography sx={{ color: '#5b6472', mb: 4, mt: 1 }}>
-          Jump straight into the category that fits your search.
+        <Typography sx={{ color: '#5A6478', mb: 4, mt: 1 }}>
+          Select a category to explore properties that match your lifestyle and investment goals.
         </Typography>
 
         <Box
