@@ -11,13 +11,20 @@ export const metadata = {
   themeColor: '#0A1628',
   icons: {
     icon: '/logo.png',
+    shortcut: '/logo.png',
+    apple: '/logo.png',
   },
+  manifest: '/manifest.json',
 }
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${plusJakartaSans.className} bg-background`}>
-      <head />
+      <head>
+        <link rel="icon" type="image/png" href="/logo.png" />
+        <link rel="shortcut icon" type="image/png" href="/logo.png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
+      </head>
       <body className="antialiased">
         <RootContent>
           {children}
