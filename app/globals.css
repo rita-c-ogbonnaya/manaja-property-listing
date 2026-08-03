@@ -47,7 +47,9 @@
 
 :root {
   color-scheme: light;
-  --manaja-red: #E23744;
+  --manaja-blue: #1A4C9E;
+  --manaja-blue-dark: #143B7A;
+  --manaja-yellow: #F5B70C;
   --manaja-navy: #16213E;
   --manaja-navy-dark: #0F1729;
   --text-primary: #16213E;

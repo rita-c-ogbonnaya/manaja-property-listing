@@ -95,7 +95,7 @@ export default function HomePage() {
       {/* Listings */}
       <Box ref={listingsRef} component="section" sx={{ py: { xs: 6, md: 8 }, scrollMarginTop: 80 }}>
         <Container maxWidth="lg">
-          <Typography sx={{ color: '#E23744', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}>
+          <Typography sx={{ color: '#1A4C9E', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}>
             HANDPICKED FOR YOU
           </Typography>
           <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2rem' }, color: '#16213E', mb: 3 }}>
@@ -161,7 +161,7 @@ export default function HomePage() {
               <Button
                 variant="outlined"
                 onClick={() => setFilters(emptyFilters)}
-                sx={{ color: '#E23744', borderColor: '#E23744', fontWeight: 700, borderRadius: '10px' }}
+                sx={{ color: '#1A4C9E', borderColor: '#1A4C9E', fontWeight: 700, borderRadius: '10px' }}
               >
                 Reset filters
               </Button>
@@ -173,7 +173,7 @@ export default function HomePage() {
       {/* Explore by city */}
       <Box component="section" sx={{ backgroundColor: '#f6f7f9', py: { xs: 6, md: 8 } }}>
         <Container maxWidth="lg">
-          <Typography sx={{ color: '#E23744', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}>
+          <Typography sx={{ color: '#1A4C9E', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}>
             POPULAR LOCATIONS
           </Typography>
           <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2rem' }, color: '#16213E' }}>
@@ -202,10 +202,10 @@ export default function HomePage() {
                     p: 3,
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
-                    '&:hover': { borderColor: '#E23744', boxShadow: '0 12px 28px rgba(16,23,41,0.1)' },
+                    '&:hover': { borderColor: '#1A4C9E', boxShadow: '0 12px 28px rgba(16,23,41,0.1)' },
                   }}
                 >
-                  <Typography sx={{ color: '#E23744', fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.06em', mb: 1 }}>
+                  <Typography sx={{ color: '#1A4C9E', fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.06em', mb: 1 }}>
                     AVAILABLE NOW
                   </Typography>
                   <Typography sx={{ fontWeight: 800, fontSize: '2rem', color: '#16213E', lineHeight: 1 }}>
@@ -216,7 +216,7 @@ export default function HomePage() {
                       <Typography sx={{ fontWeight: 700, color: '#16213E' }}>{state.label}</Typography>
                       <Typography sx={{ color: '#8a93a3', fontSize: '0.85rem' }}>properties for sale &amp; rent</Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#E23744', fontWeight: 700, fontSize: '0.85rem' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#1A4C9E', fontWeight: 700, fontSize: '0.85rem' }}>
                       Explore <ArrowForwardIcon sx={{ fontSize: 16 }} />
                     </Box>
                   </Box>
@@ -247,14 +247,14 @@ export default function HomePage() {
                     width: 52,
                     height: 52,
                     borderRadius: '14px',
-                    backgroundColor: 'rgba(226,55,68,0.1)',
+                    backgroundColor: 'rgba(26,76,158,0.1)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     mb: 2,
                   }}
                 >
-                  <Icon sx={{ color: '#E23744', fontSize: 26 }} />
+                  <Icon sx={{ color: '#1A4C9E', fontSize: 26 }} />
                 </Box>
                 <Typography sx={{ fontWeight: 700, color: '#16213E', fontSize: '1.05rem', mb: 1 }}>{title}</Typography>
                 <Typography sx={{ color: '#5b6472', fontSize: '0.92rem', lineHeight: 1.6 }}>{text}</Typography>

@@ -19,7 +19,7 @@ const controlSx = {
   borderRadius: '10px',
   '& .MuiOutlinedInput-notchedOutline': { borderColor: '#e2e5ea' },
   '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#c9cdd6' },
-  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#E23744' },
+  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#1A4C9E' },
 };
 
 export default function FilterBar({ filters, onFilterChange }) {
@@ -46,12 +46,14 @@ export default function FilterBar({ filters, onFilterChange }) {
         onChange={(e) => handleChange('search', e.target.value)}
         size="small"
         sx={{ flex: { xs: 1, md: 2 }, '& .MuiOutlinedInput-root': controlSx }}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon sx={{ color: '#98a1af', fontSize: 20 }} />
-            </InputAdornment>
-          ),
+        slotProps={{
+          input: {
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon sx={{ color: '#98a1af', fontSize: 20 }} />
+              </InputAdornment>
+            ),
+          },
         }}
       />
 
@@ -101,13 +103,13 @@ export default function FilterBar({ filters, onFilterChange }) {
         variant="outlined"
         onClick={handleReset}
         sx={{
-          color: '#E23744',
-          borderColor: '#E23744',
+          color: '#1A4C9E',
+          borderColor: '#1A4C9E',
           fontWeight: 700,
           borderRadius: '10px',
           px: 3,
           whiteSpace: 'nowrap',
-          '&:hover': { backgroundColor: '#E23744', color: '#fff', borderColor: '#E23744' },
+          '&:hover': { backgroundColor: '#1A4C9E', color: '#fff', borderColor: '#1A4C9E' },
         }}
       >
         Reset
