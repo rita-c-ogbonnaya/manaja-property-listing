@@ -5,13 +5,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import { states } from '@/lib/mock-data';
 
 const propertyTypes = [
-  'Apartment',
-  'Townhouse',
-  'Detached House',
-  'Semi-Detached',
-  'Penthouse',
-  'Mansion',
-  'Studio',
+  'Flat/Apartment',
+  'Duplex',
+  'Land',
+  'Commercial property',
+  'Event center/Venue',
 ];
 
 const controlSx = {
@@ -29,7 +27,7 @@ export default function FilterBar({ filters, onFilterChange }) {
   };
 
   const handleReset = () =>
-    onFilterChange({ search: '', state: 'all', type: 'all', beds: 'all', location: 'all', status: 'all', listingType: 'all' });
+    onFilterChange({ search: '', state: 'all', type: 'all', beds: 'all', location: 'all', status: 'all', property_status: 'all' });
 
   return (
     <Box
@@ -101,15 +99,14 @@ export default function FilterBar({ filters, onFilterChange }) {
       </Select>
 
       <Select
-        value={filters.listingType || 'all'}
-        onChange={(e) => handleChange('listingType', e.target.value)}
+        value={filters.property_status || 'all'}
+        onChange={(e) => handleChange('property_status', e.target.value)}
         size="small"
         sx={{ flex: 1, ...controlSx }}
       >
         <MenuItem value="all">All Listings</MenuItem>
         <MenuItem value="sale">For Sale</MenuItem>
         <MenuItem value="rent">For Rent</MenuItem>
-        <MenuItem value="shortlet">Shortlet</MenuItem>
       </Select>
 
       <Button

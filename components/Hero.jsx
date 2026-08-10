@@ -15,16 +15,14 @@ import SearchIcon from '@mui/icons-material/Search';
 import { states } from '@/lib/mock-data';
 
 const propertyTypes = [
-  'Apartment',
-  'Townhouse',
-  'Detached House',
-  'Semi-Detached',
-  'Penthouse',
-  'Mansion',
-  'Studio',
+  'Flat/Apartment',
+  'Duplex',
+  'Land',
+  'Commercial property',
+  'Event center/Venue',
 ];
 
-const tabs = ['Buy', 'Rent', 'Shortlet'];
+const tabs = ['Buy', 'Rent'];
 
 const fieldSx = {
   '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
@@ -63,12 +61,11 @@ export default function Hero({ filters, onFilterChange, onSearch, stats }) {
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-    const listingTypeMap = {
+    const propertyStatusMap = {
       'Buy': 'sale',
       'Rent': 'rent',
-      'Shortlet': 'shortlet'
     };
-    onFilterChange({ ...filters, listingType: listingTypeMap[tab] });
+    onFilterChange({ ...filters, property_status: propertyStatusMap[tab] });
   };
 
   return (

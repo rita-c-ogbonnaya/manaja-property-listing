@@ -1,4 +1,3 @@
-// app/page.jsx
 
 'use client';
 
@@ -13,7 +12,8 @@ import PropertyCard from '@/components/PropertyCard';
 import FilterBar from '@/components/FilterBar';
 import Hero from '@/components/Hero';
 import BrowseByType from '@/components/BrowseByType';
-import { states, properties as mockProperties, filterProperties } from '@/lib/mock-data';
+import { states } from '@/lib/mock-data';
+import { getListings } from '@/lib/api-service';
 import { useLocationState } from '@/components/StateProvider';
 
 const ITEMS_PER_PAGE = 6;
@@ -25,7 +25,7 @@ const emptyFilters = {
   beds: 'all',
   location: 'all',
   status: 'all',
-  listingType: 'all',
+  property_status: 'all',
 };
 
 const features = [
@@ -71,7 +71,7 @@ export default function HomePage() {
   useEffect(() => {
     const newFilters = { ...emptyFilters };
     if (globalListingType && globalListingType !== 'all') {
-      newFilters.listingType = globalListingType;
+      newFilters.property_status = globalListingType;
     }
     if (globalPropertyType && globalPropertyType !== 'all') {
       newFilters.type = globalPropertyType;
@@ -85,29 +85,41 @@ export default function HomePage() {
     setFilters(newFilters);
   }, [globalListingType, globalPropertyType, globalLocationFilter, globalLocationStateId]);
 
-  // Load properties (mock data for now)
+  // Load properties from API
   useEffect(() => {
-    setAllProperties(mockProperties);
-    setLoading(false);
-  }, []);
+    const fetchProperties = async () => {
+      try {
+        setLoading(true);
+        const data = await getListings(filters);
+        setAllProperties(data);
+        setFilteredProperties(data);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching properties:', err);
+        setError('Failed to load properties. Please try again later.');
+        setAllProperties([]);
+        setFilteredProperties([]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  // Apply filters whenever filters or allProperties change
+    fetchProperties();
+  }, [filters]);
+
+  // Update displayed count when filtered properties change
   useEffect(() => {
-    const filtered = filterProperties(filters);
-    setFilteredProperties(filtered);
     setDisplayedCount(ITEMS_PER_PAGE);
-  }, [filters, allProperties]);
+  }, [filteredProperties]);
 
   const stats = useMemo(() => {
-    const areas = new Set(mockProperties.map((p) => p.location.split(',')[0].trim()));
-    const managers = new Set(mockProperties.map((p) => p.manager.name));
+    const areas = new Set(allProperties.map((p) => p.address?.split(',')[0]?.trim() || 'Unknown'));
     return [
-      { value: `${mockProperties.length}+`, label: 'Active listings' },
-      { value: `${managers.size}+`, label: 'Property managers' },
+      { value: `${allProperties.length}+`, label: 'Active listings' },
       { value: `${areas.size}+`, label: 'Areas covered' },
       { value: `${states.length}`, label: 'States covered' },
     ];
-  }, []);
+  }, [allProperties]);
 
   const visibleProperties = filteredProperties.slice(0, displayedCount);
   const hasMore = displayedCount < filteredProperties.length;
@@ -251,7 +263,7 @@ export default function HomePage() {
 
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 2 }}>
             {states.map((state) => {
-              const count = mockProperties.filter((p) => p.state === state.id).length;
+              const count = allProperties.filter((p) => p.state === state.id).length;
               return (
                 <Box
                   key={state.id}

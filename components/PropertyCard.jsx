@@ -10,13 +10,11 @@ import KingBedOutlinedIcon from '@mui/icons-material/KingBedOutlined';
 import BathtubOutlinedIcon from '@mui/icons-material/BathtubOutlined';
 import SquareFootOutlinedIcon from '@mui/icons-material/SquareFootOutlined';
 
-function formatFullPrice(price, listingType) {
-  if (listingType === 'rent') {
-    return `₦${price.toLocaleString('en-NG')}/month`;
-  } else if (listingType === 'shortlet') {
-    return `₦${price.toLocaleString('en-NG')}/night`;
+function formatFullPrice(price, propertyStatus) {
+  if (propertyStatus === 'rent') {
+    return `₦${Number(price).toLocaleString('en-NG')}/month`;
   }
-  return `₦${price.toLocaleString('en-NG')}`;
+  return `₦${Number(price).toLocaleString('en-NG')}`;
 }
 
 export default function PropertyCard({ property }) {
@@ -55,8 +53,8 @@ export default function PropertyCard({ property }) {
       <Box sx={{ position: 'relative', overflow: 'hidden', height: 240 }}>
         <Box
           component="img"
-          src={property.images[0]}
-          alt={property.title}
+          src={property.property_interior_images?.[0] || property.property_exterior_images?.[0] || '/placeholder-property.jpg'}
+          alt={property.name}
           className="card-image"
           sx={{
             width: '100%',
@@ -82,7 +80,7 @@ export default function PropertyCard({ property }) {
             letterSpacing: '0.05em',
           }}
         >
-          {property.listingType === 'sale' ? 'For Sale' : property.listingType === 'rent' ? 'For Rent' : 'Shortlet'}
+          {property.property_status === 'sale' ? 'For Sale' : 'For Rent'}
         </Box>
         <IconButton
           onClick={toggleLike}
@@ -115,7 +113,7 @@ export default function PropertyCard({ property }) {
       {/* Body */}
       <Box sx={{ p: 2.5, display: 'flex', flexDirection: 'column', flex: 1 }}>
         <Typography sx={{ fontSize: '1.4rem', fontWeight: 800, color: '#0A1628', lineHeight: 1.1, letterSpacing: '-0.02em' }}>
-          {formatFullPrice(property.price, property.listingType)}
+          {formatFullPrice(property.price, property.property_status)}
         </Typography>
 
         <Typography
@@ -128,7 +126,7 @@ export default function PropertyCard({ property }) {
             textTransform: 'uppercase',
           }}
         >
-          {property.type} • {property.listingType === 'sale' ? 'Sale' : property.listingType === 'rent' ? 'Rent' : 'Shortlet'}
+          {property.property_type} • {property.property_status === 'sale' ? 'Sale' : 'Rent'}
         </Typography>
 
         <Typography
@@ -144,13 +142,13 @@ export default function PropertyCard({ property }) {
             overflow: 'hidden',
           }}
         >
-          {property.title}
+          {property.name}
         </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 1, color: '#5A6478' }}>
           <LocationOnIcon sx={{ fontSize: 16, color: '#1A4C9E' }} />
           <Typography sx={{ fontSize: '0.87rem', fontWeight: 500 }} noWrap>
-            {property.location}
+            {property.address}
           </Typography>
         </Box>
 
@@ -167,15 +165,11 @@ export default function PropertyCard({ property }) {
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.6 }}>
             <KingBedOutlinedIcon sx={{ fontSize: 18, color: '#8A93A3' }} />
-            <Typography sx={{ fontSize: '0.85rem', fontWeight: 600 }}>{property.beds} Beds</Typography>
+            <Typography sx={{ fontSize: '0.85rem', fontWeight: 600 }}>{property.bedrooms} Beds</Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.6 }}>
             <BathtubOutlinedIcon sx={{ fontSize: 18, color: '#8A93A3' }} />
-            <Typography sx={{ fontSize: '0.85rem', fontWeight: 600 }}>{property.baths} Baths</Typography>
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.6 }}>
-            <SquareFootOutlinedIcon sx={{ fontSize: 18, color: '#8A93A3' }} />
-            <Typography sx={{ fontSize: '0.85rem', fontWeight: 600 }}>{property.area}m²</Typography>
+            <Typography sx={{ fontSize: '0.85rem', fontWeight: 600 }}>{property.bathrooms} Baths</Typography>
           </Box>
         </Box>
       </Box>

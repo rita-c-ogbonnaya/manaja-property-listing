@@ -7,20 +7,14 @@ import VillaIcon from '@mui/icons-material/Villa';
 import HolidayVillageIcon from '@mui/icons-material/HolidayVillage';
 import DomainIcon from '@mui/icons-material/Domain';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
-import { properties } from '@/lib/mock-data';
 
 const categories = [
-  { type: 'Apartment', label: 'Apartments', Icon: ApartmentIcon },
-  { type: 'Detached House', label: 'Detached Houses', Icon: HouseIcon },
-  { type: 'Townhouse', label: 'Townhouses', Icon: HolidayVillageIcon },
-  { type: 'Penthouse', label: 'Penthouses', Icon: DomainIcon },
-  { type: 'Mansion', label: 'Mansions', Icon: VillaIcon },
-  { type: 'Studio', label: 'Studios', Icon: MeetingRoomIcon },
+  { type: 'Flat/Apartment', label: 'Apartments', Icon: ApartmentIcon },
+  { type: 'Duplex', label: 'Duplex', Icon: HolidayVillageIcon },
+  { type: 'Land', label: 'Land', Icon: DomainIcon },
+  { type: 'Commercial property', label: 'Commercial', Icon: MeetingRoomIcon },
+  { type: 'Event center/Venue', label: 'Event Centers', Icon: VillaIcon },
 ];
-
-function countFor(type) {
-  return properties.filter((p) => p.type === type).length;
-}
 
 export default function BrowseByType({ onSelect }) {
   return (
@@ -83,9 +77,6 @@ export default function BrowseByType({ onSelect }) {
                 <Icon sx={{ color: '#1A4C9E', fontSize: 24 }} />
               </Box>
               <Typography sx={{ fontWeight: 700, color: '#16213E', fontSize: '1rem' }}>{label}</Typography>
-              <Typography sx={{ color: '#8a93a3', fontSize: '0.85rem', mt: 0.25 }}>
-                {countFor(type)} listings
-              </Typography>
             </Box>
           ))}
         </Box>
