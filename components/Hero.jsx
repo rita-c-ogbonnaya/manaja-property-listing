@@ -101,7 +101,7 @@ export default function Hero({ filters, onFilterChange, onSearch, stats }) {
             }}
           >
             <StarIcon sx={{ fontSize: 16, color: '#F5B70C' }} />
-            Premium Real Estate Solutions
+            Premium and Verified Real Estate Solutions
           </Box>
         </Box>
 
