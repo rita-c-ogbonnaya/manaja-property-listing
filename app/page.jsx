@@ -120,7 +120,7 @@ export default function HomePage() {
             CURATED SELECTION
           </Typography>
           <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2rem' }, color: '#0A1628', mb: 3 }}>
-            Premium Property Listings
+            Premium and Verified Property Listings
           </Typography>
 
           <FilterBar filters={filters} onFilterChange={setFilters} />
