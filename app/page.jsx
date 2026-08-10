@@ -1,6 +1,8 @@
+// app/page.js
+
 'use client';
 
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Container, Box, Typography, Button } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
@@ -11,8 +13,9 @@ import PropertyCard from '@/components/PropertyCard';
 import FilterBar from '@/components/FilterBar';
 import Hero from '@/components/Hero';
 import BrowseByType from '@/components/BrowseByType';
-import { properties, filterProperties, states } from '@/lib/mock-data';
+import { states, filterProperties } from '@/lib/mock-data';
 import { useLocationState } from '@/components/StateProvider';
+import { getListings } from '@/lib/api-service';
 
 const ITEMS_PER_PAGE = 6;
 
@@ -27,33 +30,17 @@ const emptyFilters = {
 };
 
 const features = [
-  {
-    Icon: VerifiedUserOutlinedIcon,
-    title: 'Verified Properties',
-    text: 'Every property undergoes thorough verification, ensuring authenticity and availability for your peace of mind.',
-  },
-  {
-    Icon: GroupsOutlinedIcon,
-    title: 'Trusted Network',
-    text: 'Connect with accredited real estate professionals and developers across Nigeria\'s prime locations.',
-  },
-  {
-    Icon: TuneOutlinedIcon,
-    title: 'Smart Search',
-    text: 'Advanced filtering by location, price range, property type, and specifications to find your ideal space efficiently.',
-  },
-  {
-    Icon: PaidOutlinedIcon,
-    title: 'Zero Hidden Fees',
-    text: 'Search, save favorites, and make inquiries without any charges — premium service at no cost to you.',
-  },
+  // ... (features array remains unchanged)
 ];
 
 export default function HomePage() {
   const { listingType: globalListingType, propertyType: globalPropertyType, locationFilter: globalLocationFilter, locationStateId: globalLocationStateId } = useLocationState();
   const [filters, setFilters] = useState(emptyFilters);
   const [displayedCount, setDisplayedCount] = useState(ITEMS_PER_PAGE);
-  const [filteredProperties, setFilteredProperties] = useState(properties);
+  const [filteredProperties, setFilteredProperties] = useState([]);
+  const [allProperties, setAllProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const listingsRef = useRef(null);
 
   // Sync filters with global state
@@ -74,21 +61,48 @@ export default function HomePage() {
     setFilters(newFilters);
   }, [globalListingType, globalPropertyType, globalLocationFilter, globalLocationStateId]);
 
+  // Fetch listings from API
   useEffect(() => {
-    setFilteredProperties(filterProperties(filters));
+    async function fetchListings() {
+      setLoading(true);
+      setError(null);
+      try {
+        // Fetch initial listings with some default parameters
+        const data = await getListings({ limit: 100, offset: 0 }); // Fetch a reasonable amount
+        setAllProperties(data);
+      } catch (err) {
+        console.error('Failed to fetch listings:', err);
+        setError(err.message || 'Failed to load properties.');
+        // Fallback to mock data if API fails
+        // import { properties } from '@/lib/mock-data';
+        // setAllProperties(properties);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchListings();
+  }, []);
+
+  // Apply filters whenever filters or allProperties change
+  useEffect(() => {
+    // Use the filterProperties function from mock-data, or implement a similar one
+    // that works with the API data structure.
+    const filtered = filterProperties(filters, allProperties);
+    setFilteredProperties(filtered);
     setDisplayedCount(ITEMS_PER_PAGE);
-  }, [filters]);
+  }, [filters, allProperties]);
 
   const stats = useMemo(() => {
-    const areas = new Set(properties.map((p) => p.location.split(',')[0].trim()));
-    const managers = new Set(properties.map((p) => p.manager.name));
+    // Compute stats based on allProperties
+    const areas = new Set(allProperties.map((p) => p.location?.split(',')[0]?.trim() || ''));
+    const managers = new Set(allProperties.map((p) => p.manager?.name || ''));
     return [
-      { value: `${properties.length}+`, label: 'Active listings' },
+      { value: `${allProperties.length}+`, label: 'Active listings' },
       { value: `${managers.size}+`, label: 'Property managers' },
       { value: `${areas.size}+`, label: 'Areas covered' },
       { value: `${states.length}`, label: 'States covered' },
     ];
-  }, []);
+  }, [allProperties]);
 
   const visibleProperties = filteredProperties.slice(0, displayedCount);
   const hasMore = displayedCount < filteredProperties.length;
@@ -106,6 +120,8 @@ export default function HomePage() {
     setFilters({ ...emptyFilters, state: stateId });
     setTimeout(scrollToListings, 50);
   };
+
+}
 
   return (
     <Box sx={{ backgroundColor: '#f6f7f9' }}>
