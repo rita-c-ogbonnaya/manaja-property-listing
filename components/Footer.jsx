@@ -231,7 +231,7 @@ export default function Footer() {
                 }}
               >
                 {/* Email */}
-                <Box
+                {/* <Box
                   sx={{
                     display: 'flex',
                     alignItems: 'flex-start',
@@ -255,10 +255,10 @@ export default function Footer() {
                   >
                     hello@manaja.solutions
                   </MuiLink>
-                </Box>
+                </Box> */}
 
                 {/* Phone */}
-                <Box
+                {/* <Box
                   sx={{
                     display: 'flex',
                     alignItems: 'flex-start',
@@ -284,7 +284,7 @@ export default function Footer() {
                   </Typography>
                 </Box>
               </Box>
-            </Box>
+            </Box> */}
 
             {/* Footer Columns */}
             {columns.map((col) => (
