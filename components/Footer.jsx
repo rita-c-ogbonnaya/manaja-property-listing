@@ -334,117 +334,70 @@ export default function Footer() {
             }}
           />
 
-         
-{/* Footer Bottom */}
-<Box
-  sx={{
-    display: 'grid',
-    gridTemplateColumns: {
-      xs: '1fr',
-      md: '1fr auto 1fr',
-    },
-    alignItems: 'center',
-    gap: { xs: 2, md: 3 },
-  }}
->
-  {/* Copyright */}
-  <Typography
-    sx={{
-      color: 'rgba(255,255,255,0.55)',
-      fontSize: '0.85rem',
-      textAlign: {
-        xs: 'left',
-        md: 'left',
-      },
-    }}
-  >
-    © {currentYear} Manaja Solution Limited. All rights reserved.
-  </Typography>
-
-  {/* Contact Information */}
-  <Box
-    sx={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexWrap: 'wrap',
-      gap: { xs: 1.5, sm: 2.5 },
-    }}
-  >
-    {/* Email */}
-    <MuiLink
-      href="mailto:hello@manaja.solutions"
-      sx={{
-        ...linkSx,
-        display: 'flex',
-        alignItems: 'center',
-        gap: 0.75,
-        fontSize: '0.85rem',
-      }}
-    >
-      <MailOutlineIcon sx={{ fontSize: 16 }} />
-      hello@manaja.solutions
-    </MuiLink>
-
-    {/* Phone */}
-    <Typography
-      sx={{
-        color: 'rgba(255,255,255,0.7)',
-        fontSize: '0.85rem',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 0.75,
-        whiteSpace: 'nowrap',
-      }}
-    >
-      <LocalPhoneOutlinedIcon sx={{ fontSize: 16 }} />
-      +234 (814) 694-6985
-      {'  |  '}
-      +250 (793) 149-988
-    </Typography>
-  </Box>
-
-  {/* Legal Links */}
-  <Box
-    sx={{
-      display: 'flex',
-      justifyContent: {
-        xs: 'flex-start',
-        md: 'flex-end',
-      },
-      gap: 3,
-    }}
-  >
-    <MuiLink
-      href={`${SITE_URL}/terms`}
-      target="_blank"
-      rel="noopener noreferrer"
-      sx={linkSx}
-    >
-      Terms
-    </MuiLink>
-
-    <MuiLink
-      href={`${SITE_URL}/privacy`}
-      target="_blank"
-      rel="noopener noreferrer"
-      sx={linkSx}
-    >
-      Privacy
-    </MuiLink>
-
-    <MuiLink
-      href={`${SITE_URL}/cookies`}
-      target="_blank"
-      rel="noopener noreferrer"
-      sx={linkSx}
-    >
-      Cookies
-    </MuiLink>
-  </Box>
-</Box>
+          {/* Footer Bottom */}
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: {
+                xs: 'column',
+                sm: 'row',
+              },
+              justifyContent: 'space-between',
+              alignItems: {
+                xs: 'flex-start',
+                sm: 'center',
+              },
+              gap: 1.5,
+            }}
+          >
+            <Typography
+              sx={{
+                color: 'rgba(255,255,255,0.55)',
+                fontSize: '0.85rem',
+              }}
+            >
+              © {currentYear} Manaja Solution Limited. All rights reserved.
+            </Typography>
 
 
+
+
+{/* Contact Information */} <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: { xs: 1.5, sm: 2.5 }, }} > {/* Email */} <MuiLink href="mailto:hello@manaja.solutions" sx={{ ...linkSx, display: 'flex', alignItems: 'center', gap: 0.75, fontSize: '0.85rem', }} > <MailOutlineIcon sx={{ fontSize: 16 }} /> hello@manaja.solutions </MuiLink> {/* Phone */} <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: 0.75, whiteSpace: 'nowrap', }} > <LocalPhoneOutlinedIcon sx={{ fontSize: 16 }} /> +234 (814) 694-6985 {' | '} +250 (793) 149-988 </Typography> </Box>
+            
+
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 3,
+              }}
+            >
+              <MuiLink
+                href={`${SITE_URL}/terms`}
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={linkSx}
+              >
+                Terms
+              </MuiLink>
+
+              <MuiLink
+                href={`${SITE_URL}/privacy`}
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={linkSx}
+              >
+                Privacy
+              </MuiLink>
+
+              <MuiLink
+                href={`${SITE_URL}/cookies`}
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={linkSx}
+              >
+                Cookies
+              </MuiLink>
+            </Box>
           </Box>
         </Container>
       </Box>
