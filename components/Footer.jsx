@@ -223,13 +223,13 @@ export default function Footer() {
                 curated excellence for discerning clients.
               </Typography>
 
-              <Box
+              {/* <Box
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
                   gap: 1.25,
                 }}
-              >
+              > */}
                 {/* Email */}
                 {/* <Box
                   sx={{
