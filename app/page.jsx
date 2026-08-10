@@ -1,8 +1,8 @@
-// app/page.js
+// app/page.jsx
 
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { Container, Box, Typography, Button } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
@@ -13,9 +13,8 @@ import PropertyCard from '@/components/PropertyCard';
 import FilterBar from '@/components/FilterBar';
 import Hero from '@/components/Hero';
 import BrowseByType from '@/components/BrowseByType';
-import { states, filterProperties } from '@/lib/mock-data';
+import { states, properties as mockProperties, filterProperties } from '@/lib/mock-data';
 import { useLocationState } from '@/components/StateProvider';
-import { getListings } from '@/lib/api-service';
 
 const ITEMS_PER_PAGE = 6;
 
@@ -30,11 +29,36 @@ const emptyFilters = {
 };
 
 const features = [
-  // ... (features array remains unchanged)
+  {
+    Icon: VerifiedUserOutlinedIcon,
+    title: 'Verified Properties',
+    text: 'Every property undergoes thorough verification, ensuring authenticity and availability for your peace of mind.',
+  },
+  {
+    Icon: GroupsOutlinedIcon,
+    title: 'Trusted Network',
+    text: 'Connect with accredited real estate professionals and developers across Nigeria\'s prime locations.',
+  },
+  {
+    Icon: TuneOutlinedIcon,
+    title: 'Smart Search',
+    text: 'Advanced filtering by location, price range, property type, and specifications to find your ideal space efficiently.',
+  },
+  {
+    Icon: PaidOutlinedIcon,
+    title: 'Zero Hidden Fees',
+    text: 'Search, save favorites, and make inquiries without any charges — premium service at no cost to you.',
+  },
 ];
 
 export default function HomePage() {
-  const { listingType: globalListingType, propertyType: globalPropertyType, locationFilter: globalLocationFilter, locationStateId: globalLocationStateId } = useLocationState();
+  const { 
+    listingType: globalListingType, 
+    propertyType: globalPropertyType, 
+    locationFilter: globalLocationFilter, 
+    locationStateId: globalLocationStateId 
+  } = useLocationState();
+  
   const [filters, setFilters] = useState(emptyFilters);
   const [displayedCount, setDisplayedCount] = useState(ITEMS_PER_PAGE);
   const [filteredProperties, setFilteredProperties] = useState([]);
@@ -61,48 +85,29 @@ export default function HomePage() {
     setFilters(newFilters);
   }, [globalListingType, globalPropertyType, globalLocationFilter, globalLocationStateId]);
 
-  // Fetch listings from API
+  // Load properties (mock data for now)
   useEffect(() => {
-    async function fetchListings() {
-      setLoading(true);
-      setError(null);
-      try {
-        // Fetch initial listings with some default parameters
-        const data = await getListings({ limit: 100, offset: 0 }); // Fetch a reasonable amount
-        setAllProperties(data);
-      } catch (err) {
-        console.error('Failed to fetch listings:', err);
-        setError(err.message || 'Failed to load properties.');
-        // Fallback to mock data if API fails
-        // import { properties } from '@/lib/mock-data';
-        // setAllProperties(properties);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchListings();
+    setAllProperties(mockProperties);
+    setLoading(false);
   }, []);
 
   // Apply filters whenever filters or allProperties change
   useEffect(() => {
-    // Use the filterProperties function from mock-data, or implement a similar one
-    // that works with the API data structure.
-    const filtered = filterProperties(filters, allProperties);
+    const filtered = filterProperties(filters);
     setFilteredProperties(filtered);
     setDisplayedCount(ITEMS_PER_PAGE);
   }, [filters, allProperties]);
 
   const stats = useMemo(() => {
-    // Compute stats based on allProperties
-    const areas = new Set(allProperties.map((p) => p.location?.split(',')[0]?.trim() || ''));
-    const managers = new Set(allProperties.map((p) => p.manager?.name || ''));
+    const areas = new Set(mockProperties.map((p) => p.location.split(',')[0].trim()));
+    const managers = new Set(mockProperties.map((p) => p.manager.name));
     return [
-      { value: `${allProperties.length}+`, label: 'Active listings' },
+      { value: `${mockProperties.length}+`, label: 'Active listings' },
       { value: `${managers.size}+`, label: 'Property managers' },
       { value: `${areas.size}+`, label: 'Areas covered' },
       { value: `${states.length}`, label: 'States covered' },
     ];
-  }, [allProperties]);
+  }, []);
 
   const visibleProperties = filteredProperties.slice(0, displayedCount);
   const hasMore = displayedCount < filteredProperties.length;
@@ -121,11 +126,30 @@ export default function HomePage() {
     setTimeout(scrollToListings, 50);
   };
 
-}
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+        <Typography>Loading properties...</Typography>
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+        <Typography color="error">{error}</Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ backgroundColor: '#f6f7f9' }}>
-      <Hero filters={filters} onFilterChange={setFilters} onSearch={scrollToListings} stats={stats} />
+      <Hero 
+        filters={filters} 
+        onFilterChange={setFilters} 
+        onSearch={scrollToListings} 
+        stats={stats} 
+      />
 
       <BrowseByType onSelect={handleCategorySelect} />
 
@@ -227,7 +251,7 @@ export default function HomePage() {
 
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 2 }}>
             {states.map((state) => {
-              const count = properties.filter((p) => p.state === state.id).length;
+              const count = mockProperties.filter((p) => p.state === state.id).length;
               return (
                 <Box
                   key={state.id}
