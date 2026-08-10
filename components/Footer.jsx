@@ -21,10 +21,9 @@ const columns = [
   {
     title: 'Featured Searches',
     links: [
-      { label: 'Apartments in Lagos', href: '/' },
-      { label: 'Houses in Abuja', href: '/' },
-      { label: 'Land in Lekki', href: '/' },
-      { label: 'Shortlets in Ikoyi', href: '/' },
+      { label: 'About Us', href: 'https://www.manaja.solutions/about' },
+      { label: 'Our Services', href: 'https://www.manaja.solutions/modules' },
+      { label: 'Contact Us', href: 'https://www.manaja.solutions/contact' },
     ],
   },
   {
