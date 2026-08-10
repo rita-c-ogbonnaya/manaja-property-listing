@@ -283,8 +283,8 @@ export default function Footer() {
                     +250 (793) 149-988
                   </Typography>
                 </Box>
-              </Box>
-            </Box> */}
+              </Box>*/}
+            </Box> 
 
             {/* Footer Columns */}
             {columns.map((col) => (
