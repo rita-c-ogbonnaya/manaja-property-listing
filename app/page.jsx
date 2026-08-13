@@ -125,6 +125,7 @@ export default function HomePage() {
         setError(null);
       } catch (err) {
         console.error('Error fetching properties:', err);
+        console.error('Error details:', err.message, err.stack);
         setError('Failed to load properties. Please try again later.');
         setAllProperties([]);
         setFilteredProperties([]);
