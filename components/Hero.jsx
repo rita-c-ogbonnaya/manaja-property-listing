@@ -12,7 +12,6 @@ import {
 } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import SearchIcon from '@mui/icons-material/Search';
-import { states } from '@/lib/mock-data';
 
 const propertyTypes = [
   'Flat/Apartment',
@@ -52,7 +51,7 @@ function Field({ label, children }) {
   );
 }
 
-export default function Hero({ filters, onFilterChange, onSearch, stats }) {
+export default function Hero({ filters, onFilterChange, onSearch, stats, states = [] }) {
   const [activeTab, setActiveTab] = useState('Buy');
 
   const handleChange = (field, value) => {
@@ -189,11 +188,15 @@ export default function Hero({ filters, onFilterChange, onSearch, stats }) {
                 sx={fieldSx}
               >
                 <MenuItem value="all">Any location</MenuItem>
-                {states.map((s) => (
-                  <MenuItem key={s.id} value={s.id}>
-                    {s.label}
-                  </MenuItem>
-                ))}
+                {states.length > 0 ? (
+                  states.map((s) => (
+                    <MenuItem key={s.id} value={s.label}>
+                      {s.label}
+                    </MenuItem>
+                  ))
+                ) : (
+                  <MenuItem disabled>No states available</MenuItem>
+                )}
               </Select>
             </Field>
 

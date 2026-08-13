@@ -12,7 +12,6 @@ import PropertyCard from '@/components/PropertyCard';
 import FilterBar from '@/components/FilterBar';
 import Hero from '@/components/Hero';
 import BrowseByType from '@/components/BrowseByType';
-import { states } from '@/lib/mock-data';
 import { getListings } from '@/lib/api-service';
 import { useLocationState } from '@/components/StateProvider';
 
@@ -67,6 +66,7 @@ export default function HomePage() {
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [totalProperties, setTotalProperties] = useState(0);
+  const [states, setStates] = useState([]);
   const listingsRef = useRef(null);
 
   // Sync filters with global state
@@ -109,6 +109,14 @@ export default function HomePage() {
         setTotalProperties(total);
         setHasMore(properties.length < total);
         setOffset(0);
+        
+        // Extract unique states from properties for state filtering
+        const uniqueStates = [...new Set(properties.map((p) => p.state).filter(Boolean))].map((state, index) => ({
+          id: state.toLowerCase().replace(/\s+/g, '-'),
+          label: state
+        }));
+        setStates(uniqueStates);
+        
         setError(null);
       } catch (err) {
         console.error('Error fetching properties:', err);
@@ -127,10 +135,11 @@ export default function HomePage() {
 
   const stats = useMemo(() => {
     const areas = new Set(allProperties.map((p) => p.address?.split(',')[0]?.trim() || 'Unknown'));
+    const uniqueStates = new Set(allProperties.map((p) => p.state).filter(Boolean));
     return [
       { value: `${allProperties.length}+`, label: 'Active listings' },
       { value: `${areas.size}+`, label: 'Areas covered' },
-      { value: `${states.length}`, label: 'States covered' },
+      { value: `${uniqueStates.size}`, label: 'States covered' },
     ];
   }, [allProperties]);
 
@@ -176,6 +185,7 @@ export default function HomePage() {
   };
 
   const handleStateSelect = (stateId) => {
+    // Use the state name directly for filtering
     setFilters({ ...emptyFilters, state: stateId });
     setOffset(0);
     setAllProperties([]);
@@ -204,7 +214,8 @@ export default function HomePage() {
         filters={filters} 
         onFilterChange={setFilters} 
         onSearch={scrollToListings} 
-        stats={stats} 
+        stats={stats}
+        states={states}
       />
 
       <BrowseByType onSelect={handleCategorySelect} />
@@ -219,7 +230,7 @@ export default function HomePage() {
             Premium and Verified Property Listings
           </Typography>
 
-          <FilterBar filters={filters} onFilterChange={setFilters} />
+          <FilterBar filters={filters} onFilterChange={setFilters} states={states} />
 
           <Typography variant="body2" sx={{ color: '#5A6478', mb: 3 }}>
             Displaying{' '}
@@ -308,45 +319,51 @@ export default function HomePage() {
           </Typography>
 
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 2 }}>
-            {states.map((state) => {
-              const count = allProperties.filter((p) => p.state === state.id).length;
-              return (
-                <Box
-                  key={state.id}
-                  onClick={() => handleStateSelect(state.id)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') handleStateSelect(state.id);
-                  }}
-                  role="button"
-                  tabIndex={0}
-                  sx={{
-                    backgroundColor: '#fff',
-                    border: '1px solid #e7e9ee',
-                    borderRadius: '14px',
-                    p: 3,
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    '&:hover': { borderColor: '#1A4C9E', boxShadow: '0 12px 28px rgba(16,23,41,0.1)' },
-                  }}
-                >
-                  <Typography sx={{ color: '#1A4C9E', fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.06em', mb: 1 }}>
-                    ACTIVE LISTINGS
-                  </Typography>
-                  <Typography sx={{ fontWeight: 800, fontSize: '2rem', color: '#16213E', lineHeight: 1 }}>
-                    {count}
-                  </Typography>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1.5 }}>
-                    <Box>
-                      <Typography sx={{ fontWeight: 700, color: '#16213E' }}>{state.label}</Typography>
-                      <Typography sx={{ color: '#8a93a3', fontSize: '0.85rem' }}>properties for sale &amp; rent</Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#1A4C9E', fontWeight: 700, fontSize: '0.85rem' }}>
-                      Explore <ArrowForwardIcon sx={{ fontSize: 16 }} />
+            {states.length > 0 ? (
+              states.map((state) => {
+                const count = allProperties.filter((p) => p.state === state.label).length;
+                return (
+                  <Box
+                    key={state.id}
+                    onClick={() => handleStateSelect(state.label)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') handleStateSelect(state.label);
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    sx={{
+                      backgroundColor: '#fff',
+                      border: '1px solid #e7e9ee',
+                      borderRadius: '14px',
+                      p: 3,
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      '&:hover': { borderColor: '#1A4C9E', boxShadow: '0 12px 28px rgba(16,23,41,0.1)' },
+                    }}
+                  >
+                    <Typography sx={{ color: '#1A4C9E', fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.06em', mb: 1 }}>
+                      ACTIVE LISTINGS
+                    </Typography>
+                    <Typography sx={{ fontWeight: 800, fontSize: '2rem', color: '#16213E', lineHeight: 1 }}>
+                      {count}
+                    </Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1.5 }}>
+                      <Box>
+                        <Typography sx={{ fontWeight: 700, color: '#16213E' }}>{state.label}</Typography>
+                        <Typography sx={{ color: '#8a93a3', fontSize: '0.85rem' }}>properties for sale &amp; rent</Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#1A4C9E', fontWeight: 700, fontSize: '0.85rem' }}>
+                        Explore <ArrowForwardIcon sx={{ fontSize: 16 }} />
+                      </Box>
                     </Box>
                   </Box>
-                </Box>
-              );
-            })}
+                );
+              })
+            ) : (
+              <Box sx={{ gridColumn: '1 / -1', textAlign: 'center', py: 4, color: '#8A93A3' }}>
+                <Typography>No states available yet. Properties will appear here once they are listed.</Typography>
+              </Box>
+            )}
           </Box>
         </Container>
       </Box>

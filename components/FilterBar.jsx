@@ -2,7 +2,6 @@
 
 import { Box, TextField, Select, MenuItem, Button, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { states } from '@/lib/mock-data';
 
 const propertyTypes = [
   'Flat/Apartment',
@@ -21,7 +20,7 @@ const controlSx = {
   boxShadow: '0 2px 8px rgba(10, 22, 40, 0.06)',
 };
 
-export default function FilterBar({ filters, onFilterChange }) {
+export default function FilterBar({ filters, onFilterChange, states = [] }) {
   const handleChange = (field, value) => {
     onFilterChange({ ...filters, [field]: value });
   };
@@ -63,11 +62,15 @@ export default function FilterBar({ filters, onFilterChange }) {
         sx={{ flex: 1, ...controlSx }}
       >
         <MenuItem value="all">All States</MenuItem>
-        {states.map((s) => (
-          <MenuItem key={s.id} value={s.id}>
-            {s.label}
-          </MenuItem>
-        ))}
+        {states.length > 0 ? (
+          states.map((s) => (
+            <MenuItem key={s.id} value={s.label}>
+              {s.label}
+            </MenuItem>
+          ))
+        ) : (
+          <MenuItem disabled>No states available</MenuItem>
+        )}
       </Select>
 
       <Select

@@ -141,8 +141,14 @@ export default function PropertyManagersPage() {
 
             {filtered.length === 0 ? (
               <Box sx={{ py: 8, textAlign: 'center', color: '#4a5568' }}>
-                <Typography sx={{ fontWeight: 700, fontSize: '1.1rem', mb: 1 }}>No managers found</Typography>
-                <Typography>Try a different name, company or location.</Typography>
+                <Typography sx={{ fontWeight: 700, fontSize: '1.1rem', mb: 1 }}>
+                  {managers.length === 0 ? 'No property managers available' : 'No managers found'}
+                </Typography>
+                <Typography>
+                  {managers.length === 0 
+                    ? 'Property managers will appear here once they are registered on the platform.'
+                    : 'Try a different name, company or location.'}
+                </Typography>
               </Box>
             ) : (
               <Box
