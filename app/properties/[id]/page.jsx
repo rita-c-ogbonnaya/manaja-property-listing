@@ -139,8 +139,20 @@ export default function PropertyDetailPage() {
     return `₦${(numericPrice / 1000000).toFixed(0)}M`;
   };
 
+  const formatPropertyType = (propertyType) => {
+    // Convert property_type to display format
+    if (!propertyType) return 'Property';
+    return propertyType.charAt(0).toUpperCase() + propertyType.slice(1).toLowerCase();
+  };
+
   const getAllImages = () => {
-    return [...(property.property_interior_images || []), ...(property.property_exterior_images || [])];
+    const interiorImages = property.property_interior_images || [];
+    const exteriorImages = property.property_exterior_images || [];
+    return [...interiorImages, ...exteriorImages];
+  };
+
+  const handleImageError = (e) => {
+    e.target.src = '/placeholder-image.jpg';
   };
 
   // Render the rest of the component as before...
@@ -170,18 +182,37 @@ export default function PropertyDetailPage() {
                 mb: 3,
               }}
             >
-              <img
-                src={getAllImages()[currentImageIndex] || '/placeholder-image.jpg'}
-                alt={property.name}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                }}
-              />
+              {getAllImages().length > 0 ? (
+                <img
+                  src={getAllImages()[currentImageIndex]}
+                  alt={property.name}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                  }}
+                  onError={handleImageError}
+                />
+              ) : (
+                <Box
+                  sx={{
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: '#f0f2f5',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundImage: 'linear-gradient(135deg, #e8f5e9 0%, #e3f2fd 100%)',
+                  }}
+                >
+                  <Typography sx={{ color: '#8A93A3', fontWeight: 600, fontSize: '1.2rem' }}>
+                    No Images Available
+                  </Typography>
+                </Box>
+              )}
 
               {/* Navigation */}
-              {getAllImages().length > 1 && (
+              {getAllImages().length > 1 && getAllImages()[currentImageIndex] && (
                 <>
                   <Button
                     onClick={handlePrevImage}
@@ -273,6 +304,7 @@ export default function PropertyDetailPage() {
                           height: '100%',
                           objectFit: 'cover',
                         }}
+                        onError={handleImageError}
                       />
                     </Box>
                   </Grid>
@@ -285,15 +317,34 @@ export default function PropertyDetailPage() {
           <Grid size={{ xs: 12, md: 4 }}>
             {/* Header */}
             <Box sx={{ mb: 3 }}>
-              <Chip
-                label={property.property_type || 'Property'}
-                sx={{
-                  backgroundColor: '#16213E',
-                  color: '#fff',
-                  fontWeight: 700,
-                  mb: 2,
-                }}
-              />
+              <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
+                <Chip
+                  label={formatPropertyType(property.property_type)}
+                  sx={{
+                    backgroundColor: '#16213E',
+                    color: '#fff',
+                    fontWeight: 700,
+                  }}
+                />
+                <Chip
+                  label={property.property_status === 'rent' ? 'For Rent' : 'For Sale'}
+                  sx={{
+                    backgroundColor: property.property_status === 'rent' ? '#2e7d32' : '#1565c0',
+                    color: '#fff',
+                    fontWeight: 700,
+                  }}
+                />
+                {property.occupancy_status === 'available' && (
+                  <Chip
+                    label="Available"
+                    sx={{
+                      backgroundColor: '#2e7d32',
+                      color: '#fff',
+                      fontWeight: 700,
+                    }}
+                  />
+                )}
+              </Box>
               <Typography variant="h4" sx={{ mb: 1, fontWeight: 700 }}>
                 {property.name}
               </Typography>
@@ -301,10 +352,20 @@ export default function PropertyDetailPage() {
                 variant="body2"
                 sx={{ color: '#666', mb: 2, textTransform: 'uppercase' }}
               >
-                {property.address}
+                {[property.address, property.city, property.state, property.country].filter(Boolean).join(', ')}
               </Typography>
+              {property.zip_code && (
+                <Typography variant="body2" sx={{ color: '#666', mb: 2 }}>
+                  {property.zip_code}
+                </Typography>
+              )}
               <Typography variant="h5" sx={{ color: '#16213E', fontWeight: 800 }}>
                 {formatPrice(property.price)}
+                {property.property_status === 'rent' && (
+                  <Typography component="span" variant="body1" sx={{ ml: 1, color: '#666' }}>
+                    /month
+                  </Typography>
+                )}
               </Typography>
             </Box>
 

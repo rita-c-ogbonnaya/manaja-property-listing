@@ -17,6 +17,12 @@ function formatFullPrice(price, propertyStatus) {
   return `₦${Number(price).toLocaleString('en-NG')}`;
 }
 
+function formatPropertyType(propertyType) {
+  // Convert property_type to display format
+  if (!propertyType) return 'Property';
+  return propertyType.charAt(0).toUpperCase() + propertyType.slice(1).toLowerCase();
+}
+
 export default function PropertyCard({ property }) {
   const [liked, setLiked] = useState(false);
 
@@ -29,7 +35,7 @@ export default function PropertyCard({ property }) {
   return (
     <Box
       component={Link}
-      href={`/properties/${property.id}`}
+      href={`/properties/${property.id || property.name}`}
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -51,19 +57,40 @@ export default function PropertyCard({ property }) {
     >
       {/* Image */}
       <Box sx={{ position: 'relative', overflow: 'hidden', height: 240 }}>
-        <Box
-          component="img"
-          src={property.property_interior_images?.[0] || property.property_exterior_images?.[0] || '/placeholder-property.jpg'}
-          alt={property.name}
-          className="card-image"
-          sx={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            display: 'block',
-            transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-          }}
-        />
+        {property.property_interior_images?.[0] || property.property_exterior_images?.[0] ? (
+          <Box
+            component="img"
+            src={property.property_interior_images?.[0] || property.property_exterior_images?.[0]}
+            alt={property.name}
+            className="card-image"
+            sx={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              display: 'block',
+              transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+            }}
+            onError={(e) => {
+              e.target.src = '/placeholder-property.jpg';
+            }}
+          />
+        ) : (
+          <Box
+            sx={{
+              width: '100%',
+              height: '100%',
+              backgroundColor: '#f0f2f5',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundImage: 'linear-gradient(135deg, #e8f5e9 0%, #e3f2fd 100%)',
+            }}
+          >
+            <Typography sx={{ color: '#8A93A3', fontWeight: 600, fontSize: '0.9rem' }}>
+              No Image Available
+            </Typography>
+          </Box>
+        )}
         <Box
           sx={{
             position: 'absolute',
@@ -126,7 +153,7 @@ export default function PropertyCard({ property }) {
             textTransform: 'uppercase',
           }}
         >
-          {property.property_type} • {property.property_status === 'sale' ? 'Sale' : 'Rent'}
+          {formatPropertyType(property.property_type)} • {property.property_status === 'sale' ? 'Sale' : 'Rent'}
         </Typography>
 
         <Typography
@@ -148,7 +175,7 @@ export default function PropertyCard({ property }) {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 1, color: '#5A6478' }}>
           <LocationOnIcon sx={{ fontSize: 16, color: '#1A4C9E' }} />
           <Typography sx={{ fontSize: '0.87rem', fontWeight: 500 }} noWrap>
-            {property.address}
+            {[property.address, property.city, property.state].filter(Boolean).join(', ') || 'Location not specified'}
           </Typography>
         </Box>
 
@@ -165,11 +192,11 @@ export default function PropertyCard({ property }) {
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.6 }}>
             <KingBedOutlinedIcon sx={{ fontSize: 18, color: '#8A93A3' }} />
-            <Typography sx={{ fontSize: '0.85rem', fontWeight: 600 }}>{property.bedrooms} Beds</Typography>
+            <Typography sx={{ fontSize: '0.85rem', fontWeight: 600 }}>{property.bedrooms || 0} Beds</Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.6 }}>
             <BathtubOutlinedIcon sx={{ fontSize: 18, color: '#8A93A3' }} />
-            <Typography sx={{ fontSize: '0.85rem', fontWeight: 600 }}>{property.bathrooms} Baths</Typography>
+            <Typography sx={{ fontSize: '0.85rem', fontWeight: 600 }}>{property.bathrooms || 0} Baths</Typography>
           </Box>
         </Box>
       </Box>

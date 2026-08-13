@@ -16,7 +16,8 @@ import { states } from '@/lib/mock-data';
 import { getListings } from '@/lib/api-service';
 import { useLocationState } from '@/components/StateProvider';
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 10; // Match API default limit
+const INITIAL_LIMIT = 10;
 
 const emptyFilters = {
   search: '',
@@ -60,11 +61,12 @@ export default function HomePage() {
   } = useLocationState();
   
   const [filters, setFilters] = useState(emptyFilters);
-  const [displayedCount, setDisplayedCount] = useState(ITEMS_PER_PAGE);
-  const [filteredProperties, setFilteredProperties] = useState([]);
   const [allProperties, setAllProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [offset, setOffset] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [totalProperties, setTotalProperties] = useState(0);
   const listingsRef = useRef(null);
 
   // Sync filters with global state
@@ -90,15 +92,31 @@ export default function HomePage() {
     const fetchProperties = async () => {
       try {
         setLoading(true);
-        const data = await getListings(filters);
-        setAllProperties(data);
-        setFilteredProperties(data);
+        // Always filter for available properties for public listings
+        const apiFilters = { 
+          ...filters, 
+          occupancy_status: 'available',
+          limit: INITIAL_LIMIT,
+          offset: 0
+        };
+        const data = await getListings(apiFilters);
+        // Handle different response formats
+        const properties = Array.isArray(data) ? data : (data?.items || data?.properties || []);
+        const total = data?.total || data?.count || properties.length;
+        
+        setAllProperties(properties);
+        setFilteredProperties(properties);
+        setTotalProperties(total);
+        setHasMore(properties.length < total);
+        setOffset(0);
         setError(null);
       } catch (err) {
         console.error('Error fetching properties:', err);
         setError('Failed to load properties. Please try again later.');
         setAllProperties([]);
         setFilteredProperties([]);
+        setHasMore(false);
+        setTotalProperties(0);
       } finally {
         setLoading(false);
       }
@@ -106,11 +124,6 @@ export default function HomePage() {
 
     fetchProperties();
   }, [filters]);
-
-  // Update displayed count when filtered properties change
-  useEffect(() => {
-    setDisplayedCount(ITEMS_PER_PAGE);
-  }, [filteredProperties]);
 
   const stats = useMemo(() => {
     const areas = new Set(allProperties.map((p) => p.address?.split(',')[0]?.trim() || 'Unknown'));
@@ -121,20 +134,51 @@ export default function HomePage() {
     ];
   }, [allProperties]);
 
-  const visibleProperties = filteredProperties.slice(0, displayedCount);
-  const hasMore = displayedCount < filteredProperties.length;
+  const visibleProperties = allProperties;
 
   const scrollToListings = () => {
     listingsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  const loadMoreProperties = async () => {
+    if (loading || !hasMore) return;
+    
+    try {
+      setLoading(true);
+      const newOffset = offset + displayedCount;
+      const apiFilters = { 
+        ...filters, 
+        occupancy_status: 'available',
+        limit: INITIAL_LIMIT,
+        offset: newOffset
+      };
+      
+      const data = await getListings(apiFilters);
+      const newProperties = Array.isArray(data) ? data : (data?.items || data?.properties || []);
+      
+      setAllProperties(prev => [...prev, ...newProperties]);
+      setFilteredProperties(prev => [...prev, ...newProperties]);
+      setOffset(newOffset);
+      setHasMore(newProperties.length >= displayedCount);
+    } catch (err) {
+      console.error('Error loading more properties:', err);
+      setError('Failed to load more properties. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleCategorySelect = (type) => {
     setFilters({ ...emptyFilters, type });
+    setOffset(0);
+    setAllProperties([]);
     setTimeout(scrollToListings, 50);
   };
 
   const handleStateSelect = (stateId) => {
     setFilters({ ...emptyFilters, state: stateId });
+    setOffset(0);
+    setAllProperties([]);
     setTimeout(scrollToListings, 50);
   };
 
@@ -180,16 +224,13 @@ export default function HomePage() {
           <Typography variant="body2" sx={{ color: '#5A6478', mb: 3 }}>
             Displaying{' '}
             <Box component="span" sx={{ fontWeight: 700, color: '#0A1628' }}>
-              {visibleProperties.length}
+              {allProperties.length}
             </Box>{' '}
-            of{' '}
-            <Box component="span" sx={{ fontWeight: 700, color: '#0A1628' }}>
-              {filteredProperties.length}
-            </Box>{' '}
+            {totalProperties > 0 && `of ${totalProperties}`}{' '}
             available properties
           </Typography>
 
-          {visibleProperties.length > 0 ? (
+          {allProperties.length > 0 ? (
             <>
               <Box
                 sx={{
@@ -198,7 +239,7 @@ export default function HomePage() {
                   gap: 3,
                 }}
               >
-                {visibleProperties.map((property) => (
+                {allProperties.map((property) => (
                   <PropertyCard property={property} key={property.id} />
                 ))}
               </Box>
@@ -206,7 +247,8 @@ export default function HomePage() {
               {hasMore && (
                 <Box sx={{ textAlign: 'center', mt: 6 }}>
                   <Button
-                    onClick={() => setDisplayedCount((prev) => prev + ITEMS_PER_PAGE)}
+                    onClick={loadMoreProperties}
+                    disabled={loading}
                     sx={{
                       backgroundColor: '#1A4C9E',
                       color: '#fff',
@@ -220,10 +262,14 @@ export default function HomePage() {
                         boxShadow: '0 6px 16px rgba(26, 76, 158, 0.4)',
                         transform: 'translateY(-1px)',
                       },
+                      '&:disabled': {
+                        backgroundColor: '#ccc',
+                        boxShadow: 'none',
+                      },
                       transition: 'all 0.2s ease',
                     }}
                   >
-                    View More Properties
+                    {loading ? 'Loading...' : 'View More Properties'}
                   </Button>
                 </Box>
               )}
@@ -234,7 +280,7 @@ export default function HomePage() {
                 No Properties Available
               </Typography>
               <Typography variant="body2" sx={{ color: '#8A93A3', mb: 3 }}>
-                Try adjusting your search criteria
+                Please check back soon for new listings
               </Typography>
               <Button
                 variant="outlined"
