@@ -1,0 +1,18 @@
+{
+  "name": "Manaja Property Listing",
+  "short_name": "Manaja",
+  "description": "Browse verified property listings across Nigeria",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1A4C9E",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

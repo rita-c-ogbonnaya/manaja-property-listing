@@ -8,13 +8,16 @@ const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ['latin'] })
 export const metadata = {
   title: 'Manaja Solutions | Premium and verified Real Estate in Nigeria',
   description: 'Discover exclusive properties across Nigeria\'s prime locations. From luxury apartments to investment opportunities, find your perfect space with Manaja Solutions.',
-  themeColor: '#0A1628',
   icons: {
     icon: '/logo.png',
     shortcut: '/logo.png',
     apple: '/logo.png',
   },
   manifest: '/manifest.json',
+}
+
+export const viewport = {
+  themeColor: '#1A4C9E',
 }
 
 export default function RootLayout({ children }) {
