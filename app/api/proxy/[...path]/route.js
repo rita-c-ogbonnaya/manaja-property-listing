@@ -1,25 +1,30 @@
 import { NextResponse } from 'next/server';
 
-export async function GET(request) {
+export async function GET(request, { params }) {
   const { searchParams } = new URL(request.url);
-  const path = request.url.split('/api/proxy')[1];
+  const path = Array.isArray(params.path) ? params.path.join('/') : (params.path || '');
   const backendUrl = 'https://manaja-backend.onrender.com';
   
   try {
     // Forward the path and query parameters to the backend
     const queryString = searchParams.toString();
-    const url = `${backendUrl}${path}${queryString ? `?${queryString}` : ''}`;
+    const url = `${backendUrl}${path ? `/${path}` : ''}${queryString ? `?${queryString}` : ''}`;
+    
+    console.log('Proxying GET request to:', url);
     
     const response = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
+      // Add cache control for better performance
+      cache: 'no-store',
     });
     
     if (!response.ok) {
+      console.error('Backend request failed:', response.status, response.statusText);
       return NextResponse.json(
-        { error: 'Backend request failed' },
+        { error: 'Backend request failed', status: response.status },
         { status: response.status }
       );
     }
@@ -29,19 +34,21 @@ export async function GET(request) {
   } catch (error) {
     console.error('Proxy error:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Internal server error', message: error.message },
       { status: 500 }
     );
   }
 }
 
-export async function POST(request) {
-  const path = request.url.split('/api/proxy')[1];
+export async function POST(request, { params }) {
+  const path = Array.isArray(params.path) ? params.path.join('/') : (params.path || '');
   const backendUrl = 'https://manaja-backend.onrender.com';
   
   try {
     const body = await request.json();
-    const url = `${backendUrl}${path}`;
+    const url = `${backendUrl}${path ? `/${path}` : ''}`;
+    
+    console.log('Proxying POST request to:', url);
     
     const response = await fetch(url, {
       method: 'POST',
@@ -52,8 +59,9 @@ export async function POST(request) {
     });
     
     if (!response.ok) {
+      console.error('Backend request failed:', response.status, response.statusText);
       return NextResponse.json(
-        { error: 'Backend request failed' },
+        { error: 'Backend request failed', status: response.status },
         { status: response.status }
       );
     }
@@ -63,7 +71,7 @@ export async function POST(request) {
   } catch (error) {
     console.error('Proxy error:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Internal server error', message: error.message },
       { status: 500 }
     );
   }

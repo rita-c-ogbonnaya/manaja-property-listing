@@ -99,10 +99,15 @@ export default function HomePage() {
           limit: INITIAL_LIMIT,
           offset: 0
         };
+        console.log('Fetching properties with filters:', apiFilters);
         const data = await getListings(apiFilters);
+        console.log('Received data:', data);
+        
         // Handle different response formats
         const properties = Array.isArray(data) ? data : (data?.items || data?.properties || []);
         const total = data?.total || data?.count || properties.length;
+        
+        console.log('Processed properties:', properties.length, 'Total:', total);
         
         setAllProperties(properties);
         setFilteredProperties(properties);
