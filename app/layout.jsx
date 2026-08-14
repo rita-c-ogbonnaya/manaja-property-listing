@@ -9,25 +9,20 @@ export const metadata = {
   title: 'Manaja Solutions | Premium and verified Real Estate in Nigeria',
   description: 'Discover exclusive properties across Nigeria\'s prime locations. From luxury apartments to investment opportunities, find your perfect space with Manaja Solutions.',
   manifest: '/manifest.json',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/logo.png',
+  },
 }
 
 export const viewport = {
   themeColor: '#1A4C9E',
-  icons: {
-    icon: '/logo.png',
-    shortcut: '/logo.png',
-    apple: '/logo.png',
-  },
 }
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${plusJakartaSans.className} bg-background`}>
-      <head>
-        <link rel="icon" type="image/png" href="/logo.png" />
-        <link rel="shortcut icon" type="image/png" href="/logo.png" />
-        <link rel="apple-touch-icon" href="/logo.png" />
-      </head>
       <body className="antialiased">
         <RootContent>
           {children}
