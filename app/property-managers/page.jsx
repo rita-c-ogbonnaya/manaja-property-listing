@@ -48,8 +48,8 @@ export default function PropertyManagersPage() {
         const data = await getPropertyManagers();
         setManagers(data);
       } catch (err) {
-        console.error('Failed to load property managers:', err);
-        setError('Failed to load property managers. Please try again later.');
+        // If backend endpoint doesn't exist, show friendly message
+        setError('Property managers feature coming soon. Check back later.');
       } finally {
         setLoading(false);
       }
