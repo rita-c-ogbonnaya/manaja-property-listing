@@ -2,14 +2,15 @@ import { NextResponse } from 'next/server';
 
 export async function GET(request, { params }) {
   const { searchParams } = new URL(request.url);
-  const path = Array.isArray(params.path) ? params.path.join('/') : (params.path || '');
+  const resolvedParams = await params;
+  const path = Array.isArray(resolvedParams.path) ? resolvedParams.path.join('/') : (resolvedParams.path || '');
   const backendUrl = 'https://manaja-backend.onrender.com';
   
   console.log('=== PROXY DEBUG ===');
   console.log('Request URL:', request.url);
-  console.log('params.path:', params.path);
-  console.log('params.path type:', typeof params.path);
-  console.log('Array.isArray(params.path):', Array.isArray(params.path));
+  console.log('resolvedParams.path:', resolvedParams.path);
+  console.log('resolvedParams.path type:', typeof resolvedParams.path);
+  console.log('Array.isArray(resolvedParams.path):', Array.isArray(resolvedParams.path));
   console.log('extracted path:', path);
   console.log('===================');
   
@@ -50,7 +51,8 @@ export async function GET(request, { params }) {
 }
 
 export async function POST(request, { params }) {
-  const path = Array.isArray(params.path) ? params.path.join('/') : (params.path || '');
+  const resolvedParams = await params;
+  const path = Array.isArray(resolvedParams.path) ? resolvedParams.path.join('/') : (resolvedParams.path || '');
   const backendUrl = 'https://manaja-backend.onrender.com';
   
   try {
