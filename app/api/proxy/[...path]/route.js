@@ -5,6 +5,9 @@ export async function GET(request, { params }) {
   const path = Array.isArray(params.path) ? params.path.join('/') : (params.path || '');
   const backendUrl = 'https://manaja-backend.onrender.com';
   
+  console.log('Proxy GET - params.path:', params.path);
+  console.log('Proxy GET - extracted path:', path);
+  
   try {
     // Forward the path and query parameters to the backend
     const queryString = searchParams.toString();
