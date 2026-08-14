@@ -30,6 +30,7 @@ export async function GET(request, { params }) {
     }
     
     const data = await response.json();
+    console.log('Backend response:', data);
     return NextResponse.json(data);
   } catch (error) {
     console.error('Proxy error:', error);
