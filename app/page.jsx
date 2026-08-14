@@ -155,11 +155,11 @@ export default function HomePage() {
   };
 
   const loadMoreProperties = async () => {
-    if (loading || !hasMore) return;
+    if (loadingMore || !hasMore) return;
     
     try {
-      setLoading(true);
-      const newOffset = offset + displayedCount;
+      setLoadingMore(true);
+      const newOffset = offset + INITIAL_LIMIT;
       const apiFilters = { 
         ...filters, 
         occupancy_status: 'available',
@@ -171,14 +171,13 @@ export default function HomePage() {
       const newProperties = Array.isArray(data) ? data : (data?.items || data?.properties || []);
       
       setAllProperties(prev => [...prev, ...newProperties]);
-      setFilteredProperties(prev => [...prev, ...newProperties]);
       setOffset(newOffset);
-      setHasMore(newProperties.length >= displayedCount);
+      setHasMore(newProperties.length >= INITIAL_LIMIT);
     } catch (err) {
       console.error('Error loading more properties:', err);
       setError('Failed to load more properties. Please try again later.');
     } finally {
-      setLoading(false);
+      setLoadingMore(false);
     }
   };
 
