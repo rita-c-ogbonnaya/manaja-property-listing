@@ -62,6 +62,7 @@ export default function HomePage() {
   const [filters, setFilters] = useState(emptyFilters);
   const [allProperties, setAllProperties] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState(null);
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
@@ -110,7 +111,6 @@ export default function HomePage() {
         console.log('Processed properties:', properties.length, 'Total:', total);
         
         setAllProperties(properties);
-        setFilteredProperties(properties);
         setTotalProperties(total);
         setHasMore(properties.length < total);
         setOffset(0);
@@ -128,7 +128,6 @@ export default function HomePage() {
         console.error('Error details:', err.message, err.stack);
         setError('Failed to load properties. Please try again later.');
         setAllProperties([]);
-        setFilteredProperties([]);
         setHasMore(false);
         setTotalProperties(0);
       } finally {
@@ -247,7 +246,17 @@ export default function HomePage() {
             available properties
           </Typography>
 
-          {allProperties.length > 0 ? (
+          {loading ? (
+            <Box sx={{ py: 8, textAlign: 'center' }}>
+              <CircularProgress sx={{ color: '#1A4C9E' }} />
+              <Typography sx={{ mt: 2, color: '#4a5568' }}>Loading properties...</Typography>
+            </Box>
+          ) : error ? (
+            <Box sx={{ py: 8, textAlign: 'center', color: '#d32f2f' }}>
+              <Typography sx={{ fontWeight: 700, fontSize: '1.1rem', mb: 1 }}>Error</Typography>
+              <Typography>{error}</Typography>
+            </Box>
+          ) : allProperties.length > 0 ? (
             <>
               <Box
                 sx={{
