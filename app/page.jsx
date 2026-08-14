@@ -110,6 +110,11 @@ export default function HomePage() {
         
         console.log('Processed properties:', properties.length, 'Total:', total);
         
+        // Check if backend returned a message instead of data
+        if (properties.length === 0 && data && data.message) {
+          throw new Error(`Backend returned: ${data.message}. The /listings endpoint may not be properly configured.`);
+        }
+        
         setAllProperties(properties);
         setTotalProperties(total);
         setHasMore(properties.length < total);
@@ -273,7 +278,7 @@ export default function HomePage() {
                 <Box sx={{ textAlign: 'center', mt: 6 }}>
                   <Button
                     onClick={loadMoreProperties}
-                    disabled={loading}
+                    disabled={loadingMore}
                     sx={{
                       backgroundColor: '#1A4C9E',
                       color: '#fff',
@@ -294,7 +299,7 @@ export default function HomePage() {
                       transition: 'all 0.2s ease',
                     }}
                   >
-                    {loading ? 'Loading...' : 'View More Properties'}
+                    {loadingMore ? 'Loading...' : 'View More Properties'}
                   </Button>
                 </Box>
               )}
