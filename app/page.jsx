@@ -125,7 +125,7 @@ export default function HomePage() {
           id: state.toLowerCase().replace(/\s+/g, '-'),
           label: state
         }));
-        setStates(uniqueStates);
+        setStates(uniqueStates || []);
         
         setError(null);
       } catch (err) {
@@ -338,7 +338,7 @@ export default function HomePage() {
           </Typography>
 
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 2 }}>
-            {states.length > 0 ? (
+            {states && states.length > 0 ? (
               states.map((state) => {
                 const count = allProperties.filter((p) => p.state === state.label).length;
                 return (
@@ -400,7 +400,7 @@ export default function HomePage() {
           </Box>
 
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 4 }}>
-            {features.map(({ Icon, title, text }) => (
+            {features && features.map(({ Icon, title, text }) => (
               <Box key={title}>
                 <Box
                   sx={{
