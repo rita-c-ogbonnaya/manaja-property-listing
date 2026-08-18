@@ -276,6 +276,7 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
             mt: { xs: 4, md: 5 },
             maxWidth: 900,
             mx: 'auto',
+            textAlign: 'center',
           }}
         >
           {stats.map((stat, idx) => (
