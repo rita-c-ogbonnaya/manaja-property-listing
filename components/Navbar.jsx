@@ -90,6 +90,8 @@ function MegaMenu({ onNavigate, onFilterByListingType }) {
     onNavigate();
   };
 
+  const { mode } = useTheme();
+
   return (
     <Box sx={{ width: 320, py: 1 }}>
       {propertyTypes.map(({ label, Icon }) => (
@@ -98,7 +100,7 @@ function MegaMenu({ onNavigate, onFilterByListingType }) {
           component={Link}
           href="/"
           onClick={() => handlePropertyTypeClick(label)}
-          sx={{ px: 2.5, py: 1.1, gap: 1.5, color: '#16213E' }}
+          sx={{ px: 2.5, py: 1.1, gap: 1.5, color: mode === 'dark' ? '#E6EDF3' : '#16213E' }}
         >
           <Icon sx={{ fontSize: 22, color: '#1A4C9E' }} />
           <Typography sx={{ fontWeight: 600, fontSize: '0.95rem' }}>{label}</Typography>
@@ -113,7 +115,7 @@ function MegaMenu({ onNavigate, onFilterByListingType }) {
           fontSize: '0.7rem',
           fontWeight: 700,
           letterSpacing: '0.09em',
-          color: '#98a1af',
+          color: mode === 'dark' ? '#8B949E' : '#98a1af',
         }}
       >
         BROWSE BY LOCATION
@@ -124,7 +126,7 @@ function MegaMenu({ onNavigate, onFilterByListingType }) {
           component={Link}
           href="/"
           onClick={() => handleLocationClick(loc)}
-          sx={{ px: 2.5, py: 0.9, color: '#4a5568' }}
+          sx={{ px: 2.5, py: 0.9, color: mode === 'dark' ? '#8B949E' : '#4a5568' }}
         >
           <Typography sx={{ fontWeight: 600, fontSize: '0.92rem' }}>{loc.name}</Typography>
         </ListItemButton>
@@ -135,7 +137,7 @@ function MegaMenu({ onNavigate, onFilterByListingType }) {
         component={Link}
         href="/"
         onClick={handleViewAll}
-        sx={{ px: 2.5, py: 1, gap: 1, color: '#1A4C9E' }}
+        sx={{ px: 2.5, py: 1, gap: 1, color: mode === 'dark' ? '#E6EDF3' : '#1A4C9E' }}
       >
         <ArrowForwardIcon sx={{ fontSize: 20 }} />
         <Typography sx={{ fontWeight: 700, fontSize: '0.92rem' }}>View All</Typography>
@@ -211,20 +213,20 @@ export default function Navbar() {
           <Box key={item.key}>
             <ListItemButton
               onClick={() => toggleMobileSection(item.key)}
-              sx={{ py: 1.5, color: '#16213E', fontWeight: 700, justifyContent: 'space-between' }}
+              sx={{ py: 1.5, color: mode === 'dark' ? '#E6EDF3' : '#16213E', fontWeight: 700, justifyContent: 'space-between' }}
             >
               <Typography sx={{ fontWeight: 700 }}>{item.label}</Typography>
               {mobileExpanded === item.key ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             </ListItemButton>
             <Collapse in={mobileExpanded === item.key} timeout="auto" unmountOnExit>
-              <Box sx={{ backgroundColor: '#f6f7f9' }}>
+              <Box sx={{ backgroundColor: mode === 'dark' ? '#161B22' : '#f6f7f9' }}>
                 {propertyTypes.map(({ label, Icon }) => (
                   <ListItemButton
                     key={label}
                     component={Link}
                     href="/"
                     onClick={() => handleMobilePropertyTypeClick(item.key, label)}
-                    sx={{ pl: 3, py: 1, gap: 1.5, color: '#16213E' }}
+                    sx={{ pl: 3, py: 1, gap: 1.5, color: mode === 'dark' ? '#E6EDF3' : '#16213E' }}
                   >
                     <Icon sx={{ fontSize: 20, color: '#1A4C9E' }} />
                     <Typography sx={{ fontWeight: 600, fontSize: '0.92rem' }}>{label}</Typography>
@@ -238,7 +240,7 @@ export default function Navbar() {
                     fontSize: '0.68rem',
                     fontWeight: 700,
                     letterSpacing: '0.09em',
-                    color: '#98a1af',
+                    color: mode === 'dark' ? '#8B949E' : '#98a1af',
                   }}
                 >
                   BROWSE BY LOCATION
@@ -249,7 +251,7 @@ export default function Navbar() {
                     component={Link}
                     href="/"
                     onClick={() => handleMobileLocationClick(item.key, loc)}
-                    sx={{ pl: 3, py: 0.75, color: '#4a5568' }}
+                    sx={{ pl: 3, py: 0.75, color: mode === 'dark' ? '#8B949E' : '#4a5568' }}
                   >
                     <Typography sx={{ fontWeight: 600, fontSize: '0.9rem' }}>{loc.name}</Typography>
                   </ListItemButton>
@@ -265,7 +267,7 @@ export default function Navbar() {
             component={Link}
             href="/property-managers"
             onClick={closeDrawer}
-            sx={{ py: 1.5, color: '#0A1628', fontWeight: 700 }}
+            sx={{ py: 1.5, color: mode === 'dark' ? '#E6EDF3' : '#0A1628', fontWeight: 700 }}
           >
             <Typography sx={{ fontWeight: 700 }}>Trusted Partners</Typography>
           </ListItemButton>
@@ -346,7 +348,7 @@ export default function Navbar() {
                   />
                 }
                 sx={{
-                  color: openMenu === item.key ? '#1A4C9E' : '#4a5568',
+                  color: openMenu === item.key ? '#1A4C9E' : (mode === 'dark' ? '#8B949E' : '#4a5568'),
                   fontWeight: 600,
                   fontSize: '0.95rem',
                   px: 1.5,
@@ -368,9 +370,9 @@ export default function Navbar() {
                     sx={{
                       border: '1px solid #E8EBF0',
                       borderRadius: '16px',
-                      boxShadow: '0 16px 48px rgba(10, 22, 40, 0.12)',
+                      boxShadow: mode === 'dark' ? '0 16px 48px rgba(0, 0, 0, 0.4)' : '0 16px 48px rgba(10, 22, 40, 0.12)',
                       overflow: 'hidden',
-                      backgroundColor: 'rgba(255, 255, 255, 0.98)',
+                      backgroundColor: mode === 'dark' ? 'rgba(22, 27, 34, 0.98)' : 'rgba(255, 255, 255, 0.98)',
                       backdropFilter: 'blur(12px)',
                     }}
                   >
@@ -386,7 +388,7 @@ export default function Navbar() {
             href="/property-managers"
             disableRipple
             sx={{
-              color: '#0A1628',
+              color: mode === 'dark' ? '#E6EDF3' : '#0A1628',
               fontWeight: 600,
               fontSize: '0.95rem',
               px: 1.5,
