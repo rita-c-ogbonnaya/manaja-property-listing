@@ -304,11 +304,11 @@ export default function Navbar() {
       position="sticky"
       elevation={0}
       sx={{
-        backgroundColor: 'rgba(255, 255, 255, 0.98)',
+        backgroundColor: mode === 'dark' ? 'rgba(22, 27, 34, 0.98)' : 'rgba(255, 255, 255, 0.98)',
         backdropFilter: 'blur(20px)',
-        color: '#0A1628',
-        borderBottom: '1px solid #E8EBF0',
-        boxShadow: '0 2px 16px rgba(10, 22, 40, 0.04)',
+        color: mode === 'dark' ? '#E6EDF3' : '#0A1628',
+        borderBottom: mode === 'dark' ? '1px solid #30363D' : '1px solid #E8EBF0',
+        boxShadow: mode === 'dark' ? '0 2px 16px rgba(0, 0, 0, 0.4)' : '0 2px 16px rgba(10, 22, 40, 0.04)',
       }}
     >
       <Toolbar
@@ -400,8 +400,8 @@ export default function Navbar() {
             onClick={toggleTheme}
             sx={{
               ml: 1,
-              color: mode === 'dark' ? '#ffffff' : '#0A1628',
-              '&:hover': { backgroundColor: 'rgba(26, 76, 158, 0.1)' },
+              color: mode === 'dark' ? '#E6EDF3' : '#0A1628',
+              '&:hover': { backgroundColor: mode === 'dark' ? 'rgba(230, 237, 243, 0.1)' : 'rgba(26, 76, 158, 0.1)' },
             }}
             aria-label="toggle theme"
           >

@@ -230,15 +230,15 @@ export default function HomePage() {
           <Typography sx={{ color: '#1A4C9E', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}>
             CURATED SELECTION
           </Typography>
-          <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2rem' }, color: '#0A1628', mb: 3 }}>
+          <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2rem' }, color: theme.palette.text.primary, mb: 3 }}>
             Premium and Verified Property Listings
           </Typography>
 
           <FilterBar filters={filters} onFilterChange={setFilters} states={states} />
 
-          <Typography variant="body2" sx={{ color: '#5A6478', mb: 3 }}>
+          <Typography variant="body2" sx={{ color: theme.palette.text.secondary, mb: 3 }}>
             Displaying{' '}
-            <Box component="span" sx={{ fontWeight: 700, color: '#0A1628' }}>
+            <Box component="span" sx={{ fontWeight: 700, color: theme.palette.text.primary }}>
               {allProperties.length}
             </Box>{' '}
             {totalProperties > 0 && `of ${totalProperties}`}{' '}
@@ -295,14 +295,14 @@ export default function HomePage() {
                       py: 1.4,
                       borderRadius: '12px',
                       fontWeight: 700,
-                      boxShadow: '0 4px 12px rgba(26, 76, 158, 0.3)',
+                      boxShadow: mode === 'dark' ? '0 4px 12px rgba(26, 76, 158, 0.5)' : '0 4px 12px rgba(26, 76, 158, 0.3)',
                       '&:hover': { 
                         backgroundColor: '#143B7A',
-                        boxShadow: '0 6px 16px rgba(26, 76, 158, 0.4)',
+                        boxShadow: mode === 'dark' ? '0 6px 16px rgba(26, 76, 158, 0.6)' : '0 6px 16px rgba(26, 76, 158, 0.4)',
                         transform: 'translateY(-1px)',
                       },
                       '&:disabled': {
-                        backgroundColor: '#ccc',
+                        backgroundColor: mode === 'dark' ? '#30363D' : '#ccc',
                         boxShadow: 'none',
                       },
                       transition: 'all 0.2s ease',
@@ -315,10 +315,10 @@ export default function HomePage() {
             </>
           ) : (
             <Box sx={{ textAlign: 'center', py: 8 }}>
-              <Typography variant="h6" sx={{ mb: 1, color: '#0A1628', fontWeight: 700 }}>
+              <Typography variant="h6" sx={{ mb: 1, color: theme.palette.text.primary, fontWeight: 700 }}>
                 No Properties Available
               </Typography>
-              <Typography variant="body2" sx={{ color: '#8A93A3', mb: 3 }}>
+              <Typography variant="body2" sx={{ color: theme.palette.text.secondary, mb: 3 }}>
                 Please check back soon for new listings
               </Typography>
               <Button
@@ -360,25 +360,25 @@ export default function HomePage() {
                     role="button"
                     tabIndex={0}
                     sx={{
-                      backgroundColor: '#fff',
-                      border: '1px solid #e7e9ee',
+                      backgroundColor: theme.palette.background.paper,
+                      border: `1px solid ${theme.palette.divider}`,
                       borderRadius: '14px',
                       p: 3,
                       cursor: 'pointer',
                       transition: 'all 0.2s ease',
-                      '&:hover': { borderColor: '#1A4C9E', boxShadow: '0 12px 28px rgba(16,23,41,0.1)' },
+                      '&:hover': { borderColor: '#1A4C9E', boxShadow: mode === 'dark' ? '0 12px 28px rgba(26, 76, 158, 0.3)' : '0 12px 28px rgba(16,23,41,0.1)' },
                     }}
                   >
                     <Typography sx={{ color: '#1A4C9E', fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.06em', mb: 1 }}>
                       ACTIVE LISTINGS
                     </Typography>
-                    <Typography sx={{ fontWeight: 800, fontSize: '2rem', color: '#16213E', lineHeight: 1 }}>
+                    <Typography sx={{ fontWeight: 800, fontSize: '2rem', color: theme.palette.text.primary, lineHeight: 1 }}>
                       {count}
                     </Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1.5 }}>
                       <Box>
-                        <Typography sx={{ fontWeight: 700, color: '#16213E' }}>{state.label}</Typography>
-                        <Typography sx={{ color: '#8a93a3', fontSize: '0.85rem' }}>properties for sale &amp; rent</Typography>
+                        <Typography sx={{ fontWeight: 700, color: theme.palette.text.primary }}>{state.label}</Typography>
+                        <Typography sx={{ color: theme.palette.text.secondary, fontSize: '0.85rem' }}>properties for sale &amp; rent</Typography>
                       </Box>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#1A4C9E', fontWeight: 700, fontSize: '0.85rem' }}>
                         Explore <ArrowForwardIcon sx={{ fontSize: 16 }} />
@@ -388,7 +388,7 @@ export default function HomePage() {
                 );
               })
             ) : (
-              <Box sx={{ gridColumn: '1 / -1', textAlign: 'center', py: 4, color: '#8A93A3' }}>
+              <Box sx={{ gridColumn: '1 / -1', textAlign: 'center', py: 4, color: theme.palette.text.secondary }}>
                 <Typography>No states available yet. Properties will appear here once they are listed.</Typography>
               </Box>
             )}
@@ -400,10 +400,10 @@ export default function HomePage() {
       <Box id="about" component="section" sx={{ py: { xs: 6, md: 8 } }}>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', maxWidth: 640, mx: 'auto', mb: 5 }}>
-            <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2.25rem' }, color: '#16213E' }}>
+            <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2.25rem' }, color: theme.palette.text.primary }}>
               A smarter, safer way to find property
             </Typography>
-            <Typography sx={{ color: '#5b6472', mt: 1.5 }}>
+            <Typography sx={{ color: theme.palette.text.secondary, mt: 1.5 }}>
               We built Manaja to take the guesswork and risk out of house-hunting in Africa.
             </Typography>
           </Box>
@@ -416,7 +416,7 @@ export default function HomePage() {
                     width: 52,
                     height: 52,
                     borderRadius: '14px',
-                    backgroundColor: 'rgba(26,76,158,0.1)',
+                    backgroundColor: mode === 'dark' ? 'rgba(26,76,158,0.2)' : 'rgba(26,76,158,0.1)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -425,8 +425,8 @@ export default function HomePage() {
                 >
                   <Icon sx={{ color: '#1A4C9E', fontSize: 26 }} />
                 </Box>
-                <Typography sx={{ fontWeight: 700, color: '#16213E', fontSize: '1.05rem', mb: 1 }}>{title}</Typography>
-                <Typography sx={{ color: '#5b6472', fontSize: '0.92rem', lineHeight: 1.6 }}>{text}</Typography>
+                <Typography sx={{ fontWeight: 700, color: theme.palette.text.primary, fontSize: '1.05rem', mb: 1 }}>{title}</Typography>
+                <Typography sx={{ color: theme.palette.text.secondary, fontSize: '0.92rem', lineHeight: 1.6 }}>{text}</Typography>
               </Box>
             ))}
           </Box>

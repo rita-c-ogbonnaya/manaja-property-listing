@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Box, Typography, IconButton } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -24,6 +25,7 @@ function formatPropertyType(propertyType) {
 }
 
 export default function PropertyCard({ property }) {
+  const theme = useTheme();
   const [liked, setLiked] = useState(false);
 
   const toggleLike = (e) => {
@@ -40,15 +42,15 @@ export default function PropertyCard({ property }) {
         display: 'flex',
         flexDirection: 'column',
         textDecoration: 'none',
-        backgroundColor: '#fff',
+        backgroundColor: theme.palette.background.paper,
         borderRadius: '16px',
         overflow: 'hidden',
-        border: '1px solid #e7e9ee',
+        border: `1px solid ${theme.palette.divider}`,
         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
         height: '100%',
-        boxShadow: '0 4px 12px rgba(16, 23, 41, 0.08)',
+        boxShadow: theme.palette.mode === 'dark' ? '0 4px 12px rgba(0, 0, 0, 0.4)' : '0 4px 12px rgba(16, 23, 41, 0.08)',
         '&:hover': {
-          boxShadow: '0 24px 48px rgba(16, 23, 41, 0.16)',
+          boxShadow: theme.palette.mode === 'dark' ? '0 24px 48px rgba(0, 0, 0, 0.5)' : '0 24px 48px rgba(16, 23, 41, 0.16)',
           transform: 'translateY(-6px)',
           borderColor: '#1A4C9E',
           '& .card-image': { transform: 'scale(1.08)' },
@@ -79,14 +81,16 @@ export default function PropertyCard({ property }) {
             sx={{
               width: '100%',
               height: '100%',
-              backgroundColor: '#f0f2f5',
+              backgroundColor: theme.palette.mode === 'dark' ? '#161B22' : '#f0f2f5',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              backgroundImage: 'linear-gradient(135deg, #e8f5e9 0%, #e3f2fd 100%)',
+              backgroundImage: theme.palette.mode === 'dark' 
+                ? 'linear-gradient(135deg, #161B22 0%, #0D1117 100%)' 
+                : 'linear-gradient(135deg, #e8f5e9 0%, #e3f2fd 100%)',
             }}
           >
-            <Typography sx={{ color: '#8A93A3', fontWeight: 600, fontSize: '0.9rem' }}>
+            <Typography sx={{ color: theme.palette.text.secondary, fontWeight: 600, fontSize: '0.9rem' }}>
               No Image Available
             </Typography>
           </Box>
@@ -139,7 +143,7 @@ export default function PropertyCard({ property }) {
 
       {/* Body */}
       <Box sx={{ p: 2.5, display: 'flex', flexDirection: 'column', flex: 1 }}>
-        <Typography sx={{ fontSize: '1.4rem', fontWeight: 800, color: '#0A1628', lineHeight: 1.1, letterSpacing: '-0.02em' }}>
+        <Typography sx={{ fontSize: '1.4rem', fontWeight: 800, color: theme.palette.text.primary, lineHeight: 1.1, letterSpacing: '-0.02em' }}>
           {formatFullPrice(property.price, property.property_status)}
         </Typography>
 
@@ -158,7 +162,7 @@ export default function PropertyCard({ property }) {
 
         <Typography
           sx={{
-            color: '#1A2744',
+            color: theme.palette.text.primary,
             fontWeight: 700,
             fontSize: '1.05rem',
             mt: 0.75,
@@ -172,7 +176,7 @@ export default function PropertyCard({ property }) {
           {property.name}
         </Typography>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 1, color: '#5A6478' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 1, color: theme.palette.text.secondary }}>
           <LocationOnIcon sx={{ fontSize: 16, color: '#1A4C9E' }} />
           <Typography sx={{ fontSize: '0.87rem', fontWeight: 500 }} noWrap>
             {[property.address, property.city, property.state].filter(Boolean).join(', ') || 'Location not specified'}
@@ -186,16 +190,16 @@ export default function PropertyCard({ property }) {
             gap: 2.5,
             mt: 'auto',
             pt: 1.75,
-            borderTop: '1px solid #F0F2F5',
-            color: '#4A5568',
+            borderTop: `1px solid ${theme.palette.divider}`,
+            color: theme.palette.text.secondary,
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.6 }}>
-            <KingBedOutlinedIcon sx={{ fontSize: 18, color: '#8A93A3' }} />
+            <KingBedOutlinedIcon sx={{ fontSize: 18, color: theme.palette.text.secondary }} />
             <Typography sx={{ fontSize: '0.85rem', fontWeight: 600 }}>{property.bedrooms || 0} Beds</Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.6 }}>
-            <BathtubOutlinedIcon sx={{ fontSize: 18, color: '#8A93A3' }} />
+            <BathtubOutlinedIcon sx={{ fontSize: 18, color: theme.palette.text.secondary }} />
             <Typography sx={{ fontSize: '0.85rem', fontWeight: 600 }}>{property.bathrooms || 0} Baths</Typography>
           </Box>
         </Box>

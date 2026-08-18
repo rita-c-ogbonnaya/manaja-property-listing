@@ -8,6 +8,7 @@ import {
   Divider,
   Button,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import MailOutlineIcon from '@mui/icons-material/Mail';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import Logo from '@/components/Logo';
@@ -81,13 +82,14 @@ const columns = [
 ];
 
 export default function Footer() {
+  const theme = useTheme();
   const currentYear = new Date().getFullYear();
 
   return (
     <Box
       component="footer"
       sx={{
-        backgroundColor: '#0A1628',
+        backgroundColor: theme.palette.mode === 'dark' ? '#0D1117' : '#0A1628',
         color: '#fff',
       }}
     >
@@ -95,7 +97,7 @@ export default function Footer() {
       <Box
         id="list"
         sx={{
-          backgroundColor: '#0A1628',
+          backgroundColor: theme.palette.mode === 'dark' ? '#0D1117' : '#0A1628',
           color: '#fff',
           py: { xs: 6, md: 8 },
         }}
@@ -183,7 +185,7 @@ export default function Footer() {
       {/* Main Footer */}
       <Box
         sx={{
-          backgroundColor: '#0A1628',
+          backgroundColor: theme.palette.mode === 'dark' ? '#0D1117' : '#0A1628',
           color: '#fff',
           py: { xs: 5, md: 7 },
         }}
@@ -329,7 +331,7 @@ export default function Footer() {
           {/* Divider */}
           <Divider
             sx={{
-              borderColor: 'rgba(255,255,255,0.12)',
+              borderColor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.12)',
               my: 4,
             }}
           />

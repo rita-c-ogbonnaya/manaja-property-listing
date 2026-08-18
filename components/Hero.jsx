@@ -10,6 +10,7 @@ import {
   Button,
   InputLabel,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import StarIcon from '@mui/icons-material/Star';
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -25,13 +26,13 @@ const tabs = ['Buy', 'Rent'];
 
 const fieldSx = {
   '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
-  '& .MuiSelect-select': { py: 0.5, fontWeight: 600, color: '#16213E' },
+  '& .MuiSelect-select': { py: 0.5, fontWeight: 600 },
   fontSize: '0.95rem',
   '&:hover': { backgroundColor: 'rgba(26, 76, 158, 0.05)' },
   '&.Mui-focused': { backgroundColor: 'rgba(26, 76, 158, 0.08)' },
 };
 
-function Field({ label, children }) {
+function Field({ label, children, theme }) {
   return (
     <Box sx={{ px: { xs: 0, md: 2.5 }, py: { xs: 1, md: 0 }, flex: 1, minWidth: 0 }}>
       <InputLabel
@@ -39,7 +40,7 @@ function Field({ label, children }) {
           fontSize: '0.7rem',
           fontWeight: 700,
           letterSpacing: '0.06em',
-          color: '#8a93a3',
+          color: theme.palette.text.secondary,
           textTransform: 'uppercase',
           mb: 0.25,
         }}
@@ -52,6 +53,7 @@ function Field({ label, children }) {
 }
 
 export default function Hero({ filters, onFilterChange, onSearch, stats, states = [] }) {
+  const theme = useTheme();
   const [activeTab, setActiveTab] = useState('Buy');
 
   const handleChange = (field, value) => {
@@ -173,19 +175,19 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
               display: 'flex',
               flexDirection: { xs: 'column', md: 'row' },
               alignItems: { xs: 'stretch', md: 'center' },
-              backgroundColor: '#f6f7f9',
+              backgroundColor: theme.palette.mode === 'dark' ? '#161B22' : '#f6f7f9',
               borderRadius: '12px',
               p: { xs: 1.5, md: 1 },
               gap: { xs: 0, md: 0 },
             }}
           >
-            <Field label="Location">
+            <Field label="Location" theme={theme}>
               <Select
                 fullWidth
                 variant="outlined"
                 value={filters.state || 'all'}
                 onChange={(e) => handleChange('state', e.target.value)}
-                sx={fieldSx}
+                sx={{ ...fieldSx, '& .MuiSelect-select': { color: theme.palette.text.primary } }}
               >
                 <MenuItem value="all">Any location</MenuItem>
                 {states.length > 0 ? (
@@ -200,15 +202,15 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
               </Select>
             </Field>
 
-            <Box sx={{ display: { xs: 'none', md: 'block' }, width: '1px', height: 40, backgroundColor: '#e2e5ea' }} />
+            <Box sx={{ display: { xs: 'none', md: 'block' }, width: '1px', height: 40, backgroundColor: theme.palette.divider }} />
 
-            <Field label="Property Type">
+            <Field label="Property Type" theme={theme}>
               <Select
                 fullWidth
                 variant="outlined"
                 value={filters.type || 'all'}
                 onChange={(e) => handleChange('type', e.target.value)}
-                sx={fieldSx}
+                sx={{ ...fieldSx, '& .MuiSelect-select': { color: theme.palette.text.primary } }}
               >
                 <MenuItem value="all">Any type</MenuItem>
                 {propertyTypes.map((t) => (
@@ -219,15 +221,15 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
               </Select>
             </Field>
 
-            <Box sx={{ display: { xs: 'none', md: 'block' }, width: '1px', height: 40, backgroundColor: '#e2e5ea' }} />
+            <Box sx={{ display: { xs: 'none', md: 'block' }, width: '1px', height: 40, backgroundColor: theme.palette.divider }} />
 
-            <Field label="Bedrooms">
+            <Field label="Bedrooms" theme={theme}>
               <Select
                 fullWidth
                 variant="outlined"
                 value={filters.beds || 'all'}
                 onChange={(e) => handleChange('beds', e.target.value)}
-                sx={fieldSx}
+                sx={{ ...fieldSx, '& .MuiSelect-select': { color: theme.palette.text.primary } }}
               >
                 <MenuItem value="all">Any beds</MenuItem>
                 <MenuItem value="1">1+</MenuItem>
