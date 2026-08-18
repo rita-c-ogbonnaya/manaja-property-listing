@@ -271,7 +271,7 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
         <Box
           sx={{
             display: 'grid',
-            gridTemplateColumns: { xs: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' },
+            gridTemplateColumns: { xs: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
             gap: { xs: 3, md: 0 },
             mt: { xs: 4, md: 5 },
             maxWidth: 900,
@@ -284,6 +284,7 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
               key={stat.label}
               sx={{
                 textAlign: 'center',
+                justifySelf: 'center',
                 borderRight: {
                   xs: 'none',
                   md: idx < stats.length - 1 ? '1px solid rgba(255,255,255,0.14)' : 'none',
