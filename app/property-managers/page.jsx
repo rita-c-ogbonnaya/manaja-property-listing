@@ -140,11 +140,8 @@ export default function PropertyManagersPage() {
           </Box>
         ) : (
           <>
-            <Typography sx={{ fontWeight: 700, color: theme.palette.text.primary, mb: 3, fontSize: { xs: '0.95rem', md: '1.05rem' }}>
-              {filtered.length} property manager{filtered.length === 1 ? '' : 's'}{' '}
-              <Box component="span" sx={{ color: theme.palette.text.secondary, fontWeight: 500 }}>
-                across Africa.
-              </Box>
+            <Typography sx={{ fontWeight: 700, color: theme.palette.text.primary, mb: 3, fontSize: { xs: '0.95rem', md: '1.05rem' } }}>
+              {filtered.length} property manager{filtered.length === 1 ? '' : 's'} across Africa.
             </Typography>
 
             {filtered.length === 0 ? (
