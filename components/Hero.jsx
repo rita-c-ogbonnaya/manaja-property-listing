@@ -22,7 +22,7 @@ const propertyTypes = [
   'Event center/Venue',
 ];
 
-const tabs = ['Buy', 'Rent'];
+const tabs = ['Buy', 'Rent', 'Shortlet'];
 
 const fieldSx = {
   '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
@@ -65,6 +65,7 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
     const propertyStatusMap = {
       'Buy': 'sale',
       'Rent': 'rent',
+      'Shortlet': 'shortlet',
     };
     onFilterChange({ ...filters, property_status: propertyStatusMap[tab] });
   };
