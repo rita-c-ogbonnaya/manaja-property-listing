@@ -37,7 +37,7 @@ const features = [
   {
     Icon: GroupsOutlinedIcon,
     title: 'Trusted Network',
-    text: 'Connect with accredited real estate professionals and developers across Nigeria\'s prime locations.',
+    text: 'Connect with accredited real estate professionals and developers across Africa\'s prime locations.',
   },
   {
     Icon: TuneOutlinedIcon,
@@ -334,7 +334,7 @@ export default function HomePage() {
             Browse by State
           </Typography>
           <Typography sx={{ color: '#5A6478', mb: 4, mt: 1 }}>
-            Explore properties across Nigeria's most sought-after states and regions.
+            Explore properties across Africa's most sought-after states and regions.
           </Typography>
 
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 2 }}>
@@ -395,7 +395,7 @@ export default function HomePage() {
               A smarter, safer way to find property
             </Typography>
             <Typography sx={{ color: '#5b6472', mt: 1.5 }}>
-              We built Manaja to take the guesswork and risk out of house-hunting in Nigeria.
+              We built Manaja to take the guesswork and risk out of house-hunting in Africa.
             </Typography>
           </Box>
 

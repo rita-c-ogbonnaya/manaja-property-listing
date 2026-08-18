@@ -86,7 +86,7 @@ export default function PropertyManagersPage() {
             Property Managers
           </Typography>
           <Typography sx={{ color: 'rgba(255,255,255,0.75)', maxWidth: 640, fontSize: { xs: '0.98rem', md: '1.05rem' }, lineHeight: 1.6 }}>
-            Browse trusted property managers listing across Nigeria. Filter by name, company or location to
+            Browse trusted property managers listing across Africa. Filter by name, company or location to
             find the right partner for your next home.
           </Typography>
 
@@ -135,7 +135,7 @@ export default function PropertyManagersPage() {
             <Typography sx={{ fontWeight: 700, color: '#16213E', mb: 3, fontSize: '1.05rem' }}>
               {filtered.length} property manager{filtered.length === 1 ? '' : 's'}
               <Box component="span" sx={{ color: '#98a1af', fontWeight: 500 }}>
-                {'  '}across Nigeria
+                {'  '}across Africa.
               </Box>
             </Typography>
 
@@ -277,7 +277,7 @@ export default function PropertyManagersPage() {
               Are you a property manager?
             </Typography>
             <Typography sx={{ color: '#4a5568', maxWidth: 560 }}>
-              Join Manaja and showcase your listings to thousands of verified buyers and renters across Nigeria.
+              Join Manaja and showcase your listings to thousands of verified buyers and renters across Africa.
             </Typography>
           </Box>
           <Button

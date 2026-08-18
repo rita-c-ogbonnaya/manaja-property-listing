@@ -145,7 +145,7 @@ export default function Footer() {
                 }}
               >
                 Showcase your properties to qualified buyers and tenants
-                actively searching in Nigeria&apos;s premium real estate
+                actively searching in Africa&apos;s premium real estate
                 market.
               </Typography>
             </Box>
@@ -219,7 +219,7 @@ export default function Footer() {
                 }}
               >
                 Manaja Solutions provides access to premium real estate
-                opportunities across Nigeria&apos;s prime locations,
+                opportunities across Africa&apos;s prime locations,
                 curated excellence for discerning clients.
               </Typography>
 

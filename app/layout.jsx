@@ -6,8 +6,8 @@ import './globals.css'
 const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Manaja Solutions | Premium and verified Real Estate in Nigeria',
-  description: 'Discover exclusive properties across Nigeria\'s prime locations. From luxury apartments to investment opportunities, find your perfect space with Manaja Solutions.',
+  title: 'Manaja Solutions | Premium and verified Real Estate in Africa',
+  description: 'Premium & verified property listing guaranteed across Africa\'s prime locations. From luxury apartments to investment opportunities, find your perfect space with Manaja Solutions.',
   manifest: '/manifest.json',
   icons: {
     icon: [

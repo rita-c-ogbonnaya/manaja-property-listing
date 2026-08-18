@@ -113,7 +113,7 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
             mb: 2,
           }}
         >
-          Discover Your Perfect Space
+          Premium & verified property listing guaranteed.
         </Typography>
         <Typography
           className="text-pretty"
@@ -126,7 +126,7 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
             mb: { xs: 4, md: 5 },
           }}
         >
-          Explore exclusive properties across Nigeria's finest locations. From luxury apartments to investment opportunities, find what matters most to you.
+          Explore exclusive properties across Africa's finest locations. From luxury apartments to investment opportunities, find what matters most to you.
         </Typography>
 
         {/* Search Card */}
