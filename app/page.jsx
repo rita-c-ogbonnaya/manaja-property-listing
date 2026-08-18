@@ -48,7 +48,7 @@ const features = [
   },
   {
     Icon: PaidOutlinedIcon,
-    title: 'Zero Hidden Fees',
+    title: 'Zero Hidden Fees', 
     text: 'Search, save favorites, and make inquiries without any charges — premium service at no cost to you.',
   },
 ];
@@ -226,12 +226,12 @@ export default function HomePage() {
       <BrowseByType onSelect={handleCategorySelect} />
 
       {/* Listings */}
-      <Box ref={listingsRef} component="section" sx={{ py: { xs: 6, md: 8 }, scrollMarginTop: 80 }}>
+      <Box ref={listingsRef} component="section" sx={{ py: { xs: 4, md: 8 }, scrollMarginTop: 80 }}>
         <Container maxWidth="lg">
           <Typography sx={{ color: '#1A4C9E', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}>
             CURATED SELECTION
           </Typography>
-          <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2rem' }, color: theme.palette.text.primary, mb: 3 }}>
+          <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.4rem', md: '2rem' }, color: theme.palette.text.primary, mb: 3 }}>
             Premium and Verified Property Listings
           </Typography>
 
@@ -276,7 +276,7 @@ export default function HomePage() {
                 sx={{
                   display: 'grid',
                   gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
-                  gap: 3,
+                  gap: { xs: 2, md: 3 },
                 }}
               >
                 {allProperties.map((property) => (
@@ -285,14 +285,14 @@ export default function HomePage() {
               </Box>
 
               {hasMore && (
-                <Box sx={{ textAlign: 'center', mt: 6 }}>
+                <Box sx={{ textAlign: 'center', mt: { xs: 4, md: 6 } }}>
                   <Button
                     onClick={loadMoreProperties}
                     disabled={loadingMore}
                     sx={{
                       backgroundColor: '#1A4C9E',
                       color: '#fff',
-                      px: 4,
+                      px: { xs: 3, md: 4 },
                       py: 1.4,
                       borderRadius: '12px',
                       fontWeight: 700,

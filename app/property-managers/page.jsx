@@ -80,25 +80,25 @@ export default function PropertyManagersPage() {
   return (
     <Box component="main" sx={{ backgroundColor: theme.palette.background.default, minHeight: '100vh' }}>
       {/* Hero */}
-      <Box sx={{ backgroundColor: '#16213E', color: '#fff', py: { xs: 5, md: 8 } }}>
+      <Box sx={{ backgroundColor: '#16213E', color: '#fff', py: { xs: 4, md: 8 } }}>
         <Container maxWidth="lg">
           <Typography
-            sx={{ color: '#F5B70C', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1.5 }}
+            sx={{ color: '#F5B70C', fontWeight: 700, letterSpacing: '0.08em', fontSize: { xs: '0.75rem', md: '0.8rem' }, mb: 1.5 }}
           >
             VERIFIED PARTNERS
           </Typography>
           <Typography
             component="h1"
-            sx={{ fontWeight: 800, fontSize: { xs: '1.9rem', md: '2.6rem' }, mb: 1.5, lineHeight: 1.15 }}
+            sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2.6rem' }, mb: 1.5, lineHeight: 1.15 }}
           >
             Property Managers
           </Typography>
-          <Typography sx={{ color: 'rgba(255,255,255,0.75)', maxWidth: 640, fontSize: { xs: '0.98rem', md: '1.05rem' }, lineHeight: 1.6 }}>
+          <Typography sx={{ color: 'rgba(255,255,255,0.75)', maxWidth: { xs: '100%', md: 640 }, fontSize: { xs: '0.9rem', md: '1.05rem' }, lineHeight: 1.6 }}>
             Browse trusted property managers listing across Africa. Filter by name, company or location to
             find the right partner for your next home.
           </Typography>
 
-          <Box sx={{ mt: { xs: 3, md: 4 }, maxWidth: 640 }}>
+          <Box sx={{ mt: { xs: 3, md: 4 }, maxWidth: { xs: '100%', md: 640 } }}>
             <TextField
               fullWidth
               placeholder="Search by name, company or location"
@@ -127,7 +127,7 @@ export default function PropertyManagersPage() {
       </Box>
 
       {/* Listing */}
-      <Container maxWidth="lg" sx={{ py: { xs: 4, md: 6 } }}>
+      <Container maxWidth="lg" sx={{ py: { xs: 3, md: 6 } }}>
         {loading ? (
           <Box sx={{ py: 8, textAlign: 'center' }}>
             <CircularProgress sx={{ color: '#1A4C9E' }} />
@@ -140,10 +140,10 @@ export default function PropertyManagersPage() {
           </Box>
         ) : (
           <>
-            <Typography sx={{ fontWeight: 700, color: theme.palette.text.primary, mb: 3, fontSize: '1.05rem' }}>
-              {filtered.length} property manager{filtered.length === 1 ? '' : 's'}
+            <Typography sx={{ fontWeight: 700, color: theme.palette.text.primary, mb: 3, fontSize: { xs: '0.95rem', md: '1.05rem' }}>
+              {filtered.length} property manager{filtered.length === 1 ? '' : 's'}{' '}
               <Box component="span" sx={{ color: theme.palette.text.secondary, fontWeight: 500 }}>
-                {'  '}across Africa.
+                across Africa.
               </Box>
             </Typography>
 
@@ -163,7 +163,7 @@ export default function PropertyManagersPage() {
                 sx={{
                   display: 'grid',
                   gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' },
-                  gap: 3,
+                  gap: { xs: 2, md: 3 },
                 }}
               >
                 {filtered.map((m, idx) => (
@@ -177,7 +177,7 @@ export default function PropertyManagersPage() {
                         backgroundColor: theme.palette.background.paper,
                         border: `1px solid ${theme.palette.divider}`,
                         borderRadius: '16px',
-                        p: 3,
+                        p: { xs: 2, md: 3 },
                         display: 'flex',
                         flexDirection: 'column',
                         height: '100%',
@@ -194,22 +194,22 @@ export default function PropertyManagersPage() {
                         <Avatar
                           sx={{
                             bgcolor: avatarColors[idx % avatarColors.length],
-                            width: 56,
-                            height: 56,
+                            width: { xs: 48, md: 56 },
+                            height: { xs: 48, md: 56 },
                             fontWeight: 700,
-                            fontSize: '1.1rem',
+                            fontSize: { xs: '1rem', md: '1.1rem' },
                           }}
                         >
                           {initials(m.name || 'Property Manager')}
                         </Avatar>
                         <Box sx={{ minWidth: 0 }}>
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                            <Typography sx={{ fontWeight: 700, color: theme.palette.text.primary, fontSize: '1.02rem' }} noWrap>
+                            <Typography sx={{ fontWeight: 700, color: theme.palette.text.primary, fontSize: { xs: '0.95rem', md: '1.02rem' } }} noWrap>
                               {m.name || 'Property Manager'}
                             </Typography>
                             {m.is_verified && <VerifiedIcon sx={{ fontSize: 18, color: '#1A4C9E' }} />}
                           </Box>
-                          <Typography sx={{ color: theme.palette.text.secondary, fontSize: '0.88rem' }} noWrap>
+                          <Typography sx={{ color: theme.palette.text.secondary, fontSize: { xs: '0.8rem', md: '0.88rem' } }} noWrap>
                             {m.company || 'Independent'}
                           </Typography>
                         </Box>
@@ -225,17 +225,17 @@ export default function PropertyManagersPage() {
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: theme.palette.text.secondary }}>
                           <HomeWorkOutlinedIcon sx={{ fontSize: 18, color: theme.palette.text.secondary }} />
-                          <Typography sx={{ fontSize: '0.9rem', fontWeight: 600 }}>{m.listing_count || 0} listings</Typography>
+                          <Typography sx={{ fontSize: { xs: '0.85rem', md: '0.9rem' }, fontWeight: 600 }}>{m.listing_count || 0} listings</Typography>
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.25 }}>
                           <StarRoundedIcon sx={{ fontSize: 19, color: '#F5B70C' }} />
-                          <Typography sx={{ fontSize: '0.9rem', fontWeight: 700, color: theme.palette.text.primary }}>
+                          <Typography sx={{ fontSize: { xs: '0.85rem', md: '0.9rem' }, fontWeight: 700, color: theme.palette.text.primary }}>
                             {(m.rating || 0).toFixed(1)}
                           </Typography>
                         </Box>
                       </Box>
 
-                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.75, mb: 2.5 }}>
+                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 2.5 }}>
                         {(m.specialties || []).map((s) => (
                           <Chip
                             key={s}
@@ -245,7 +245,7 @@ export default function PropertyManagersPage() {
                               backgroundColor: 'rgba(26,76,158,0.08)',
                               color: '#1A4C9E',
                               fontWeight: 600,
-                              fontSize: '0.75rem',
+                              fontSize: { xs: '0.7rem', md: '0.75rem' },
                             }}
                           />
                         ))}
@@ -278,11 +278,11 @@ export default function PropertyManagersPage() {
         {/* Become a manager CTA */}
         <Box
           sx={{
-            mt: { xs: 5, md: 7 },
+            mt: { xs: 4, md: 7 },
             backgroundColor: theme.palette.background.paper,
             border: `1px solid ${theme.palette.divider}`,
             borderRadius: '16px',
-            p: { xs: 3, md: 5 },
+            p: { xs: 2.5, md: 5 },
             display: 'flex',
             flexDirection: { xs: 'column', md: 'row' },
             alignItems: { xs: 'flex-start', md: 'center' },
@@ -291,10 +291,10 @@ export default function PropertyManagersPage() {
           }}
         >
           <Box>
-            <Typography sx={{ fontWeight: 800, fontSize: { xs: '1.3rem', md: '1.6rem' }, color: theme.palette.text.primary, mb: 1 }}>
+            <Typography sx={{ fontWeight: 800, fontSize: { xs: '1.2rem', md: '1.6rem' }, color: theme.palette.text.primary, mb: 1 }}>
               Are you a property manager?
             </Typography>
-            <Typography sx={{ color: theme.palette.text.secondary, maxWidth: 560 }}>
+            <Typography sx={{ color: theme.palette.text.secondary, maxWidth: { xs: '100%', md: 560 } }}>
               Join Manaja and showcase your listings to thousands of verified buyers and renters across Africa.
             </Typography>
           </Box>
@@ -307,7 +307,7 @@ export default function PropertyManagersPage() {
               backgroundColor: '#F5B70C',
               color: '#16213E',
               fontWeight: 800,
-              px: 4,
+              px: { xs: 3, md: 4 },
               py: 1.5,
               borderRadius: '10px',
               whiteSpace: 'nowrap',

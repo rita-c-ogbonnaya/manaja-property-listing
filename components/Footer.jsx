@@ -99,7 +99,7 @@ export default function Footer() {
         sx={{
           backgroundColor: theme.palette.mode === 'dark' ? '#0D1117' : '#0A1628',
           color: '#fff',
-          py: { xs: 6, md: 8 },
+          py: { xs: 5, md: 8 },
         }}
       >
         <Container maxWidth="lg">
@@ -118,7 +118,7 @@ export default function Footer() {
                   color: '#F5B70C',
                   fontWeight: 700,
                   letterSpacing: '0.08em',
-                  fontSize: '0.8rem',
+                  fontSize: { xs: '0.75rem', md: '0.8rem' },
                   mb: 1,
                 }}
               >
@@ -130,7 +130,7 @@ export default function Footer() {
                 sx={{
                   fontWeight: 800,
                   fontSize: {
-                    xs: '1.6rem',
+                    xs: '1.4rem',
                     md: '2rem',
                   },
                   mb: 1,
@@ -142,7 +142,7 @@ export default function Footer() {
               <Typography
                 sx={{
                   color: 'rgba(255,255,255,0.7)',
-                  maxWidth: 520,
+                  maxWidth: { xs: '100%', md: 520 },
                   lineHeight: 1.7,
                 }}
               >
@@ -161,7 +161,7 @@ export default function Footer() {
                 backgroundColor: '#F5B70C',
                 color: '#0A1628',
                 fontWeight: 800,
-                px: 4,
+                px: { xs: 3, md: 4 },
                 py: 1.5,
                 borderRadius: '12px',
                 whiteSpace: 'nowrap',
@@ -187,7 +187,7 @@ export default function Footer() {
         sx={{
           backgroundColor: theme.palette.mode === 'dark' ? '#0D1117' : '#0A1628',
           color: '#fff',
-          py: { xs: 5, md: 7 },
+          py: { xs: 4, md: 7 },
         }}
       >
         <Container maxWidth="lg">
@@ -199,7 +199,7 @@ export default function Footer() {
                 sm: 'repeat(2, 1fr)',
                 md: '1.6fr repeat(3, 1fr)',
               },
-              gap: 4,
+              gap: { xs: 3, md: 4 },
             }}
           >
             {/* Company Information */}
@@ -214,10 +214,10 @@ export default function Footer() {
               <Typography
                 sx={{
                   color: 'rgba(255,255,255,0.7)',
-                  fontSize: '0.92rem',
+                  fontSize: { xs: '0.85rem', md: '0.92rem' },
                   lineHeight: 1.7,
                   mb: 2,
-                  maxWidth: 320,
+                  maxWidth: { xs: '100%', md: 320 },
                 }}
               >
                 Manaja Solutions provides access to premium real estate
@@ -295,7 +295,7 @@ export default function Footer() {
                   sx={{
                     fontWeight: 700,
                     mb: 2,
-                    fontSize: '0.95rem',
+                    fontSize: { xs: '0.9rem', md: '0.95rem' },
                   }}
                 >
                   {col.title}
@@ -340,37 +340,35 @@ export default function Footer() {
           <Box
             sx={{
               display: 'flex',
-              flexDirection: {
-                xs: 'column',
-                sm: 'row',
-              },
-              justifyContent: 'space-between',
-              alignItems: {
-                xs: 'flex-start',
-                sm: 'center',
-              },
-              gap: 1.5,
+              alignItems: 'center',
+              justifyContent: { xs: 'flex-start', sm: 'center' },
+              flexWrap: 'wrap',
+              gap: { xs: 1.5, sm: 2.5 }, 
             }}
           >
             <Typography
               sx={{
                 color: 'rgba(255,255,255,0.55)',
-                fontSize: '0.85rem',
+                fontSize: { xs: '0.8rem', md: '0.85rem' },
               }}
             >
-              © {currentYear} Manaja Solution Limited. All rights reserved.
+              &copy; {currentYear} Manaja Solution Limited. All rights reserved.
             </Typography>
 
-
-
-
-{/* Contact Information */} <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: { xs: 1.5, sm: 2.5 }, }} > {/* Email */} <MuiLink href="mailto:hello@manaja.solutions" sx={{ ...linkSx, display: 'flex', alignItems: 'center', gap: 0.75, fontSize: '0.85rem', }} > <MailOutlineIcon sx={{ fontSize: 16 }} /> hello@manaja.solutions </MuiLink> {/* Phone */} <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: 0.75, whiteSpace: 'nowrap', }} > <LocalPhoneOutlinedIcon sx={{ fontSize: 16 }} /> +234 (814) 694-6985 {' | '} +250 (793) 149-988 </Typography> </Box>
-            
+            {/* Contact Information */}
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: { xs: 1.5, sm: 2.5 }, }}>
+              <MuiLink href="mailto:hello@manaja.solutions" sx={{ ...linkSx, display: 'flex', alignItems: 'center', gap: 0.75, fontSize: { xs: '0.8rem', md: '0.85rem' }, }}>
+                <MailOutlineIcon sx={{ fontSize: 16 }} /> hello@manaja.solutions
+              </MuiLink>
+              <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: { xs: '0.8rem', md: '0.85rem' }, display: 'flex', alignItems: 'center', gap: 0.75, whiteSpace: 'nowrap', }}>
+                <LocalPhoneOutlinedIcon sx={{ fontSize: 16 }} /> +234 (814) 694-6985 {' | '} +250 (793) 149-988
+              </Typography>
+            </Box>
 
             <Box
               sx={{
                 display: 'flex',
-                gap: 3,
+                gap: { xs: 2, md: 3 },
               }}
             >
               <MuiLink

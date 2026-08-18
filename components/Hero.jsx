@@ -17,7 +17,6 @@ import SearchIcon from '@mui/icons-material/Search';
 const propertyTypes = [
   'Flat/Apartment',
   'Duplex',
-  'Land',
   'Commercial property',
   'Event center/Venue',
 ];
@@ -91,16 +90,16 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
               display: 'inline-flex',
               alignItems: 'center',
               gap: 1,
-              px: 2,
+              px: { xs: 1.5, md: 2 },
               py: 0.75,
               borderRadius: 999,
               border: '1px solid rgba(255,255,255,0.18)',
               backgroundColor: 'rgba(255,255,255,0.06)',
-              fontSize: '0.85rem',
+              fontSize: { xs: '0.75rem', md: '0.85rem' },
             }}
           >
-            <StarIcon sx={{ fontSize: 16, color: '#F5B70C' }} />
-            Premium and Verified Real Estate Solutions
+            <StarIcon sx={{ fontSize: { xs: 14, md: 16 }, color: '#F5B70C' }} />
+            Premium & verified property listing guaranteed.
           </Box>
         </Box>
 
@@ -111,22 +110,24 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
           sx={{
             textAlign: 'center',
             fontWeight: 800,
-            fontSize: { xs: '2.5rem', sm: '3.25rem', md: '4.25rem' },
-            lineHeight: 1.05,
+            fontSize: { xs: '1.8rem', sm: '2.5rem', md: '4.25rem' },
+            lineHeight: 1.1,
             mb: 2,
+            px: 2,
           }}
         >
-          Premium & verified property listing guaranteed.
+          Discover Your Perfect Space
         </Typography>
         <Typography
           className="text-pretty"
           sx={{
             textAlign: 'center',
-            fontSize: { xs: '1rem', md: '1.15rem' },
+            fontSize: { xs: '0.9rem', md: '1.15rem' },
             color: 'rgba(255,255,255,0.75)',
             maxWidth: 620,
             mx: 'auto',
             mb: { xs: 4, md: 5 },
+            px: 2,
           }}
         >
           Explore exclusive properties across Africa's finest locations. From luxury apartments to investment opportunities, find what matters most to you.
@@ -146,7 +147,7 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
           }}
         >
           {/* Tabs */}
-          <Box sx={{ display: 'flex', gap: { xs: 1.5, md: 3 }, mb: 2, flexWrap: 'wrap' }}>
+          <Box sx={{ display: 'flex', gap: { xs: 1, md: 3 }, mb: 2, flexWrap: 'wrap', justifyContent: { xs: 'center', md: 'flex-start' } }}>
             {tabs.map((tab) => (
               <Box
                 key={tab}
@@ -155,11 +156,11 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
                 tabIndex={0}
                 sx={{
                   cursor: 'pointer',
-                  px: 1.5,
+                  px: { xs: 1, md: 1.5 },
                   py: 0.75,
                   borderRadius: 999,
                   fontWeight: 700,
-                  fontSize: '0.9rem',
+                  fontSize: { xs: '0.85rem', md: '0.9rem' },
                   color: activeTab === tab ? '#1A4C9E' : '#5b6472',
                   backgroundColor: activeTab === tab ? 'rgba(26,76,158,0.1)' : 'transparent',
                   transition: 'all 0.2s ease',
@@ -179,7 +180,7 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
               backgroundColor: theme.palette.mode === 'dark' ? '#161B22' : '#f6f7f9',
               borderRadius: '12px',
               p: { xs: 1.5, md: 1 },
-              gap: { xs: 0, md: 0 },
+              gap: { xs: 1, md: 0 },
             }}
           >
             <Field label="Location" theme={theme}>
@@ -246,11 +247,11 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
               startIcon={<SearchIcon />}
               sx={{
                 ml: { xs: 0, md: 2 },
-                mt: { xs: 1.5, md: 0 },
+                mt: { xs: 0, md: 0 },
                 backgroundColor: '#1A4C9E',
                 color: '#fff',
                 fontWeight: 700,
-                px: 4,
+                px: { xs: 3, md: 4 },
                 py: 1.5,
                 borderRadius: '12px',
                 whiteSpace: 'nowrap',
@@ -271,13 +272,14 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
         {/* Stats */}
         <Box
           sx={{
-            display: 'grid',
-            gridTemplateColumns: { xs: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
-            gap: { xs: 3, md: 0 },
+            display: 'flex',
+            justifyContent: 'center',
+            gap: { xs: 2, sm: 4 },
             mt: { xs: 4, md: 5 },
             maxWidth: 900,
             mx: 'auto',
             textAlign: 'center',
+            flexWrap: { xs: 'wrap', sm: 'nowrap' },
           }}
         >
           {stats.map((stat, idx) => (
@@ -285,13 +287,13 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
               key={stat.label}
               sx={{
                 textAlign: 'center',
-                justifySelf: 'center',
+                flex: { xs: '1 1 auto', sm: '0 0 auto' },
               }}
             >
-              <Typography sx={{ fontWeight: 800, fontSize: { xs: '1.5rem', md: '2rem' } }}>
+              <Typography sx={{ fontWeight: 800, fontSize: { xs: '1.1rem', md: '2rem' } }}>
                 {stat.value}
               </Typography>
-              <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem' }}>
+              <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: { xs: '0.7rem', md: '0.9rem' } }}>
                 {stat.label}
               </Typography>
             </Box>
