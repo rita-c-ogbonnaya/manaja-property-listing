@@ -3,12 +3,14 @@
 
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { Container, Box, Typography, Button } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined';
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import PropertyCard from '@/components/PropertyCard';
+import PropertyCardSkeleton from '@/components/PropertyCardSkeleton';
 import FilterBar from '@/components/FilterBar';
 import Hero from '@/components/Hero';
 import BrowseByType from '@/components/BrowseByType';
@@ -52,6 +54,7 @@ const features = [
 ];
 
 export default function HomePage() {
+  const theme = useTheme();
   const { 
     listingType: globalListingType, 
     propertyType: globalPropertyType, 
@@ -61,7 +64,7 @@ export default function HomePage() {
   
   const [filters, setFilters] = useState(emptyFilters);
   const [allProperties, setAllProperties] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState(null);
   const [offset, setOffset] = useState(0);
@@ -201,14 +204,6 @@ export default function HomePage() {
     setTimeout(scrollToListings, 50);
   };
 
-  if (loading) {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-        <Typography>Loading properties...</Typography>
-      </Box>
-    );
-  }
-
   if (error) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
@@ -218,7 +213,7 @@ export default function HomePage() {
   }
 
   return (
-    <Box sx={{ backgroundColor: '#f6f7f9' }}>
+    <Box sx={{ backgroundColor: theme.palette.background.default }}>
       <Hero 
         filters={filters} 
         onFilterChange={setFilters} 
@@ -251,9 +246,16 @@ export default function HomePage() {
           </Typography>
 
           {loading ? (
-            <Box sx={{ py: 8, textAlign: 'center' }}>
-              <CircularProgress sx={{ color: '#1A4C9E' }} />
-              <Typography sx={{ mt: 2, color: '#4a5568' }}>Loading properties...</Typography>
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
+                gap: 3,
+              }}
+            >
+              {Array.from({ length: 6 }).map((_, index) => (
+                <PropertyCardSkeleton key={index} />
+              ))}
             </Box>
           ) : error ? (
             <Box sx={{ py: 8, textAlign: 'center', color: '#d32f2f' }}>
@@ -325,15 +327,15 @@ export default function HomePage() {
       </Box>
 
       {/* Explore by city */}
-      <Box component="section" sx={{ backgroundColor: '#f6f7f9', py: { xs: 6, md: 8 } }}>
+      <Box component="section" sx={{ backgroundColor: theme.palette.background.default, py: { xs: 6, md: 8 } }}>
         <Container maxWidth="lg">
           <Typography sx={{ color: '#1A4C9E', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}>
             PRIME LOCATIONS
           </Typography>
-          <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2rem' }, color: '#0A1628' }}>
+          <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2rem' }, color: theme.palette.text.primary }}>
             Browse by State
           </Typography>
-          <Typography sx={{ color: '#5A6478', mb: 4, mt: 1 }}>
+          <Typography sx={{ color: theme.palette.text.secondary, mb: 4, mt: 1 }}>
             Explore properties across Africa's most sought-after states and regions.
           </Typography>
 

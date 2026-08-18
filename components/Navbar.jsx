@@ -28,8 +28,11 @@ import ApartmentOutlinedIcon from '@mui/icons-material/ApartmentOutlined';
 import TerrainOutlinedIcon from '@mui/icons-material/TerrainOutlined';
 import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 import Logo from '@/components/Logo';
 import { useLocationState } from '@/components/StateProvider';
+import { useTheme } from '@/components/ThemeProvider';
 
 const APP_URL = 'https://app.manaja.solutions';
 
@@ -147,6 +150,7 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileExpanded, setMobileExpanded] = useState(null);
   const { setListingType, setPropertyType, setLocationFilter } = useLocationState();
+  const { mode, toggleTheme } = useTheme();
 
   const handleDrawerToggle = () => setMobileOpen((prev) => !prev);
   const closeDrawer = () => {
@@ -391,6 +395,18 @@ export default function Navbar() {
           >
             Trusted Partners
           </Button>
+
+          <IconButton
+            onClick={toggleTheme}
+            sx={{
+              ml: 1,
+              color: mode === 'dark' ? '#ffffff' : '#0A1628',
+              '&:hover': { backgroundColor: 'rgba(26, 76, 158, 0.1)' },
+            }}
+            aria-label="toggle theme"
+          >
+            {mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
+          </IconButton>
 
           <Button
             component="a"

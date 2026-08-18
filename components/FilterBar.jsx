@@ -1,26 +1,29 @@
 'use client';
 
 import { Box, TextField, Select, MenuItem, Button, InputAdornment } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 
 const propertyTypes = [
   'Flat/Apartment',
   'Duplex',
+  'Shortlet',
   'Land',
   'Commercial property',
   'Event center/Venue',
 ];
 
-const controlSx = {
-  backgroundColor: '#fff',
-  borderRadius: '12px',
-  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#E2E5EA' },
-  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#C9CDD6' },
-  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#1A4C9E' },
-  boxShadow: '0 2px 8px rgba(10, 22, 40, 0.06)',
-};
-
 export default function FilterBar({ filters, onFilterChange, states = [] }) {
+  const theme = useTheme();
+  
+  const controlSx = {
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: '12px',
+    '& .MuiOutlinedInput-notchedOutline': { borderColor: theme.palette.mode === 'dark' ? '#2A3A5E' : '#E2E5EA' },
+    '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: theme.palette.mode === 'dark' ? '#3A4A6E' : '#C9CDD6' },
+    '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#1A4C9E' },
+    boxShadow: theme.palette.mode === 'dark' ? '0 2px 8px rgba(0, 0, 0, 0.3)' : '0 2px 8px rgba(10, 22, 40, 0.06)',
+  };
   const handleChange = (field, value) => {
     onFilterChange({ ...filters, [field]: value });
   };

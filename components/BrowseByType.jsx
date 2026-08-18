@@ -1,34 +1,39 @@
 'use client';
 
 import { Box, Container, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import HouseIcon from '@mui/icons-material/House';
 import VillaIcon from '@mui/icons-material/Villa';
 import HolidayVillageIcon from '@mui/icons-material/HolidayVillage';
 import DomainIcon from '@mui/icons-material/Domain';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import HotelIcon from '@mui/icons-material/Hotel';
 
 const categories = [
   { type: 'Flat/Apartment', label: 'Apartments', Icon: ApartmentIcon },
   { type: 'Duplex', label: 'Duplex', Icon: HolidayVillageIcon },
+  { type: 'Shortlet', label: 'Shortlets', Icon: HotelIcon },
   { type: 'Land', label: 'Land', Icon: DomainIcon },
   { type: 'Commercial property', label: 'Commercial', Icon: MeetingRoomIcon },
   { type: 'Event center/Venue', label: 'Event Centers', Icon: VillaIcon },
 ];
 
 export default function BrowseByType({ onSelect }) {
+  const theme = useTheme();
+  
   return (
-    <Box component="section" sx={{ backgroundColor: '#f6f7f9', py: { xs: 6, md: 8 } }}>
+    <Box component="section" sx={{ backgroundColor: theme.palette.background.default, py: { xs: 6, md: 8 } }}>
       <Container maxWidth="lg">
         <Typography
           sx={{ color: '#1A4C9E', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}
         >
           PROPERTY CATEGORIES
         </Typography>
-        <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2rem' }, color: '#0A1628' }}>
+        <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2rem' }, color: theme.palette.text.primary }}>
           Find Your Ideal Property Type
         </Typography>
-        <Typography sx={{ color: '#5A6478', mb: 4, mt: 1 }}>
+        <Typography sx={{ color: theme.palette.text.secondary, mb: 4, mt: 1 }}>
           Select a category to explore properties that match your lifestyle and investment goals.
         </Typography>
 
