@@ -46,10 +46,10 @@ const columns = [
   {
     title: 'Quick Links',
     links: [
-      {
-        label: 'Trusted Partners',
-        href: '/property-managers',
-      },
+      // {
+      //   label: 'Trusted Partners',
+      //   href: '/property-managers',
+      // },
       {
         label: 'Properties for Sale',
         href: '/',

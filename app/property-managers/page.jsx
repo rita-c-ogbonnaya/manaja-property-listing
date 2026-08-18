@@ -1,6 +1,9 @@
+// app/property-managers/page.js
+
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
+import Link from 'next/link';
 import {
   Box,
   Container,
@@ -19,12 +22,13 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import HomeWorkOutlinedIcon from '@mui/icons-material/HomeWorkOutlined';
-import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
-import { getPropertyManagers } from '@/lib/api-service';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { getPublicManagers } from '@/lib/api-service';
 
 const APP_URL = 'https://app.manaja.solutions';
 
 function initials(name) {
+  if (!name) return 'PM';
   return name
     .split(' ')
     .map((part) => part[0])
@@ -48,11 +52,12 @@ export default function PropertyManagersPage() {
       try {
         setLoading(true);
         setError(null);
-        const data = await getPropertyManagers();
-        setManagers(data);
+        const data = await getPublicManagers();
+        setManagers(data || []);
       } catch (err) {
-        // If backend endpoint doesn't exist, show friendly message
-        setError('Property managers feature coming soon. Check back later.');
+        console.error('Failed to load managers:', err);
+        setError('Unable to load property managers. Please try again later.');
+        setManagers([]);
       } finally {
         setLoading(false);
       }
@@ -66,9 +71,9 @@ export default function PropertyManagersPage() {
     if (!q) return managers;
     return managers.filter(
       (m) =>
-        m.name.toLowerCase().includes(q) ||
-        m.company.toLowerCase().includes(q) ||
-        m.location.toLowerCase().includes(q)
+        (m.name || '').toLowerCase().includes(q) ||
+        (m.company || '').toLowerCase().includes(q) ||
+        (m.location || '').toLowerCase().includes(q)
     );
   }, [query, managers]);
 
@@ -162,98 +167,108 @@ export default function PropertyManagersPage() {
                 }}
               >
                 {filtered.map((m, idx) => (
-                  <Box
+                  <Link
                     key={m.id}
-                    sx={{
-                      backgroundColor: theme.palette.background.paper,
-                      border: `1px solid ${theme.palette.divider}`,
-                      borderRadius: '16px',
-                      p: 3,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      transition: 'box-shadow 0.2s, transform 0.2s',
-                      '&:hover': { boxShadow: mode === 'dark' ? '0 12px 28px rgba(0, 0, 0, 0.4)' : '0 12px 28px rgba(16,23,41,0.10)', transform: 'translateY(-3px)' },
-                    }}
+                    href={`/property-managers/${m.id}`}
+                    style={{ textDecoration: 'none' }}
                   >
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-                      <Avatar
-                        sx={{
-                          bgcolor: avatarColors[idx % avatarColors.length],
-                          width: 56,
-                          height: 56,
-                          fontWeight: 700,
-                          fontSize: '1.1rem',
-                        }}
-                      >
-                        {initials(m.name)}
-                      </Avatar>
-                      <Box sx={{ minWidth: 0 }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                          <Typography sx={{ fontWeight: 700, color: theme.palette.text.primary, fontSize: '1.02rem' }} noWrap>
-                            {m.name}
-                          </Typography>
-                          {m.verified && <VerifiedIcon sx={{ fontSize: 18, color: '#1A4C9E' }} />}
-                        </Box>
-                        <Typography sx={{ color: theme.palette.text.secondary, fontSize: '0.88rem' }} noWrap>
-                          {m.company}
-                        </Typography>
-                      </Box>
-                    </Box>
-
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, color: theme.palette.text.secondary, mb: 1 }}>
-                      <LocationOnOutlinedIcon sx={{ fontSize: 18, color: theme.palette.text.secondary }} />
-                      <Typography sx={{ fontSize: '0.9rem' }} noWrap>
-                        {m.location}
-                      </Typography>
-                    </Box>
-
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: theme.palette.text.secondary }}>
-                        <HomeWorkOutlinedIcon sx={{ fontSize: 18, color: theme.palette.text.secondary }} />
-                        <Typography sx={{ fontSize: '0.9rem', fontWeight: 600 }}>{m.listings} listings</Typography>
-                      </Box>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.25 }}>
-                        <StarRoundedIcon sx={{ fontSize: 19, color: '#F5B70C' }} />
-                        <Typography sx={{ fontSize: '0.9rem', fontWeight: 700, color: theme.palette.text.primary }}>
-                          {m.rating.toFixed(1)}
-                        </Typography>
-                      </Box>
-                    </Box>
-
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.75, mb: 2.5 }}>
-                      {m.specialties.map((s) => (
-                        <Chip
-                          key={s}
-                          label={s}
-                          size="small"
-                          sx={{
-                            backgroundColor: 'rgba(26,76,158,0.08)',
-                            color: '#1A4C9E',
-                            fontWeight: 600,
-                            fontSize: '0.75rem',
-                          }}
-                        />
-                      ))}
-                    </Box>
-
-                    <Divider sx={{ mb: 2, borderColor: theme.palette.divider }} />
-
-                    <Button
-                      component="a"
-                      href={`tel:${m.phone.replace(/\s/g, '')}`}
-                      startIcon={<LocalPhoneOutlinedIcon />}
-                      variant="contained"
+                    <Box
                       sx={{
-                        mt: 'auto',
-                        backgroundColor: '#1A4C9E',
-                        fontWeight: 700,
-                        boxShadow: 'none',
-                        '&:hover': { backgroundColor: '#143B7A', boxShadow: 'none' },
+                        backgroundColor: theme.palette.background.paper,
+                        border: `1px solid ${theme.palette.divider}`,
+                        borderRadius: '16px',
+                        p: 3,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: '100%',
+                        transition: 'all 0.2s ease',
+                        cursor: 'pointer',
+                        '&:hover': { 
+                          boxShadow: mode === 'dark' ? '0 12px 28px rgba(0, 0, 0, 0.4)' : '0 12px 28px rgba(16,23,41,0.10)',
+                          transform: 'translateY(-3px)',
+                          borderColor: '#1A4C9E',
+                        },
                       }}
                     >
-                      Contact Manager
-                    </Button>
-                  </Box>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+                        <Avatar
+                          sx={{
+                            bgcolor: avatarColors[idx % avatarColors.length],
+                            width: 56,
+                            height: 56,
+                            fontWeight: 700,
+                            fontSize: '1.1rem',
+                          }}
+                        >
+                          {initials(m.name || 'Property Manager')}
+                        </Avatar>
+                        <Box sx={{ minWidth: 0 }}>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                            <Typography sx={{ fontWeight: 700, color: theme.palette.text.primary, fontSize: '1.02rem' }} noWrap>
+                              {m.name || 'Property Manager'}
+                            </Typography>
+                            {m.is_verified && <VerifiedIcon sx={{ fontSize: 18, color: '#1A4C9E' }} />}
+                          </Box>
+                          <Typography sx={{ color: theme.palette.text.secondary, fontSize: '0.88rem' }} noWrap>
+                            {m.company || 'Independent'}
+                          </Typography>
+                        </Box>
+                      </Box>
+
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, color: theme.palette.text.secondary, mb: 1 }}>
+                        <LocationOnOutlinedIcon sx={{ fontSize: 18, color: theme.palette.text.secondary }} />
+                        <Typography sx={{ fontSize: '0.9rem' }} noWrap>
+                          {m.location || 'Location not specified'}
+                        </Typography>
+                      </Box>
+
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: theme.palette.text.secondary }}>
+                          <HomeWorkOutlinedIcon sx={{ fontSize: 18, color: theme.palette.text.secondary }} />
+                          <Typography sx={{ fontSize: '0.9rem', fontWeight: 600 }}>{m.listing_count || 0} listings</Typography>
+                        </Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.25 }}>
+                          <StarRoundedIcon sx={{ fontSize: 19, color: '#F5B70C' }} />
+                          <Typography sx={{ fontSize: '0.9rem', fontWeight: 700, color: theme.palette.text.primary }}>
+                            {(m.rating || 0).toFixed(1)}
+                          </Typography>
+                        </Box>
+                      </Box>
+
+                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.75, mb: 2.5 }}>
+                        {(m.specialties || []).map((s) => (
+                          <Chip
+                            key={s}
+                            label={s}
+                            size="small"
+                            sx={{
+                              backgroundColor: 'rgba(26,76,158,0.08)',
+                              color: '#1A4C9E',
+                              fontWeight: 600,
+                              fontSize: '0.75rem',
+                            }}
+                          />
+                        ))}
+                      </Box>
+
+                      <Divider sx={{ mb: 2, borderColor: theme.palette.divider }} />
+
+                      <Button
+                        component="div"
+                        endIcon={<ArrowForwardIcon />}
+                        variant="contained"
+                        sx={{
+                          mt: 'auto',
+                          backgroundColor: '#1A4C9E',
+                          fontWeight: 700,
+                          boxShadow: 'none',
+                          '&:hover': { backgroundColor: '#143B7A', boxShadow: 'none' },
+                        }}
+                      >
+                        View Properties
+                      </Button>
+                    </Box>
+                  </Link>
                 ))}
               </Box>
             )}

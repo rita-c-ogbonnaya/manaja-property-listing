@@ -383,7 +383,7 @@ export default function Navbar() {
             </Box>
           ))}
 
-          <Button
+          {/* <Button
             component={Link}
             href="/property-managers"
             disableRipple
@@ -396,7 +396,7 @@ export default function Navbar() {
             }}
           >
             Trusted Partners
-          </Button>
+          </Button> */}
 
           <IconButton
             onClick={toggleTheme}
