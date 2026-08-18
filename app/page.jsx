@@ -246,16 +246,23 @@ export default function HomePage() {
           </Typography>
 
           {loading ? (
-            <Box
-              sx={{
-                display: 'grid',
-                gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
-                gap: 3,
-              }}
-            >
-              {Array.from({ length: 6 }).map((_, index) => (
-                <PropertyCardSkeleton key={index} />
-              ))}
+            <Box sx={{ py: 8, textAlign: 'center' }}>
+              <Box 
+                component="img"
+                src="/logo.png"
+                alt="Manaja Logo"
+                sx={{ 
+                  width: 80, 
+                  height: 80,
+                  mx: 'auto',
+                  animation: 'pulse 2s ease-in-out infinite',
+                  '@keyframes pulse': {
+                    '0%, 100%': { opacity: 1, transform: 'scale(1)' },
+                    '50%': { opacity: 0.7, transform: 'scale(0.95)' },
+                  },
+                }}
+              />
+              <Typography sx={{ mt: 2, color: theme.palette.text.secondary, fontWeight: 600 }}>Loading properties...</Typography>
             </Box>
           ) : error ? (
             <Box sx={{ py: 8, textAlign: 'center', color: '#d32f2f' }}>
