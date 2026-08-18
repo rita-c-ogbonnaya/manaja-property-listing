@@ -55,6 +55,7 @@ const features = [
 
 export default function HomePage() {
   const theme = useTheme();
+  const mode = theme.palette.mode;
   const { 
     listingType: globalListingType, 
     propertyType: globalPropertyType, 
