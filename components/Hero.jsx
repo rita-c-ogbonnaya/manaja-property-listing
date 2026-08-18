@@ -285,10 +285,6 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
               sx={{
                 textAlign: 'center',
                 justifySelf: 'center',
-                borderRight: {
-                  xs: 'none',
-                  md: idx < stats.length - 1 ? '1px solid rgba(255,255,255,0.14)' : 'none',
-                },
               }}
             >
               <Typography sx={{ fontWeight: 800, fontSize: { xs: '1.5rem', md: '2rem' } }}>
