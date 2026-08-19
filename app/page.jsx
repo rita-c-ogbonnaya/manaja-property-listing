@@ -228,7 +228,7 @@ export default function HomePage() {
       {/* Listings */}
       <Box ref={listingsRef} component="section" sx={{ py: { xs: 4, md: 8 }, scrollMarginTop: 80 }}>
         <Container maxWidth="lg">
-          <Typography sx={{ color: '#1A4C9E', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}>
+          <Typography sx={{ color: mode === 'dark' ? '#F5B70C' : '#1A4C9E', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}>
             CURATED SELECTION
           </Typography>
           <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.4rem', md: '2rem' }, color: theme.palette.text.primary, mb: 3 }}>
@@ -290,21 +290,24 @@ export default function HomePage() {
                     onClick={loadMoreProperties}
                     disabled={loadingMore}
                     sx={{
-                      backgroundColor: '#1A4C9E',
-                      color: '#fff',
+                      backgroundColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.15)' : '#1A4C9E',
+                      color: mode === 'dark' ? '#F5B70C' : '#fff',
                       px: { xs: 3, md: 4 },
                       py: 1.4,
                       borderRadius: '12px',
                       fontWeight: 700,
-                      boxShadow: mode === 'dark' ? '0 4px 12px rgba(26, 76, 158, 0.5)' : '0 4px 12px rgba(26, 76, 158, 0.3)',
+                      border: mode === 'dark' ? '1px solid rgba(245, 183, 12, 0.3)' : 'none',
+                      boxShadow: mode === 'dark' ? 'none' : '0 4px 12px rgba(26, 76, 158, 0.3)',
                       '&:hover': { 
-                        backgroundColor: '#143B7A',
-                        boxShadow: mode === 'dark' ? '0 6px 16px rgba(26, 76, 158, 0.6)' : '0 6px 16px rgba(26, 76, 158, 0.4)',
+                        backgroundColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.25)' : '#143B7A',
+                        boxShadow: mode === 'dark' ? 'none' : '0 6px 16px rgba(26, 76, 158, 0.4)',
                         transform: 'translateY(-1px)',
+                        borderColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.5)' : 'none',
                       },
                       '&:disabled': {
                         backgroundColor: mode === 'dark' ? '#30363D' : '#ccc',
                         boxShadow: 'none',
+                        borderColor: mode === 'dark' ? '#30363D' : '#ccc',
                       },
                       transition: 'all 0.2s ease',
                     }}
@@ -325,7 +328,17 @@ export default function HomePage() {
               <Button
                 variant="outlined"
                 onClick={() => setFilters(emptyFilters)}
-                sx={{ color: '#1A4C9E', borderColor: '#1A4C9E', fontWeight: 700, borderRadius: '12px' }}
+                sx={{ 
+                  color: mode === 'dark' ? '#F5B70C' : '#1A4C9E', 
+                  borderColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.3)' : '#1A4C9E', 
+                  fontWeight: 700, 
+                  borderRadius: '12px',
+                  backgroundColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.1)' : 'transparent',
+                  '&:hover': {
+                    backgroundColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.2)' : 'rgba(26, 76, 158, 0.05)',
+                    borderColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.5)' : '#1A4C9E',
+                  },
+                }}
               >
                 Clear All Filters
               </Button>
@@ -335,9 +348,9 @@ export default function HomePage() {
       </Box>
 
       {/* Explore by city */}
-      <Box component="section" sx={{ backgroundColor: theme.palette.background.default, py: { xs: 6, md: 8 } }}>
+      <Box component="section" sx={{ backgroundColor: theme.palette.background.default, py: { xs: 6, md: 4 } }}>
         <Container maxWidth="lg">
-          <Typography sx={{ color: '#1A4C9E', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}>
+          <Typography sx={{ color: mode === 'dark' ? '#F5B70C' : '#1A4C9E', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}>
             PRIME LOCATIONS
           </Typography>
           <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2rem' }, color: theme.palette.text.primary }}>
@@ -367,10 +380,10 @@ export default function HomePage() {
                       p: 3,
                       cursor: 'pointer',
                       transition: 'all 0.2s ease',
-                      '&:hover': { borderColor: '#1A4C9E', boxShadow: mode === 'dark' ? '0 12px 28px rgba(26, 76, 158, 0.3)' : '0 12px 28px rgba(16,23,41,0.1)' },
+                      '&:hover': { borderColor: mode === 'dark' ? '#F5B70C' : '#1A4C9E', boxShadow: mode === 'dark' ? '0 12px 28px rgba(26, 76, 158, 0.3)' : '0 12px 28px rgba(16,23,41,0.1)' },
                     }}
                   >
-                    <Typography sx={{ color: '#1A4C9E', fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.06em', mb: 1 }}>
+                    <Typography sx={{ color: mode === 'dark' ? '#F5B70C' : '#1A4C9E', fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.06em', mb: 1 }}>
                       ACTIVE LISTINGS
                     </Typography>
                     <Typography sx={{ fontWeight: 800, fontSize: '2rem', color: theme.palette.text.primary, lineHeight: 1 }}>
@@ -381,7 +394,7 @@ export default function HomePage() {
                         <Typography sx={{ fontWeight: 700, color: theme.palette.text.primary }}>{state.label}</Typography>
                         <Typography sx={{ color: theme.palette.text.secondary, fontSize: '0.85rem' }}>properties for sale &amp; rent</Typography>
                       </Box>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#1A4C9E', fontWeight: 700, fontSize: '0.85rem' }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: mode === 'dark' ? '#F5B70C' : '#1A4C9E', fontWeight: 700, fontSize: '0.85rem' }}>
                         Explore <ArrowForwardIcon sx={{ fontSize: 16 }} />
                       </Box>
                     </Box>
@@ -398,9 +411,9 @@ export default function HomePage() {
       </Box>
 
       {/* Why choose */}
-      <Box id="about" component="section" sx={{ py: { xs: 6, md: 8 } }}>
+      <Box id="about" component="section" sx={{ py: { xs: 6, md: 4 } }}>
         <Container maxWidth="lg">
-          <Box sx={{ textAlign: 'center', maxWidth: 640, mx: 'auto', mb: 5 }}>
+          <Box sx={{ textAlign: 'center', maxWidth: 650, mx: 'auto', mb: 5 }}>
             <Typography component="h2" sx={{ fontWeight: 800, fontSize: { xs: '1.6rem', md: '2.25rem' }, color: theme.palette.text.primary }}>
               A smarter, safer way to find property
             </Typography>
@@ -424,7 +437,7 @@ export default function HomePage() {
                     mb: 2,
                   }}
                 >
-                  <Icon sx={{ color: '#1A4C9E', fontSize: 26 }} />
+                  <Icon sx={{ color: mode === 'dark' ? '#F5B70C' : '#1A4C9E', fontSize: 26 }} />
                 </Box>
                 <Typography sx={{ fontWeight: 700, color: theme.palette.text.primary, fontSize: '1.05rem', mb: 1 }}>{title}</Typography>
                 <Typography sx={{ color: theme.palette.text.secondary, fontSize: '0.92rem', lineHeight: 1.6 }}>{text}</Typography>

@@ -101,7 +101,7 @@ function MegaMenu({ onNavigate, onFilterByListingType }) {
           onClick={() => handlePropertyTypeClick(label)}
           sx={{ px: 2.5, py: 1.1, gap: 1.5, color: mode === 'dark' ? '#E6EDF3' : '#16213E' }}
         >
-          <Icon sx={{ fontSize: 22, color: '#1A4C9E' }} />
+          <Icon sx={{ fontSize: 22, color: mode === 'dark' ? '#F5B70C' : '#1A4C9E' }} />
           <Typography sx={{ fontWeight: 600, fontSize: '0.95rem' }}>{label}</Typography>
         </ListItemButton>
       ))}
@@ -136,7 +136,7 @@ function MegaMenu({ onNavigate, onFilterByListingType }) {
         component={Link}
         href="/"
         onClick={handleViewAll}
-        sx={{ px: 2.5, py: 1, gap: 1, color: mode === 'dark' ? '#E6EDF3' : '#1A4C9E' }}
+        sx={{ px: 2.5, py: 1, gap: 1, color: mode === 'dark' ? '#F5B70C' : '#1A4C9E' }}
       >
         <ArrowForwardIcon sx={{ fontSize: 20 }} />
         <Typography sx={{ fontWeight: 700, fontSize: '0.92rem' }}>View All</Typography>
@@ -282,7 +282,7 @@ export default function Navbar() {
                         },
                       }}
                     >
-                      <Icon sx={{ fontSize: 20, color: '#1A4C9E' }} />
+                      <Icon sx={{ fontSize: 20, color: mode === 'dark' ? '#F5B70C' : '#1A4C9E' }} />
                       <Typography sx={{ fontWeight: 500, fontSize: '0.9rem' }}>{label}</Typography>
                     </ListItemButton>
                   ))}
@@ -362,15 +362,18 @@ export default function Navbar() {
           rel="noopener noreferrer"
           variant="contained"
           sx={{ 
-            backgroundColor: '#1A4C9E', 
+            backgroundColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.15)' : '#1A4C9E',
+            color: mode === 'dark' ? '#F5B70C' : '#fff',
             fontWeight: 700, 
             py: 1.25,
             fontSize: '0.9rem',
             borderRadius: 1,
-            boxShadow: '0 2px 8px rgba(26, 76, 158, 0.25)',
+            border: mode === 'dark' ? '1px solid rgba(245, 183, 12, 0.3)' : 'none',
+            boxShadow: mode === 'dark' ? 'none' : '0 2px 8px rgba(26, 76, 158, 0.25)',
             '&:hover': {
-              backgroundColor: '#143B7A',
-              boxShadow: '0 4px 12px rgba(26, 76, 158, 0.35)',
+              backgroundColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.25)' : '#143B7A',
+              boxShadow: mode === 'dark' ? 'none' : '0 4px 12px rgba(26, 76, 158, 0.35)',
+              borderColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.5)' : 'none',
             }
           }}
         >
@@ -451,11 +454,11 @@ export default function Navbar() {
                   />
                 }
                 sx={{
-                  color: openMenu === item.key ? '#1A4C9E' : (mode === 'dark' ? '#8B949E' : '#4a5568'),
+                  color: openMenu === item.key ? (mode === 'dark' ? '#F5B70C' : '#1A4C9E') : (mode === 'dark' ? '#8B949E' : '#4a5568'),
                   fontWeight: 600,
                   fontSize: '0.95rem',
                   px: 1.5,
-                  '&:hover': { color: '#1A4C9E', backgroundColor: 'transparent' },
+                  '&:hover': { color: mode === 'dark' ? '#F5B70C' : '#1A4C9E', backgroundColor: 'transparent' },
                 }}
               >
                 {item.label}
@@ -521,16 +524,19 @@ export default function Navbar() {
             variant="contained"
             sx={{
               ml: 1.5,
-              backgroundColor: '#1A4C9E',
+              backgroundColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.15)' : '#1A4C9E',
+              color: mode === 'dark' ? '#F5B70C' : '#fff',
               fontWeight: 700,
               px: 2.5,
               py: 1,
               borderRadius: '10px',
-              boxShadow: '0 4px 12px rgba(26, 76, 158, 0.3)',
+              border: mode === 'dark' ? '1px solid rgba(245, 183, 12, 0.3)' : 'none',
+              boxShadow: mode === 'dark' ? 'none' : '0 4px 12px rgba(26, 76, 158, 0.3)',
               '&:hover': { 
-                backgroundColor: '#143B7A',
-                boxShadow: '0 6px 16px rgba(26, 76, 158, 0.4)',
+                backgroundColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.25)' : '#143B7A',
+                boxShadow: mode === 'dark' ? 'none' : '0 6px 16px rgba(26, 76, 158, 0.4)',
                 transform: 'translateY(-1px)',
+                borderColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.5)' : 'none',
               },
               transition: 'all 0.2s ease',
             }}

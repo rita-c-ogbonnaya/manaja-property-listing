@@ -74,8 +74,9 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
       component="section"
       sx={{
         position: 'relative',
-        background:
-          'radial-gradient(ellipse at 50% 0%, rgba(26, 76, 158, 0.25) 0%, transparent 50%), radial-gradient(ellipse at 100% 100%, rgba(245, 183, 12, 0.15) 0%, transparent 40%), linear-gradient(135deg, #0A1628 0%, #1A2744 50%, #0F1729 100%)',
+        background: theme.palette.mode === 'dark'
+          ? 'radial-gradient(ellipse at 50% 0%, rgba(26, 76, 158, 0.15) 0%, transparent 50%), radial-gradient(ellipse at 100% 100%, rgba(245, 183, 12, 0.1) 0%, transparent 40%), linear-gradient(135deg, #0D1117 0%, #161B22 50%, #0D1117 100%)'
+          : 'radial-gradient(ellipse at 50% 0%, rgba(26, 76, 158, 0.25) 0%, transparent 50%), radial-gradient(ellipse at 100% 100%, rgba(245, 183, 12, 0.15) 0%, transparent 40%), linear-gradient(135deg, #0A1628 0%, #1A2744 50%, #0F1729 100%)',
         color: '#fff',
         pt: { xs: 6, md: 9 },
         pb: { xs: 6, md: 10 },
@@ -124,7 +125,7 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
             textAlign: 'center',
             fontSize: { xs: '0.9rem', md: '1.15rem' },
             color: 'rgba(255,255,255,0.75)',
-            maxWidth: 620,
+            maxWidth: 650,
             mx: 'auto',
             mb: { xs: 4, md: 5 },
             px: 2,
@@ -161,8 +162,8 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
                   borderRadius: 999,
                   fontWeight: 700,
                   fontSize: { xs: '0.85rem', md: '0.9rem' },
-                  color: activeTab === tab ? '#1A4C9E' : '#5b6472',
-                  backgroundColor: activeTab === tab ? 'rgba(26,76,158,0.1)' : 'transparent',
+                  color: activeTab === tab ? (theme.palette.mode === 'dark' ? '#F5B70C' : '#1A4C9E') : '#5b6472',
+                  backgroundColor: activeTab === tab ? (theme.palette.mode === 'dark' ? 'rgba(245, 183, 12, 0.1)' : 'rgba(26,76,158,0.1)') : 'transparent',
                   transition: 'all 0.2s ease',
                 }}
               >
@@ -248,18 +249,20 @@ export default function Hero({ filters, onFilterChange, onSearch, stats, states 
               sx={{
                 ml: { xs: 0, md: 2 },
                 mt: { xs: 0, md: 0 },
-                backgroundColor: '#1A4C9E',
-                color: '#fff',
+                backgroundColor: theme.palette.mode === 'dark' ? 'rgba(245, 183, 12, 0.15)' : '#1A4C9E',
+                color: theme.palette.mode === 'dark' ? '#F5B70C' : '#fff',
                 fontWeight: 700,
                 px: { xs: 3, md: 4 },
                 py: 1.5,
                 borderRadius: '12px',
                 whiteSpace: 'nowrap',
-                boxShadow: '0 4px 14px rgba(26, 76, 158, 0.4)',
+                border: theme.palette.mode === 'dark' ? '1px solid rgba(245, 183, 12, 0.3)' : 'none',
+                boxShadow: theme.palette.mode === 'dark' ? 'none' : '0 4px 14px rgba(26, 76, 158, 0.4)',
                 '&:hover': { 
-                  backgroundColor: '#143B7A',
-                  boxShadow: '0 6px 20px rgba(26, 76, 158, 0.5)',
+                  backgroundColor: theme.palette.mode === 'dark' ? 'rgba(245, 183, 12, 0.25)' : '#143B7A',
+                  boxShadow: theme.palette.mode === 'dark' ? 'none' : '0 6px 20px rgba(26, 76, 158, 0.5)',
                   transform: 'translateY(-1px)',
+                  borderColor: theme.palette.mode === 'dark' ? 'rgba(245, 183, 12, 0.5)' : 'none',
                 },
                 transition: 'all 0.2s ease',
               }}

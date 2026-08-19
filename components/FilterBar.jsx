@@ -21,7 +21,7 @@ export default function FilterBar({ filters, onFilterChange, states = [] }) {
     borderRadius: '12px',
     '& .MuiOutlinedInput-notchedOutline': { borderColor: theme.palette.mode === 'dark' ? '#2A3A5E' : '#E2E5EA' },
     '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: theme.palette.mode === 'dark' ? '#3A4A6E' : '#C9CDD6' },
-    '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#1A4C9E' },
+    '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: theme.palette.mode === 'dark' ? '#F5B70C' : '#1A4C9E' },
     boxShadow: theme.palette.mode === 'dark' ? '0 2px 8px rgba(0, 0, 0, 0.3)' : '0 2px 8px rgba(10, 22, 40, 0.06)',
   };
   const handleChange = (field, value) => {
@@ -119,17 +119,18 @@ export default function FilterBar({ filters, onFilterChange, states = [] }) {
         variant="outlined"
         onClick={handleReset}
         sx={{
-          color: '#1A4C9E',
-          borderColor: '#1A4C9E',
+          color: theme.palette.mode === 'dark' ? '#F5B70C' : '#1A4C9E',
+          borderColor: theme.palette.mode === 'dark' ? 'rgba(245, 183, 12, 0.3)' : '#1A4C9E',
           fontWeight: 700,
           borderRadius: '12px',
           px: 3,
           whiteSpace: 'nowrap',
+          backgroundColor: theme.palette.mode === 'dark' ? 'rgba(245, 183, 12, 0.1)' : 'transparent',
           '&:hover': { 
-            backgroundColor: '#1A4C9E', 
-            color: '#fff', 
-            borderColor: '#1A4C9E',
-            boxShadow: '0 4px 12px rgba(26, 76, 158, 0.3)',
+            backgroundColor: theme.palette.mode === 'dark' ? 'rgba(245, 183, 12, 0.2)' : '#1A4C9E', 
+            color: theme.palette.mode === 'dark' ? '#F5B70C' : '#fff', 
+            borderColor: theme.palette.mode === 'dark' ? 'rgba(245, 183, 12, 0.5)' : '#1A4C9E',
+            boxShadow: theme.palette.mode === 'dark' ? 'none' : '0 4px 12px rgba(26, 76, 158, 0.3)',
           },
           transition: 'all 0.2s ease',
         }}

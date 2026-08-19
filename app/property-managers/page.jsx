@@ -37,7 +37,7 @@ function initials(name) {
     .toUpperCase();
 }
 
-const avatarColors = ['#1A4C9E', '#143B7A', '#2A3A5E', '#0B4F6C', '#245c8f'];
+const avatarColors = ['#F5B70C', '#E6A50C', '#D4940C', '#C3830C', '#B2720C'];
 
 export default function PropertyManagersPage() {
   const theme = useTheme();
@@ -130,7 +130,7 @@ export default function PropertyManagersPage() {
       <Container maxWidth="lg" sx={{ py: { xs: 3, md: 6 } }}>
         {loading ? (
           <Box sx={{ py: 8, textAlign: 'center' }}>
-            <CircularProgress sx={{ color: '#1A4C9E' }} />
+            <CircularProgress sx={{ color: mode === 'dark' ? '#F5B70C' : '#1A4C9E' }} />
             <Typography sx={{ mt: 2, color: theme.palette.text.secondary }}>Loading property managers...</Typography>
           </Box>
         ) : error ? (
@@ -183,7 +183,7 @@ export default function PropertyManagersPage() {
                         '&:hover': { 
                           boxShadow: mode === 'dark' ? '0 12px 28px rgba(0, 0, 0, 0.4)' : '0 12px 28px rgba(16,23,41,0.10)',
                           transform: 'translateY(-3px)',
-                          borderColor: '#1A4C9E',
+                          borderColor: mode === 'dark' ? '#F5B70C' : '#1A4C9E',
                         },
                       }}
                     >
@@ -204,7 +204,7 @@ export default function PropertyManagersPage() {
                             <Typography sx={{ fontWeight: 700, color: theme.palette.text.primary, fontSize: { xs: '0.95rem', md: '1.02rem' } }} noWrap>
                               {m.name || 'Property Manager'}
                             </Typography>
-                            {m.is_verified && <VerifiedIcon sx={{ fontSize: 18, color: '#1A4C9E' }} />}
+                            {m.is_verified && <VerifiedIcon sx={{ fontSize: 18, color: mode === 'dark' ? '#F5B70C' : '#1A4C9E' }} />}
                           </Box>
                           <Typography sx={{ color: theme.palette.text.secondary, fontSize: { xs: '0.8rem', md: '0.88rem' } }} noWrap>
                             {m.company || 'Independent'}
@@ -239,8 +239,8 @@ export default function PropertyManagersPage() {
                             label={s}
                             size="small"
                             sx={{
-                              backgroundColor: 'rgba(26,76,158,0.08)',
-                              color: '#1A4C9E',
+                              backgroundColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.08)' : 'rgba(26,76,158,0.08)',
+                              color: mode === 'dark' ? '#F5B70C' : '#1A4C9E',
                               fontWeight: 600,
                               fontSize: { xs: '0.7rem', md: '0.75rem' },
                             }}
@@ -256,10 +256,16 @@ export default function PropertyManagersPage() {
                         variant="contained"
                         sx={{
                           mt: 'auto',
-                          backgroundColor: '#1A4C9E',
+                          backgroundColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.15)' : '#1A4C9E',
+                          color: mode === 'dark' ? '#F5B70C' : '#fff',
                           fontWeight: 700,
-                          boxShadow: 'none',
-                          '&:hover': { backgroundColor: '#143B7A', boxShadow: 'none' },
+                          border: mode === 'dark' ? '1px solid rgba(245, 183, 12, 0.3)' : 'none',
+                          boxShadow: mode === 'dark' ? 'none' : 'none',
+                          '&:hover': { 
+                            backgroundColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.25)' : '#143B7A', 
+                            boxShadow: 'none',
+                            borderColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.5)' : 'none',
+                          },
                         }}
                       >
                         View Properties
@@ -301,15 +307,19 @@ export default function PropertyManagersPage() {
             target="_blank"
             rel="noopener noreferrer"
             sx={{
-              backgroundColor: '#F5B70C',
-              color: '#16213E',
+              backgroundColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.15)' : '#F5B70C',
+              color: mode === 'dark' ? '#F5B70C' : '#16213E',
               fontWeight: 800,
               px: { xs: 3, md: 4 },
               py: 1.5,
               borderRadius: '10px',
               whiteSpace: 'nowrap',
-              boxShadow: 'none',
-              '&:hover': { backgroundColor: '#DBA200' },
+              border: mode === 'dark' ? '1px solid rgba(245, 183, 12, 0.3)' : 'none',
+              boxShadow: mode === 'dark' ? 'none' : 'none',
+              '&:hover': { 
+                backgroundColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.25)' : '#DBA200',
+                borderColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.5)' : 'none',
+              },
             }}
           >
             List a property

@@ -77,7 +77,7 @@ export default function PropertyDetailPage() {
   if (loading) {
     return (
       <Container maxWidth="lg" sx={{ py: 8, textAlign: 'center' }}>
-        <CircularProgress sx={{ color: '#1A4C9E' }} />
+        <CircularProgress sx={{ color: mode === 'dark' ? '#F5B70C' : '#1A4C9E' }} />
         <Typography variant="body1" sx={{ mt: 2 }}>
           Loading property details...
         </Typography>
@@ -264,7 +264,7 @@ export default function PropertyDetailPage() {
                           borderRadius: '50%',
                           backgroundColor:
                             idx === currentImageIndex
-                              ? '#1A4C9E'
+                              ? (mode === 'dark' ? '#F5B70C' : '#1A4C9E')
                               : 'rgba(255, 255, 255, 0.6)',
                           cursor: 'pointer',
                           transition: 'all 0.3s',
@@ -291,7 +291,7 @@ export default function PropertyDetailPage() {
                         cursor: 'pointer',
                         border:
                           idx === currentImageIndex
-                            ? '3px solid #1A4C9E'
+                            ? `3px solid ${mode === 'dark' ? '#F5B70C' : '#1A4C9E'}`
                             : '2px solid #e0e0e0',
                         transition: 'all 0.3s',
                       }}
@@ -382,7 +382,7 @@ export default function PropertyDetailPage() {
               <Grid container spacing={2}>
                 <Grid size={6}>
                   <Box sx={{ textAlign: 'center' }}>
-                    <Typography variant="h6" sx={{ fontWeight: 700, color: '#1A4C9E' }}>
+                    <Typography variant="h6" sx={{ fontWeight: 700, color: mode === 'dark' ? '#F5B70C' : '#1A4C9E' }}>
                       {property.bedrooms || 0}
                     </Typography>
                     <Typography variant="body2" sx={{ color: '#666', mt: 0.5 }}>
@@ -392,7 +392,7 @@ export default function PropertyDetailPage() {
                 </Grid>
                 <Grid size={6}>
                   <Box sx={{ textAlign: 'center' }}>
-                    <Typography variant="h6" sx={{ fontWeight: 700, color: '#1A4C9E' }}>
+                    <Typography variant="h6" sx={{ fontWeight: 700, color: mode === 'dark' ? '#F5B70C' : '#1A4C9E' }}>
                       {property.bathrooms || 0}
                     </Typography>
                     <Typography variant="body2" sx={{ color: '#666', mt: 0.5 }}>
@@ -419,10 +419,14 @@ export default function PropertyDetailPage() {
                 variant="contained"
                 onClick={() => setContactDialogOpen(true)}
                 sx={{
-                  backgroundColor: '#1A4C9E',
-                  color: '#fff',
+                  backgroundColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.15)' : '#1A4C9E',
+                  color: mode === 'dark' ? '#F5B70C' : '#fff',
                   fontWeight: 700,
-                  '&:hover': { backgroundColor: '#143B7A' },
+                  border: mode === 'dark' ? '1px solid rgba(245, 183, 12, 0.3)' : 'none',
+                  '&:hover': { 
+                    backgroundColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.25)' : '#143B7A',
+                    borderColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.5)' : 'none',
+                  },
                 }}
               >
                 Contact About This Property
@@ -523,7 +527,11 @@ export default function PropertyDetailPage() {
           <Button
             onClick={handleSubmitContact}
             variant="contained"
-            sx={{ backgroundColor: '#1A4C9E' }}
+            sx={{ 
+              backgroundColor: mode === 'dark' ? 'rgba(245, 183, 12, 0.15)' : '#1A4C9E',
+              color: mode === 'dark' ? '#F5B70C' : '#fff',
+              border: mode === 'dark' ? '1px solid rgba(245, 183, 12, 0.3)' : 'none',
+            }}
           >
             Send Message
           </Button>

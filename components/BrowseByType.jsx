@@ -26,7 +26,7 @@ export default function BrowseByType({ onSelect }) {
     <Box component="section" sx={{ backgroundColor: theme.palette.background.default, py: { xs: 6, md: 8 } }}>
       <Container maxWidth="lg">
         <Typography
-          sx={{ color: '#1A4C9E', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}
+          sx={{ color: theme.palette.mode === 'dark' ? '#F5B70C' : '#1A4C9E', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.8rem', mb: 1 }}
         >
           PROPERTY CATEGORIES
         </Typography>
@@ -54,14 +54,14 @@ export default function BrowseByType({ onSelect }) {
                 if (e.key === 'Enter' || e.key === ' ') onSelect(type);
               }}
               sx={{
-                backgroundColor: '#fff',
-                border: '1px solid #e7e9ee',
+                backgroundColor: theme.palette.background.paper,
+                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: '14px',
                 p: 2.5,
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
                 '&:hover': {
-                  borderColor: '#1A4C9E',
+                  borderColor: theme.palette.mode === 'dark' ? '#F5B70C' : '#1A4C9E',
                   boxShadow: '0 12px 28px rgba(16, 23, 41, 0.1)',
                   transform: 'translateY(-3px)',
                 },
@@ -72,16 +72,16 @@ export default function BrowseByType({ onSelect }) {
                   width: 46,
                   height: 46,
                   borderRadius: '12px',
-                  backgroundColor: 'rgba(26,76,158,0.1)',
+                  backgroundColor: theme.palette.mode === 'dark' ? 'rgba(245, 183, 12, 0.1)' : 'rgba(26,76,158,0.1)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   mb: 2,
                 }}
               >
-                <Icon sx={{ color: '#1A4C9E', fontSize: 24 }} />
+                <Icon sx={{ color: theme.palette.mode === 'dark' ? '#F5B70C' : '#1A4C9E', fontSize: 24 }} />
               </Box>
-              <Typography sx={{ fontWeight: 700, color: '#16213E', fontSize: '1rem' }}>{label}</Typography>
+              <Typography sx={{ fontWeight: 700, color: theme.palette.text.primary, fontSize: '1rem' }}>{label}</Typography>
             </Box>
           ))}
         </Box>
