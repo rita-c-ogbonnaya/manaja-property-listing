@@ -1,10 +1,12 @@
 import { NextResponse } from 'next/server';
+const backendUrl = 'https://manaja-backend-production.up.railway.app';
+
+
 
 export async function GET(request, { params }) {
   const { searchParams } = new URL(request.url);
   const resolvedParams = await params;
   const path = Array.isArray(resolvedParams.path) ? resolvedParams.path.join('/') : (resolvedParams.path || '');
-  const backendUrl = 'https://manaja-backend.onrender.com';
   
   console.log('=== PROXY DEBUG ===');
   console.log('Request URL:', request.url);
@@ -53,7 +55,6 @@ export async function GET(request, { params }) {
 export async function POST(request, { params }) {
   const resolvedParams = await params;
   const path = Array.isArray(resolvedParams.path) ? resolvedParams.path.join('/') : (resolvedParams.path || '');
-  const backendUrl = 'https://manaja-backend-production.up.railway.app';
   
   try {
     const body = await request.json();
