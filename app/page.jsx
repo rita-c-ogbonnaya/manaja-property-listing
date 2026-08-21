@@ -114,6 +114,12 @@ export default function HomePage() {
         
         console.log('Processed properties:', properties.length, 'Total:', total);
         
+        // Debug: log first property to check ID field
+        if (properties.length > 0) {
+          console.log('First property structure:', properties[0]);
+          console.log('Available fields:', Object.keys(properties[0]));
+        }
+        
         // Check if backend returned a message instead of data
         if (properties.length === 0 && data && data.message) {
           throw new Error(`Backend returned: ${data.message}. The /listings endpoint may not be properly configured.`);
