@@ -53,7 +53,7 @@ export async function GET(request, { params }) {
 export async function POST(request, { params }) {
   const resolvedParams = await params;
   const path = Array.isArray(resolvedParams.path) ? resolvedParams.path.join('/') : (resolvedParams.path || '');
-  const backendUrl = 'https://manaja-backend.onrender.com';
+  const backendUrl = 'https://manaja-backend-production.up.railway.app';
   
   try {
     const body = await request.json();
