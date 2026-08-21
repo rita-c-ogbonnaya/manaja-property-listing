@@ -37,7 +37,7 @@ export default function PropertyCard({ property }) {
   return (
     <Box
       component={Link}
-      href={`/properties/${property.id}`}
+      href={`/properties/${property.name}`}
       sx={{
         display: 'flex',
         flexDirection: 'column',
