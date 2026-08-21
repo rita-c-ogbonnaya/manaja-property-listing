@@ -160,14 +160,21 @@ export default function PropertyDetailPage() {
   // Render the rest of the component as before...
   // (The rest of the component remains largely the same, using the `property` state)
   return (
-    <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '100vh', py: 4 }}>
+    <Box sx={{ backgroundColor: theme.palette.background.default, minHeight: '100vh', py: 4 }}>
       <Container maxWidth="lg">
         {/* Back Button */}
         <Button
           component={Link}
           href="/"
           startIcon={<ArrowBackIcon />}
-          sx={{ mb: 3 }}
+          sx={{ 
+            mb: 3,
+            color: theme.palette.text.primary,
+            fontWeight: 600,
+            '&:hover': {
+              backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.04)',
+            },
+          }}
         >
           Back to Properties
         </Button>
@@ -200,14 +207,16 @@ export default function PropertyDetailPage() {
                   sx={{
                     width: '100%',
                     height: '100%',
-                    backgroundColor: '#f0f2f5',
+                    backgroundColor: theme.palette.mode === 'dark' ? '#1a1f2e' : '#f0f2f5',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    backgroundImage: 'linear-gradient(135deg, #e8f5e9 0%, #e3f2fd 100%)',
+                    backgroundImage: theme.palette.mode === 'dark' 
+                      ? 'linear-gradient(135deg, #1a1f2e 0%, #252b3d 100%)' 
+                      : 'linear-gradient(135deg, #e8f5e9 0%, #e3f2fd 100%)',
                   }}
                 >
-                  <Typography sx={{ color: '#8A93A3', fontWeight: 600, fontSize: '1.2rem' }}>
+                  <Typography sx={{ color: theme.palette.text.secondary, fontWeight: 600, fontSize: '1.2rem' }}>
                     No Images Available
                   </Typography>
                 </Box>
@@ -223,9 +232,10 @@ export default function PropertyDetailPage() {
                       left: 16,
                       top: '50%',
                       transform: 'translateY(-50%)',
-                      backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                      backgroundColor: theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.8)',
+                      color: theme.palette.text.primary,
                       minWidth: 40,
-                      '&:hover': { backgroundColor: '#fff' },
+                      '&:hover': { backgroundColor: theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.8)' : '#fff' },
                     }}
                   >
                     {'<'}
@@ -237,9 +247,10 @@ export default function PropertyDetailPage() {
                       right: 16,
                       top: '50%',
                       transform: 'translateY(-50%)',
-                      backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                      backgroundColor: theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.8)',
+                      color: theme.palette.text.primary,
                       minWidth: 40,
-                      '&:hover': { backgroundColor: '#fff' },
+                      '&:hover': { backgroundColor: theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.8)' : '#fff' },
                     }}
                   >
                     {'>'}
@@ -294,7 +305,7 @@ export default function PropertyDetailPage() {
                         border:
                           idx === currentImageIndex
                             ? `3px solid ${theme.palette.mode === 'dark' ? '#F5B70C' : '#1A4C9E'}`
-                            : '2px solid #e0e0e0',
+                            : `2px solid ${theme.palette.divider}`,
                         transition: 'all 0.3s',
                       }}
                     >
@@ -323,7 +334,7 @@ export default function PropertyDetailPage() {
                 <Chip
                   label={formatPropertyType(property.property_type)}
                   sx={{
-                    backgroundColor: '#16213E',
+                    backgroundColor: theme.palette.mode === 'dark' ? 'rgba(26, 33, 62, 0.8)' : '#16213E',
                     color: '#fff',
                     fontWeight: 700,
                   }}
@@ -347,24 +358,24 @@ export default function PropertyDetailPage() {
                   />
                 )}
               </Box>
-              <Typography variant="h4" sx={{ mb: 1, fontWeight: 700 }}>
+              <Typography variant="h4" sx={{ mb: 1, fontWeight: 700, color: theme.palette.text.primary }}>
                 {property.name}
               </Typography>
               <Typography
                 variant="body2"
-                sx={{ color: '#666', mb: 2, textTransform: 'uppercase' }}
+                sx={{ color: theme.palette.text.secondary, mb: 2, textTransform: 'uppercase' }}
               >
                 {[property.address, property.city, property.state, property.country].filter(Boolean).join(', ')}
               </Typography>
               {property.zip_code && (
-                <Typography variant="body2" sx={{ color: '#666', mb: 2 }}>
+                <Typography variant="body2" sx={{ color: theme.palette.text.secondary, mb: 2 }}>
                   {property.zip_code}
                 </Typography>
               )}
-              <Typography variant="h5" sx={{ color: '#16213E', fontWeight: 800 }}>
+              <Typography variant="h5" sx={{ color: theme.palette.text.primary, fontWeight: 800 }}>
                 {formatPrice(property.price)}
                 {property.property_status === 'rent' && (
-                  <Typography component="span" variant="body1" sx={{ ml: 1, color: '#666' }}>
+                  <Typography component="span" variant="body1" sx={{ ml: 1, color: theme.palette.text.secondary }}>
                     /month
                   </Typography>
                 )}
@@ -374,11 +385,11 @@ export default function PropertyDetailPage() {
             {/* Key Stats */}
             <Box
               sx={{
-                backgroundColor: '#fff',
+                backgroundColor: theme.palette.background.paper,
                 p: 3,
                 borderRadius: 2,
                 mb: 3,
-                border: '1px solid #e0e0e0',
+                border: `1px solid ${theme.palette.divider}`,
               }}
             >
               <Grid container spacing={2}>
@@ -387,7 +398,7 @@ export default function PropertyDetailPage() {
                     <Typography variant="h6" sx={{ fontWeight: 700, color: theme.palette.mode === 'dark' ? '#F5B70C' : '#1A4C9E' }}>
                       {property.bedrooms || 0}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: '#666', mt: 0.5 }}>
+                    <Typography variant="body2" sx={{ color: theme.palette.text.secondary, mt: 0.5 }}>
                       Bedrooms
                     </Typography>
                   </Box>
@@ -397,7 +408,7 @@ export default function PropertyDetailPage() {
                     <Typography variant="h6" sx={{ fontWeight: 700, color: theme.palette.mode === 'dark' ? '#F5B70C' : '#1A4C9E' }}>
                       {property.bathrooms || 0}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: '#666', mt: 0.5 }}>
+                    <Typography variant="body2" sx={{ color: theme.palette.text.secondary, mt: 0.5 }}>
                       Bathrooms
                     </Typography>
                   </Box>
@@ -409,11 +420,11 @@ export default function PropertyDetailPage() {
             {/* Contact Button */}
             <Box
               sx={{
-                backgroundColor: '#fff',
+                backgroundColor: theme.palette.background.paper,
                 p: 3,
                 borderRadius: 2,
                 mb: 3,
-                border: '1px solid #e0e0e0',
+                border: `1px solid ${theme.palette.divider}`,
               }}
             >
               <Button
@@ -438,18 +449,18 @@ export default function PropertyDetailPage() {
         </Grid>
 
         {/* Description */}
-        <Box sx={{ backgroundColor: '#fff', p: 4, borderRadius: 2, my: 4, border: '1px solid #e0e0e0' }}>
-          <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
+        <Box sx={{ backgroundColor: theme.palette.background.paper, p: 4, borderRadius: 2, my: 4, border: `1px solid ${theme.palette.divider}` }}>
+          <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, color: theme.palette.text.primary }}>
             About This Property
           </Typography>
-          <Typography variant="body1" sx={{ color: '#666', lineHeight: 1.8, mb: 3 }}>
+          <Typography variant="body1" sx={{ color: theme.palette.text.secondary, lineHeight: 1.8, mb: 3 }}>
             {property.description}
           </Typography>
 
           {/* Features */}
           {property.features && property.features.length > 0 && (
             <>
-              <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
+              <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, color: theme.palette.text.primary }}>
                 Features
               </Typography>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
@@ -458,8 +469,9 @@ export default function PropertyDetailPage() {
                     key={idx}
                     label={feature}
                     sx={{
-                      backgroundColor: '#f5f5f5',
-                      border: '1px solid #e0e0e0',
+                      backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.08)' : '#f5f5f5',
+                      border: `1px solid ${theme.palette.divider}`,
+                      color: theme.palette.text.primary,
                     }}
                   />
                 ))}
@@ -471,7 +483,7 @@ export default function PropertyDetailPage() {
         {/* Similar Properties */}
         {similarProperties.length > 0 && (
           <Box sx={{ mt: 6 }}>
-            <Typography variant="h5" sx={{ fontWeight: 700, mb: 3 }}>
+            <Typography variant="h5" sx={{ fontWeight: 700, mb: 3, color: theme.palette.text.primary }}>
               Similar Properties
             </Typography>
             <Grid container spacing={3}>
@@ -486,8 +498,18 @@ export default function PropertyDetailPage() {
       </Container>
 
       {/* Contact Dialog */}
-      <Dialog open={contactDialogOpen} onClose={() => setContactDialogOpen(false)} maxWidth="sm" fullWidth>
-        <DialogTitle>Contact About This Property</DialogTitle>
+      <Dialog 
+        open={contactDialogOpen} 
+        onClose={() => setContactDialogOpen(false)} 
+        maxWidth="sm" 
+        fullWidth
+        PaperProps={{
+          sx: {
+            backgroundColor: theme.palette.background.paper,
+          },
+        }}
+      >
+        <DialogTitle sx={{ color: theme.palette.text.primary }}>Contact About This Property</DialogTitle>
         <DialogContent sx={{ pt: 2 }}>
           <TextField
             fullWidth
@@ -525,7 +547,12 @@ export default function PropertyDetailPage() {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setContactDialogOpen(false)}>Cancel</Button>
+          <Button 
+            onClick={() => setContactDialogOpen(false)}
+            sx={{ color: theme.palette.text.primary }}
+          >
+            Cancel
+          </Button>
           <Button
             onClick={handleSubmitContact}
             variant="contained"
