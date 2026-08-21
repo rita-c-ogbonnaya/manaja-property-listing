@@ -376,7 +376,7 @@ export default function PropertyDetailPage() {
                 {formatPrice(property.price)}
                 {property.property_status === 'rent' && (
                   <Typography component="span" variant="body1" sx={{ ml: 1, color: theme.palette.text.secondary }}>
-                    /month
+                    {property.payment_frequency === 'yearly' ? '/year' : '/month'}
                   </Typography>
                 )}
               </Typography>
@@ -415,6 +415,42 @@ export default function PropertyDetailPage() {
                 </Grid>
 
               </Grid>
+            </Box>
+
+            {/* Metro Manager Contact Info */}
+            <Box
+              sx={{
+                backgroundColor: theme.palette.background.paper,
+                p: 3,
+                borderRadius: 2,
+                mb: 3,
+                border: `1px solid ${theme.palette.divider}`,
+              }}
+            >
+              <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, color: theme.palette.text.primary }}>
+                Property Manager
+              </Typography>
+              {property.metro_manager_name && (
+                <Typography variant="body1" sx={{ color: theme.palette.text.secondary, mb: 1 }}>
+                  {property.metro_manager_name}
+                </Typography>
+              )}
+              {property.metro_manager_phone && (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                  <LocalPhoneIcon sx={{ fontSize: 18, color: '#1A4C9E' }} />
+                  <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
+                    {property.metro_manager_phone}
+                  </Typography>
+                </Box>
+              )}
+              {property.metro_manager_email && (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <MailIcon sx={{ fontSize: 18, color: '#1A4C9E' }} />
+                  <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
+                    {property.metro_manager_email}
+                  </Typography>
+                </Box>
+              )}
             </Box>
 
             {/* Contact Button */}
