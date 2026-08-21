@@ -58,7 +58,7 @@ export default function PropertyCard({ property }) {
       }}
     >
       {/* Image */}
-      <Box sx={{ position: 'relative', overflow: 'hidden', height: 240 }}>
+      <Box sx={{ position: 'relative', overflow: 'hidden', height: { xs: 200, sm: 240 } }}>
         {property.property_interior_images?.[0] || property.property_exterior_images?.[0] ? (
           <Box
             component="img"
@@ -142,8 +142,8 @@ export default function PropertyCard({ property }) {
       </Box>
 
       {/* Body */}
-      <Box sx={{ p: 2.5, display: 'flex', flexDirection: 'column', flex: 1 }}>
-        <Typography sx={{ fontSize: '1.4rem', fontWeight: 800, color: theme.palette.text.primary, lineHeight: 1.1, letterSpacing: '-0.02em' }}>
+      <Box sx={{ p: { xs: 2, sm: 2.5 }, display: 'flex', flexDirection: 'column', flex: 1 }}>
+        <Typography sx={{ fontSize: { xs: '1.2rem', sm: '1.4rem' }, fontWeight: 800, color: theme.palette.text.primary, lineHeight: 1.1, letterSpacing: '-0.02em' }}>
           {formatFullPrice(property.price, property.property_status)}
         </Typography>
 
@@ -151,7 +151,7 @@ export default function PropertyCard({ property }) {
           sx={{
             color: '#1A4C9E',
             fontWeight: 700,
-            fontSize: '0.8rem',
+            fontSize: { xs: '0.75rem', sm: '0.8rem' },
             mt: 0.75,
             letterSpacing: '0.03em',
             textTransform: 'uppercase',
@@ -164,7 +164,7 @@ export default function PropertyCard({ property }) {
           sx={{
             color: theme.palette.text.primary,
             fontWeight: 700,
-            fontSize: '1.05rem',
+            fontSize: { xs: '0.95rem', sm: '1.05rem' },
             mt: 0.75,
             lineHeight: 1.3,
             display: '-webkit-box',
@@ -177,8 +177,8 @@ export default function PropertyCard({ property }) {
         </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 1, color: theme.palette.text.secondary }}>
-          <LocationOnIcon sx={{ fontSize: 16, color: '#1A4C9E' }} />
-          <Typography sx={{ fontSize: '0.87rem', fontWeight: 500 }} noWrap>
+          <LocationOnIcon sx={{ fontSize: { xs: 14, sm: 16 }, color: '#1A4C9E' }} />
+          <Typography sx={{ fontSize: { xs: '0.8rem', sm: '0.87rem' }, fontWeight: 500 }} noWrap>
             {[property.address, property.city, property.state].filter(Boolean).join(', ') || 'Location not specified'}
           </Typography>
         </Box>
@@ -187,20 +187,20 @@ export default function PropertyCard({ property }) {
           sx={{
             display: 'flex',
             alignItems: 'center',
-            gap: 2.5,
+            gap: { xs: 1.5, sm: 2.5 },
             mt: 'auto',
-            pt: 1.75,
+            pt: { xs: 1.5, sm: 1.75 },
             borderTop: `1px solid ${theme.palette.divider}`,
             color: theme.palette.text.secondary,
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.6 }}>
-            <KingBedOutlinedIcon sx={{ fontSize: 18, color: theme.palette.text.secondary }} />
-            <Typography sx={{ fontSize: '0.85rem', fontWeight: 600 }}>{property.bedrooms || 0} Beds</Typography>
+            <KingBedOutlinedIcon sx={{ fontSize: { xs: 16, sm: 18 }, color: theme.palette.text.secondary }} />
+            <Typography sx={{ fontSize: { xs: '0.8rem', sm: '0.85rem' }, fontWeight: 600 }}>{property.bedrooms || 0} Beds</Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.6 }}>
-            <BathtubOutlinedIcon sx={{ fontSize: 18, color: theme.palette.text.secondary }} />
-            <Typography sx={{ fontSize: '0.85rem', fontWeight: 600 }}>{property.bathrooms || 0} Baths</Typography>
+            <BathtubOutlinedIcon sx={{ fontSize: { xs: 16, sm: 18 }, color: theme.palette.text.secondary }} />
+            <Typography sx={{ fontSize: { xs: '0.8rem', sm: '0.85rem' }, fontWeight: 600 }}>{property.bathrooms || 0} Baths</Typography>
           </Box>
         </Box>
       </Box>
