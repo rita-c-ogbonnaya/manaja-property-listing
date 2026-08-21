@@ -17,7 +17,7 @@ import BrowseByType from '@/components/BrowseByType';
 import { getListings } from '@/lib/api-service';
 import { useLocationState } from '@/components/StateProvider';
 
-const ITEMS_PER_PAGE = 10; // Match API default limit
+const ITEMS_PER_PAGE = 10; 
 const INITIAL_LIMIT = 10;
 
 const emptyFilters = {
