@@ -122,7 +122,7 @@ export default function HomePage() {
           console.log('ID field value:', properties[0].id);
           console.log('Name field value:', properties[0].name);
           console.log('================================');
-        }
+                  }
         
         // Check if backend returned a message instead of data
         if (properties.length === 0 && data && data.message) {
